@@ -13,6 +13,8 @@ services:
       MARIADB_PASSWORD: admin
       MARIADB_ROOT_USER: root
       MARIADB_ROOT_PASSWORD: admin
+    volumes:
+      - ./config:/docker-entrypoint-initdb.d
 
   presta:
     build:
@@ -42,5 +44,17 @@ services:
       ADMIN_PASSWD: lampybright
     volumes:
       - ./src:/var/www/html
+    depends_on:
+      - db
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "1235:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: admin
     depends_on:
       - db

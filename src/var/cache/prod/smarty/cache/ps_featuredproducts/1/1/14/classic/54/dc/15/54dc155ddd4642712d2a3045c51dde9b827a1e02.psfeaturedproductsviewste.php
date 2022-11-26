@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-26 14:01:02
+/* Smarty version 3.1.43, created on 2022-11-26 15:08:33
   from 'module:psfeaturedproductsviewste' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_63820e0ecb6a54_28816982',
+  'unifunc' => 'content_63821de17bb3c7_96397760',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -42,7 +42,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_63820e0ecb6a54_28816982 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63821de17bb3c7_96397760 (Smarty_Internal_Template $_smarty_tpl) {
 ?><section class="featured-products clearfix">
   <h2 class="h2 products-section-title text-uppercase">
     Popularne produkty
@@ -77,7 +77,7 @@ function content_63820e0ecb6a54_28816982 (Smarty_Internal_Template $_smarty_tpl)
 
           
                           <div class="variant-links">
-      <a href="http://localhost/index.php?id_product=1&amp;id_product_attribute=1&amp;rewrite=hummingbird-printed-t-shirt&amp;controller=product#/1-size-s/8-color-white"
+      <a href="http://localhost/index.php?id_product=1&amp;id_product_attribute=3&amp;rewrite=hummingbird-printed-t-shirt&amp;controller=product#/2-size-m/8-color-white"
        class="color"
        title="White"
        aria-label="White"
