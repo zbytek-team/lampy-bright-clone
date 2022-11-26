@@ -1,16 +1,15 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname}, 
+Hi {firstname} {lastname},
 
-Zaktualizowaliśmy postęp w sprawie Twojego zwrotu
-#{id_order_return}, nowy status to: "{state_order_return}"
+Order return #{id_order_return} - Update
 
-Możesz obejrzeć swoje zamówienie i pobrać fakturę na stronie
-"Historia zamówień" [{history_url}]
-logując się na swoje konto klienta za pomocą strony "Moje konto"
-[{my_account_url}] w naszym sklepie. 
+We have updated the progress on your return #{id_order_return}, the new status is: "{state_order_return}".
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+Follow your order and download your invoice on our shop, go to the [Order history and details]({history_url}) section of your customer account.
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

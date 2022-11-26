@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,21 +17,21 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
-
 
 namespace PrestaShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ShopGroup
+ * ShopGroup.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ShopGroupRepository")
@@ -38,7 +39,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ShopGroup
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(name="id_shop_group", type="integer")
@@ -54,45 +55,64 @@ class ShopGroup
     private $name;
 
     /**
-     * @var boolean
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=50)
+     */
+    private $color;
+
+    /**
+     * @var bool
      *
      * @ORM\Column(name="share_customer", type="boolean")
      */
     private $shareCustomer;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="share_order", type="boolean")
      */
     private $shareOrder;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="share_stock", type="boolean")
      */
     private $shareStock;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="boolean")
      */
     private $deleted;
 
+    /**
+     * @var Collection
+     *
+     * One group shop has many shops. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\Shop", mappedBy="shopGroup")
+     */
+    private $shops;
+
+    public function __construct()
+    {
+        $this->shops = new ArrayCollection();
+    }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -100,7 +120,7 @@ class ShopGroup
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -114,7 +134,7 @@ class ShopGroup
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -124,9 +144,33 @@ class ShopGroup
     }
 
     /**
-     * Set shareCustomer
+     * Set color
      *
-     * @param boolean $shareCustomer
+     * @param string $color
+     *
+     * @return ShopGroup
+     */
+    public function setColor(string $color): ShopGroup
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string|null
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set shareCustomer.
+     *
+     * @param bool $shareCustomer
      *
      * @return ShopGroup
      */
@@ -138,9 +182,9 @@ class ShopGroup
     }
 
     /**
-     * Get shareCustomer
+     * Get shareCustomer.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShareCustomer()
     {
@@ -148,9 +192,9 @@ class ShopGroup
     }
 
     /**
-     * Set shareOrder
+     * Set shareOrder.
      *
-     * @param boolean $shareOrder
+     * @param bool $shareOrder
      *
      * @return ShopGroup
      */
@@ -162,9 +206,9 @@ class ShopGroup
     }
 
     /**
-     * Get shareOrder
+     * Get shareOrder.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShareOrder()
     {
@@ -172,9 +216,9 @@ class ShopGroup
     }
 
     /**
-     * Set shareStock
+     * Set shareStock.
      *
-     * @param boolean $shareStock
+     * @param bool $shareStock
      *
      * @return ShopGroup
      */
@@ -186,9 +230,9 @@ class ShopGroup
     }
 
     /**
-     * Get shareStock
+     * Get shareStock.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShareStock()
     {
@@ -196,9 +240,9 @@ class ShopGroup
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return ShopGroup
      */
@@ -210,9 +254,9 @@ class ShopGroup
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -220,9 +264,9 @@ class ShopGroup
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
-     * @param boolean $deleted
+     * @param bool $deleted
      *
      * @return ShopGroup
      */
@@ -234,12 +278,20 @@ class ShopGroup
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getShops(): Collection
+    {
+        return $this->shops;
     }
 }

@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -18,7 +19,7 @@ use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 
 /**
- * Csa Guzzle Cache integration
+ * Csa Guzzle Cache integration.
  *
  * @author Charles Sarrazin <charles@sarraz.in>
  */
@@ -34,7 +35,7 @@ class CacheSubscriber implements SubscriberInterface
     public function getEvents()
     {
         return [
-            'before'   => ['onBefore', RequestEvents::LATE],
+            'before' => ['onBefore', RequestEvents::LATE],
             'complete' => ['onComplete', RequestEvents::EARLY],
         ];
     }

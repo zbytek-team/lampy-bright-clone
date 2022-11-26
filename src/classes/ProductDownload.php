@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,16 +17,17 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
+use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\VirtualProductFileSettings;
+
 /**
- * Class ProductDownloadCore
+ * Class ProductDownloadCore.
  */
 class ProductDownloadCore extends ObjectModel
 {
@@ -44,10 +46,10 @@ class ProductDownloadCore extends ObjectModel
     /** @var string DateExpiration deadline of the file */
     public $date_expiration;
 
-    /** @var string NbDaysAccessible how many days the customer can access to file */
+    /** @var int NbDaysAccessible how many days the customer can access to file */
     public $nb_days_accessible;
 
-    /** @var string NbDownloadable how many time the customer can download the file */
+    /** @var int NbDownloadable how many time the customer can download the file */
     public $nb_downloadable;
 
     /** @var bool Active if file is accessible or not */
@@ -56,29 +58,29 @@ class ProductDownloadCore extends ObjectModel
     /** @var bool is_shareable indicates whether the product can be shared */
     public $is_shareable = 0;
 
-    protected static $_productIds = array();
+    protected static $_productIds = [];
 
     /**
      * @see ObjectModel::$definition
      */
-    public static $definition = array(
+    public static $definition = [
         'table' => 'product_download',
         'primary' => 'id_product_download',
-        'fields' => array(
-            'id_product' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
-            'display_filename' => array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255),
-            'filename' => array('type' => self::TYPE_STRING, 'validate' => 'isSha1', 'size' => 255),
-            'date_add' => array('type' => self::TYPE_DATE, 'validate' => 'isDate'),
-            'date_expiration' => array('type' => self::TYPE_DATE, 'validate' => 'isDate'),
-            'nb_days_accessible' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'size' => 10),
-            'nb_downloadable' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'size' => 10),
-            'active' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-            'is_shareable' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-        ),
-    );
+        'fields' => [
+            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
+            'display_filename' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => VirtualProductFileSettings::MAX_DISPLAY_FILENAME_LENGTH],
+            'filename' => ['type' => self::TYPE_STRING, 'validate' => 'isSha1', 'size' => VirtualProductFileSettings::MAX_FILENAME_LENGTH],
+            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'date_expiration' => ['type' => self::TYPE_DATE, 'validate' => 'isDateOrNull'],
+            'nb_days_accessible' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'size' => 10],
+            'nb_downloadable' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'size' => 10],
+            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'is_shareable' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+        ],
+    ];
 
     /**
-     * Build a virtual product
+     * Build a virtual product.
      *
      * @param int $idProductDownload Existing productDownload id in order to load object (optional)
      */
@@ -90,6 +92,7 @@ class ProductDownloadCore extends ObjectModel
 
     /**
      * @see ObjectModel::getFields()
+     *
      * @return array
      */
     public function getFields()
@@ -114,6 +117,7 @@ class ProductDownloadCore extends ObjectModel
             //Configuration::updateGlobalValue('PS_VIRTUAL_PROD_FEATURE_ACTIVE', ProductDownload::isCurrentlyUsed($this->def['table'], true));
             return true;
         }
+
         return false;
     }
 
@@ -128,7 +132,7 @@ class ProductDownloadCore extends ObjectModel
     }
 
     /**
-     * Delete the file
+     * Delete the file.
      *
      * @param int $idProductDownload : if we need to delete a specific product attribute file
      *
@@ -140,12 +144,12 @@ class ProductDownloadCore extends ObjectModel
             return false;
         }
 
-        return unlink(_PS_DOWNLOAD_DIR_.$this->filename)
-            && Db::getInstance()->delete('product_download', 'id_product_download = '.(int) $idProductDownload);
+        return unlink(_PS_DOWNLOAD_DIR_ . $this->filename)
+            && Db::getInstance()->delete('product_download', 'id_product_download = ' . (int) $idProductDownload);
     }
 
     /**
-     * Check if file exists
+     * Check if file exists.
      *
      * @return bool
      */
@@ -155,11 +159,11 @@ class ProductDownloadCore extends ObjectModel
             return false;
         }
 
-        return file_exists(_PS_DOWNLOAD_DIR_.$this->filename);
+        return file_exists(_PS_DOWNLOAD_DIR_ . $this->filename);
     }
 
     /**
-     * Check if download repository is writable
+     * Check if download repository is writable.
      *
      * @return bool
      */
@@ -169,7 +173,7 @@ class ProductDownloadCore extends ObjectModel
     }
 
     /**
-     * Return the id_product_download from an id_product
+     * Return the id_product_download from an id_product.
      *
      * @param int $idProduct Product the id
      *
@@ -181,20 +185,21 @@ class ProductDownloadCore extends ObjectModel
             return false;
         }
 
-        self::$_productIds[$idProduct] = (int)Db::getInstance()->getValue('
+        self::$_productIds[$idProduct] = (int) Db::getInstance()->getValue('
 		SELECT `id_product_download`
-		FROM `'._DB_PREFIX_.'product_download`
-		WHERE `id_product` = '.(int) $idProduct.'
-		'.($active ? ' AND `active` = 1' : '').'
+		FROM `' . _DB_PREFIX_ . 'product_download`
+		WHERE `id_product` = ' . (int) $idProduct . '
+		' . ($active ? ' AND `active` = 1' : '') . '
 		ORDER BY `id_product_download` DESC');
 
         return self::$_productIds[$idProduct];
     }
 
     /**
-     * Return the display filename from a physical filename
+     * Return the display filename from a physical filename.
      *
      * @param string $filename Filename physically
+     *
      * @return int Product the id for this virtual product
      *
      * @since 1.5.0.1
@@ -203,12 +208,12 @@ class ProductDownloadCore extends ObjectModel
     {
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 		SELECT `id_product_download`
-		FROM `'._DB_PREFIX_.'product_download`
-		WHERE `filename` = \''.pSQL($filename).'\'');
+		FROM `' . _DB_PREFIX_ . 'product_download`
+		WHERE `filename` = \'' . pSQL($filename) . '\'');
     }
 
     /**
-     * Return the filename from a Product ID
+     * Return the filename from a Product ID.
      *
      * @param int $idProduct Product ID
      *
@@ -218,28 +223,29 @@ class ProductDownloadCore extends ObjectModel
     {
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `filename`
-			FROM `'._DB_PREFIX_.'product_download`
-			WHERE `id_product` = '.(int) $idProduct.'
+			FROM `' . _DB_PREFIX_ . 'product_download`
+			WHERE `id_product` = ' . (int) $idProduct . '
 				AND `active` = 1
 		');
     }
 
     /**
-     * Return the display filename from a physical filename
+     * Return the display filename from a physical filename.
      *
      * @param string $filename Filename physically
+     *
      * @return string Filename the display filename for this virtual product
      */
     public static function getFilenameFromFilename($filename)
     {
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 		SELECT `display_filename`
-		FROM `'._DB_PREFIX_.'product_download`
-		WHERE `filename` = \''.pSQL($filename).'\'');
+		FROM `' . _DB_PREFIX_ . 'product_download`
+		WHERE `filename` = \'' . pSQL($filename) . '\'');
     }
 
     /**
-     * Return text link
+     * Return text link.
      *
      * @param bool $admin specific to backend (optionnal)
      * @param string $hash hash code in table order detail (optionnal)
@@ -248,36 +254,37 @@ class ProductDownloadCore extends ObjectModel
      */
     public function getTextLink($admin = true, $hash = false)
     {
-        $key = $this->filename.'-'.($hash ? $hash : 'orderdetail');
-        $link = ($admin) ? 'get-file-admin.php?' : _PS_BASE_URL_.__PS_BASE_URI__.'index.php?controller=get-file&';
-        $link .= ($admin) ? 'file='.$this->filename : 'key='.$key;
+        if ($admin) {
+            return 'get-file-admin.php?file=' . $this->filename;
+        }
+        $key = $this->filename . '-' . ($hash ? $hash : 'orderdetail');
 
-        return $link;
+        return Context::getContext()->link->getPageLink('get-file&key=' . $key);
     }
 
     /**
-     * Return html link
+     * Return html link.
      *
      * @param string $class CSS selector
-     * @param bool   $admin specific to backend
-     * @param bool   $hash  hash code in table order detail
+     * @param bool $admin specific to backend
+     * @param bool $hash hash code in table order detail
      *
      * @return string Html all the code for print a link to the file
      */
     public function getHtmlLink($class = false, $admin = true, $hash = false)
     {
         $link = $this->getTextLink($admin, $hash);
-        $html = '<a href="'.$link.'" title=""';
+        $html = '<a href="' . $link . '" title=""';
         if ($class) {
-            $html .= ' class="'.$class.'"';
+            $html .= ' class="' . $class . '"';
         }
-        $html .= '>'.$this->display_filename.'</a>';
+        $html .= '>' . $this->display_filename . '</a>';
 
         return $html;
     }
 
     /**
-     * Return a deadline
+     * Return a deadline.
      *
      * @return string Datetime in SQL format
      */
@@ -286,24 +293,24 @@ class ProductDownloadCore extends ObjectModel
         if (!(int) $this->nb_days_accessible) {
             return '0000-00-00 00:00:00';
         }
-        $timestamp = strtotime('+'.(int) $this->nb_days_accessible.' day');
+        $timestamp = strtotime('+' . (int) $this->nb_days_accessible . ' day');
 
         return date('Y-m-d H:i:s', $timestamp);
     }
 
     /**
-     * Return a hash for control download access
+     * Return a hash for control download access.
      *
      * @return string Hash ready to insert in database
      */
     public function getHash()
     {
         // TODO check if this hash not already in database
-        return sha1(microtime().$this->id);
+        return sha1(microtime() . $this->id);
     }
 
     /**
-     * Return a sha1 filename
+     * Return a sha1 filename.
      *
      * @return string Sha1 unique filename
      */
@@ -311,13 +318,13 @@ class ProductDownloadCore extends ObjectModel
     {
         do {
             $filename = sha1(microtime());
-        } while (file_exists(_PS_DOWNLOAD_DIR_.$filename));
+        } while (file_exists(_PS_DOWNLOAD_DIR_ . $filename));
 
         return $filename;
     }
 
     /**
-     * This method is allow to know if a feature is used or active
+     * This method is allow to know if a feature is used or active.
      *
      * @return bool
      *

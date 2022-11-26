@@ -1,22 +1,19 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-{firstname_friend} {lastname_friend}, dołącz do nas! 
+{firstname_friend} {lastname_friend}, Join us!
 
-Twój znajomy {firstname} {lastname} chce Ci polecić {shop_name}
-[{shop_url}]!
+Your friend {firstname} {lastname} wants to refer you on [{shop_name}]({shop_url})!
 
-Jest nam niezmiernie miło zaoferować Ci kupon o wartości
-{discount}, który możesz wykorzystać przy następnym zamówieniu.
-Poleć nasz sklep i zdobądź kupon na {discount}! rabatu To bardzo
-proste, aby się zarejestrować. Po prostu kliknij tutaj!
-[{link}] 		 
+We are pleased to offer you a voucher worth {discount} that you can use on your next order. Get referred and earn a discount voucher of {discount}!
 
-Rejestrując się, nie zapomnij podać adresu e-mail swojego
-znajomego: {email}.
+[It's very easy to sign up, just click here!]({link})
 
-Z poważaniem, 
+When signing up, don't forget to provide the email address of your referring friend: {email}.
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+Best regards,
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

@@ -1,28 +1,29 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname},
+Hi {firstname} {lastname},
 
-Dziękujemy za utworzenie konta klienta na stronie {shop_name}. 
+Thank you for creating a customer account at {shop_name}.
 
-Oto twoje dane logowania:
+Your login details on {shop_name}
 
-ADRES E-MAIL: {email} 		 
+Here are your login details:
 
-Ważne wskazówki dotyczące bezpieczeństwa:
+Email address: {email}
 
-* Zawsze trzymaj dane do Twojego konta w bezpiecznym miejscu.
+Important Security Tips:
 
-* Nigdy nie ujawniaj nikomu swojego loginu i hasła.
+1. Always keep your account details safe.
 
-* Regularnie zmieniaj swoje hasło.
+2. Never disclose your login details to anyone.
 
-* Jeśli podejrzewasz, że ktoś używa Twojego konta nielegalnie,
-prosimy o natychmiastowe poinformowanie nas o tym.
+3. Change your password regularly.
 
-Możesz teraz składać zamówienia w naszym sklepie: {shop_name}
-[{shop_url}] 
+4. Should you suspect someone is using your account illegally, please notify us immediately.
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+You can now place orders on our shop: [{shop_name}]({shop_url})
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

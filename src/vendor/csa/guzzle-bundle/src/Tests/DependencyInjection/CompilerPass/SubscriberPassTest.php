@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -16,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
-class SubscriberPassTest extends \PHPUnit_Framework_TestCase
+class SubscriberPassTest extends \PHPUnit\Framework\TestCase
 {
     public function testSubscriberRegisteredToFactory()
     {
@@ -55,7 +56,7 @@ class SubscriberPassTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('configure', $callback[1]);
         $configurator = $container->findDefinition($callback[0]);
 
-        $this->assertEquals(array(new Reference('sub')), $configurator->getArgument(0));
+        $this->assertEquals([new Reference('sub')], $configurator->getArgument(0));
     }
 
     public function testSpecificSubscribersAddedToClient()
@@ -66,7 +67,7 @@ class SubscriberPassTest extends \PHPUnit_Framework_TestCase
         $container->setDefinition('client', $client);
 
         foreach (['foo', 'bar', 'qux'] as $alias) {
-            $container ->setDefinition($alias, $this->createSubscriber($alias));
+            $container->setDefinition($alias, $this->createSubscriber($alias));
         }
 
         $pass = new SubscriberPass();

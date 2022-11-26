@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,18 +17,19 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\PrestaShop\Adapter\Product;
 
+use Context;
 use Image;
 use Product;
-use Context;
+use StockAvailable;
 
 /**
  * This class will provide data from DB / ORM about Product, for both Front and Admin interfaces.
@@ -35,9 +37,10 @@ use Context;
 class ProductDataProvider
 {
     /**
-     * Get a new ProductCore instance
+     * Get a new ProductCore instance.
      *
-     * @param null $idProduct
+     * @param int|null $idProduct
+     *
      * @return Product
      */
     public function getProductInstance($idProduct = null)
@@ -50,7 +53,7 @@ class ProductDataProvider
     }
 
     /**
-     * Get a product
+     * Get a product.
      *
      * @param int $id_product
      * @param bool $full
@@ -69,33 +72,33 @@ class ProductDataProvider
         }
 
         $product = new Product($id_product, $full, $id_lang, $id_shop, $context);
-        if ($product) {
-            if (!is_array($product->link_rewrite)) {
-                $linkRewrite = $product->link_rewrite;
-            } else {
-                $linkRewrite = $product->link_rewrite[$id_lang ? $id_lang : key($product->link_rewrite)];
-            }
 
-            $cover = Product::getCover($product->id);
-            $product->image = Context::getContext()->link->getImageLink($linkRewrite, $cover ? $cover['id_image'] : '', 'home_default');
+        if (!is_array($product->link_rewrite)) {
+            $linkRewrite = $product->link_rewrite;
+        } else {
+            $linkRewrite = $product->link_rewrite[$id_lang ? $id_lang : key($product->link_rewrite)];
         }
+
+        $cover = Product::getCover($product->id);
+        $product->image = Context::getContext()->link->getImageLink($linkRewrite, $cover ? $cover['id_image'] : '', 'home_default');
 
         return $product;
     }
 
     /**
-     * Get default taxe rate product
+     * Get default taxe rate product.
      *
      * @return int id tax rule group
      */
     public function getIdTaxRulesGroup()
     {
         $product = new Product();
+
         return $product->getIdTaxRulesGroup();
     }
 
     /**
-     * Get product quantity
+     * Get product quantity.
      *
      * @param int $id_product
      * @param int|null $id_product_attribute
@@ -109,7 +112,18 @@ class ProductDataProvider
     }
 
     /**
-     * Get associated images to product
+     * @param int $id_product
+     * @param int $id_product_attribute Optional
+     *
+     * @return string
+     */
+    public function getLocation($id_product, $id_product_attribute = 0)
+    {
+        return StockAvailable::getLocation($id_product, $id_product_attribute);
+    }
+
+    /**
+     * Get associated images to product.
      *
      * @param int $id_product
      * @param int $id_lang
@@ -118,8 +132,9 @@ class ProductDataProvider
      */
     public function getImages($id_product, $id_lang)
     {
+        $id_shop = (int) Context::getContext()->shop->id;
         $data = [];
-        foreach (Image::getImages($id_lang, $id_product) as $image) {
+        foreach (Image::getImages($id_lang, $id_product, null, $id_shop) as $image) {
             $data[] = $this->getImage($image['id_image']);
         }
 
@@ -127,7 +142,7 @@ class ProductDataProvider
     }
 
     /**
-     * Get an image
+     * Get an image.
      *
      * @param int $id_image
      *
@@ -135,7 +150,7 @@ class ProductDataProvider
      */
     public function getImage($id_image)
     {
-        $imageData = new Image((int)$id_image);
+        $imageData = new Image((int) $id_image);
 
         return [
             'id' => $imageData->id,
@@ -144,7 +159,7 @@ class ProductDataProvider
             'cover' => $imageData->cover ? true : false,
             'legend' => $imageData->legend,
             'format' => $imageData->image_format,
-            'base_image_url' => _THEME_PROD_DIR_.$imageData->getImgPath(),
+            'base_image_url' => _THEME_PROD_DIR_ . $imageData->getImgPath(),
         ];
     }
 }

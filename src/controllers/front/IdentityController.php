@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,14 +17,12 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
-
 class IdentityControllerCore extends FrontController
 {
     public $auth = true;
@@ -31,30 +30,33 @@ class IdentityControllerCore extends FrontController
     public $authRedirection = 'identity';
     public $ssl = true;
 
+    public $passwordRequired = true;
+
     /**
-     * Assign template vars related to page content
+     * Assign template vars related to page content.
+     *
      * @see FrontController::initContent()
      */
     public function initContent()
     {
         $should_redirect = false;
 
-        $customer_form = $this->makeCustomerForm();
+        $customer_form = $this->makeCustomerForm()->setPasswordRequired($this->passwordRequired);
         $customer = new Customer();
 
         $customer_form->getFormatter()
             ->setAskForNewPassword(true)
-            ->setPasswordRequired(true)
-            ->setPartnerOptinRequired($customer->isFieldRequired('optin'))
-        ;
+            ->setAskForPassword($this->passwordRequired)
+            ->setPasswordRequired($this->passwordRequired)
+            ->setPartnerOptinRequired($customer->isFieldRequired('optin'));
 
         if (Tools::isSubmit('submitCreate')) {
             $customer_form->fillWith(Tools::getAllValues());
             if ($customer_form->submit()) {
-                $this->success[] = $this->trans('Information successfully updated.', array(), 'Shop.Notifications.Success');
+                $this->success[] = $this->trans('Information successfully updated.', [], 'Shop.Notifications.Success');
                 $should_redirect = true;
             } else {
-                $this->errors[] = $this->trans('Could not update your information, please check your data.', array(), 'Shop.Notifications.Error');
+                $this->errors[] = $this->trans('Could not update your information, please check your data.', [], 'Shop.Notifications.Error');
             }
         } else {
             $customer_form->fillFromCustomer(
@@ -63,7 +65,7 @@ class IdentityControllerCore extends FrontController
         }
 
         $this->context->smarty->assign([
-            'customer_form' => $customer_form->getProxy()
+            'customer_form' => $customer_form->getProxy(),
         ]);
 
         if ($should_redirect) {
@@ -79,6 +81,11 @@ class IdentityControllerCore extends FrontController
         $breadcrumb = parent::getBreadcrumbLinks();
 
         $breadcrumb['links'][] = $this->addMyAccountToBreadcrumb();
+
+        $breadcrumb['links'][] = [
+            'title' => $this->trans('Your personal information', [], 'Shop.Theme.Customeraccount'),
+            'url' => $this->context->link->getPageLink('identity'),
+        ];
 
         return $breadcrumb;
     }

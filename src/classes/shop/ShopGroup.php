@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,12 +17,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 /**
@@ -30,6 +30,7 @@
 class ShopGroupCore extends ObjectModel
 {
     public $name;
+    public $color;
     public $active = true;
     public $share_customer;
     public $share_stock;
@@ -39,21 +40,23 @@ class ShopGroupCore extends ObjectModel
     /**
      * @see ObjectModel::$definition
      */
-    public static $definition = array(
+    public static $definition = [
         'table' => 'shop_group',
         'primary' => 'id_shop_group',
-        'fields' => array(
-            'name' =>            array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 64),
-            'share_customer' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-            'share_order' =>    array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-            'share_stock' =>    array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-            'active' =>        array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-            'deleted' =>        array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
-        ),
-    );
+        'fields' => [
+            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 64],
+            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor'],
+            'share_customer' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'share_order' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'share_stock' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'deleted' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+        ],
+    ];
 
     /**
      * @see ObjectModel::getFields()
+     *
      * @return array
      */
     public function getFields()
@@ -72,6 +75,7 @@ class ShopGroupCore extends ObjectModel
         if ($active) {
             $groups->where('active', '=', true);
         }
+
         return $groups;
     }
 
@@ -85,44 +89,49 @@ class ShopGroupCore extends ObjectModel
 
     public function haveShops()
     {
-        return (bool)$this->getTotalShops();
+        return (bool) $this->getTotalShops();
     }
 
     public function getTotalShops()
     {
         $sql = 'SELECT COUNT(*)
-                FROM '._DB_PREFIX_.'shop s
-                WHERE id_shop_group='.(int)$this->id;
-        return (int)Db::getInstance()->getValue($sql);
+                FROM ' . _DB_PREFIX_ . 'shop s
+                WHERE id_shop_group=' . (int) $this->id;
+
+        return (int) Db::getInstance()->getValue($sql);
     }
 
     public static function getShopsFromGroup($id_group)
     {
         $sql = 'SELECT s.`id_shop`
-                FROM '._DB_PREFIX_.'shop s
-                WHERE id_shop_group='.(int)$id_group;
+                FROM ' . _DB_PREFIX_ . 'shop s
+                WHERE id_shop_group=' . (int) $id_group;
+
         return Db::getInstance()->executeS($sql);
     }
 
     /**
-     * Return a group shop ID from group shop name
+     * Return a group shop ID from group shop name.
      *
      * @param string $name
+     *
      * @return int
      */
     public static function getIdByName($name)
     {
         $sql = 'SELECT id_shop_group
-                FROM '._DB_PREFIX_.'shop_group
-                WHERE name = \''.pSQL($name).'\'';
-        return (int)Db::getInstance()->getValue($sql);
+                FROM ' . _DB_PREFIX_ . 'shop_group
+                WHERE name = \'' . pSQL($name) . '\'';
+
+        return (int) Db::getInstance()->getValue($sql);
     }
 
     /**
-     * Detect dependency with customer or orders
+     * Detect dependency with customer or orders.
      *
      * @param int $id_shop_group
      * @param string $check all|customer|order
+     *
      * @return bool
      */
     public static function hasDependency($id_shop_group, $check = 'all')
@@ -133,10 +142,10 @@ class ShopGroupCore extends ObjectModel
         }
 
         if ($check == 'all' || $check == 'customer') {
-            $total_customer = (int)Db::getInstance()->getValue(
+            $total_customer = (int) Db::getInstance()->getValue(
                 'SELECT count(*)
-                FROM `'._DB_PREFIX_.'customer`
-                WHERE `id_shop` IN ('.implode(', ', $list_shops).')'
+                FROM `' . _DB_PREFIX_ . 'customer`
+                WHERE `id_shop` IN (' . implode(', ', $list_shops) . ')'
             );
             if ($total_customer) {
                 return true;
@@ -144,10 +153,10 @@ class ShopGroupCore extends ObjectModel
         }
 
         if ($check == 'all' || $check == 'order') {
-            $total_order = (int)Db::getInstance()->getValue(
+            $total_order = (int) Db::getInstance()->getValue(
                 'SELECT count(*)
-                FROM `'._DB_PREFIX_.'orders`
-                WHERE `id_shop` IN ('.implode(', ', $list_shops).')'
+                FROM `' . _DB_PREFIX_ . 'orders`
+                WHERE `id_shop` IN (' . implode(', ', $list_shops) . ')'
             );
             if ($total_order) {
                 return true;
@@ -161,10 +170,11 @@ class ShopGroupCore extends ObjectModel
     {
         return Db::getInstance()->getValue(
             'SELECT id_shop
-            FROM '._DB_PREFIX_.'shop
-            WHERE name = "'.pSQL($name).'"
-            AND id_shop_group = '.(int)$this->id.'
-            '.($id_shop ? 'AND id_shop != '.(int)$id_shop : '')
+            FROM ' . _DB_PREFIX_ . 'shop
+            WHERE name = "' . pSQL($name) . '"
+            AND id_shop_group = ' . (int) $this->id . '
+            ' . ($id_shop ? 'AND id_shop != ' . (int) $id_shop : ''),
+            false
         );
     }
 }

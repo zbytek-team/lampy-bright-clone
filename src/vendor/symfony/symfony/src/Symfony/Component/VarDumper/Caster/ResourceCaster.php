@@ -20,6 +20,11 @@ use Symfony\Component\VarDumper\Cloner\Stub;
  */
 class ResourceCaster
 {
+    /**
+     * @param \CurlHandle|resource $h
+     *
+     * @return array
+     */
     public static function castCurl($h, array $a, Stub $stub, $isNested)
     {
         return curl_getinfo($h);
@@ -40,7 +45,12 @@ class ResourceCaster
 
     public static function castStream($stream, array $a, Stub $stub, $isNested)
     {
-        return stream_get_meta_data($stream) + static::castStreamContext($stream, $a, $stub, $isNested);
+        $a = stream_get_meta_data($stream) + static::castStreamContext($stream, $a, $stub, $isNested);
+        if (isset($a['uri'])) {
+            $a['uri'] = new LinkStub($a['uri']);
+        }
+
+        return $a;
     }
 
     public static function castStreamContext($stream, array $a, Stub $stub, $isNested)

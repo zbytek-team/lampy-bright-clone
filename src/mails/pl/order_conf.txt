@@ -1,69 +1,45 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname},
+Hi {firstname} {lastname},
 
-Dziękujemy za zakupy na stronie {shop_name}! 
+Thank you for shopping on {shop_name}!
 
-ZAMÓWIENIE: {order_name} Złożone w {date}
+Order details
 
-PŁATNOŚĆ: {payment} 		 
+Order: {order_name} Placed on {date}
 
-INDEKS
+Payment: {payment}
 
-PRODUKT
+Reference	Product	Unit price	Quantity	Total price  {products_txt} {discounts_txt}
+Products	{total_products}
+Discounts	{total_discounts}
+Gift-wrapping	{total_wrapping}
+Shipping	{total_shipping}
+Including total tax	{total_tax_paid}
+Total paid	{total_paid}
 
-CENA JEDNOSTKOWA
+Shipping
 
-ILOŚĆ
+Carrier: {carrier}
 
-CENA KOŃCOWA
+Payment: {payment}
 
-{products_txt} 
+Recycled packaging: {recycled_packaging_label}
 
-{discounts} 
+Delivery address
 
-PRODUKTY 
+{delivery_block_txt}
 
-{total_products} 
+Billing address
 
-RABATY 
+{invoice_block_txt}
 
-{total_discounts} 
+Follow your order and download your invoice on our shop, go to the [Order history and details]({history_url}) section of your customer account.
 
-PAKOWANIE PREZENTOWE 
+If you have a guest account, you can follow your order via the [Guest Tracking]({guest_tracking_url}) section on our shop.
 
-{total_wrapping} 
+[{shop_name}]({shop_url})
 
-WYSYŁKA 
-
-{total_shipping} 
-
-CAŁKOWITY ZAPŁACONY PODATEK 
-
-{total_tax_paid} 
-
-ZAPŁACONO W SUMIE 
-
-{total_paid} 
-
-PRZEWOŹNIK: {carrier}
-
-PŁATNOŚĆ: {payment} 		 
-
-{delivery_block_txt} 
-
-{invoice_block_txt} 
-
-Możesz obejrzeć swoje zamówienie i pobrać fakturę na stronie
-"Historia zamówień" [{history_url}]
-logując się na swoje konto klienta za pomocą strony "Moje konto"
-[{my_account_url}] w naszym sklepie. 
-
-Jeśli posiadasz konto gościa, możesz śledzić swoje
-zamówienie w sekcji "Śledzenie zamówienia"
-[{guest_tracking_url}?id_order={order_name}].
-
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
-
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

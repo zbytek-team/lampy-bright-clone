@@ -8,7 +8,7 @@
 
             {block name='order_confirmation_header'}
               <h3 class="h1 card-title">
-                <i class="material-icons done">&#xE876;</i>{l s='Your order is confirmed' d='Shop.Theme.Checkout'}
+                <i class="material-icons rtl-no-flip done">&#xE876;</i>{l s='Your order is confirmed' d='Shop.Theme.Checkout'}
               </h3>
             {/block}
 
@@ -57,7 +57,7 @@
           <div id="order-details" class="col-md-4">
             <h3 class="h3 card-title">{l s='Order details' d='Shop.Theme.Checkout'}:</h3>
             <ul>
-              <li>{l s='Order reference: %reference%' d='Shop.Theme.Checkout' sprintf=['%reference%' => $order.details.reference]}</li>
+              <li id="order-reference-value">{l s='Order reference: %reference%' d='Shop.Theme.Checkout' sprintf=['%reference%' => $order.details.reference]}</li>
               <li>{l s='Payment method: %method%' d='Shop.Theme.Checkout' sprintf=['%method%' => $order.details.payment]}</li>
               {if !$order.details.is_virtual}
                 <li>

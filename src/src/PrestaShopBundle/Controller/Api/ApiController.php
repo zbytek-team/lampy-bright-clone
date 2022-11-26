@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,16 +17,16 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 namespace PrestaShopBundle\Controller\Api;
 
+use Exception;
 use PrestaShopBundle\Api\QueryParamsCollection;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,6 +42,9 @@ abstract class ApiController
      */
     protected $logger;
 
+    /**
+     * @param LoggerInterface $logger
+     */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
@@ -58,18 +62,20 @@ abstract class ApiController
 
     /**
      * @param HttpException $exception
+     *
      * @return JsonResponse
      */
     protected function handleException(HttpException $exception)
     {
         $this->logger->info($exception->getMessage());
 
-        return new JsonResponse(array('error' => $exception->getMessage()), $exception->getStatusCode());
+        return new JsonResponse(['error' => $exception->getMessage()], $exception->getStatusCode());
     }
 
     /**
-     * @param $content
-     * @return mixed
+     * @param string $content
+     *
+     * @return array
      */
     protected function guardAgainstInvalidJsonBody($content)
     {
@@ -93,40 +99,51 @@ abstract class ApiController
         try {
             $cacheRefresh->addCacheClear();
             $cacheRefresh->execute();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->container->get('logger')->error($exception->getMessage());
         }
     }
 
     /**
-     * Add additional info to JSON return
+     * Add additional info to JSON return.
      *
      * @param Request $request
      * @param QueryParamsCollection|null $queryParams
      * @param array $headers
+     *
      * @return array
      */
-    protected function addAdditionalInfo(Request $request, QueryParamsCollection $queryParams = null, $headers = array())
-    {
+    protected function addAdditionalInfo(
+        Request $request,
+        QueryParamsCollection $queryParams = null,
+        $headers = []
+    ) {
         $router = $this->container->get('router');
 
-        $queryParamsArray = array();
-        if (!is_null($queryParams)) {
+        $queryParamsArray = [];
+        if (null !== $queryParams) {
             $queryParamsArray = $queryParams->getQueryParams();
         }
 
-        $allParams = $allParamsWithoutPagination = array_merge($request->attributes->get('_route_params'), $queryParamsArray, $request->query->all());
+        $allParams = $allParamsWithoutPagination = array_merge(
+            $request->attributes->get('_route_params'),
+            $queryParamsArray,
+            $request->query->all()
+        );
         unset($allParamsWithoutPagination['page_index'], $allParamsWithoutPagination['page_size']);
 
-        $info = array(
+        $info = [
             'current_url' => $router->generate($request->attributes->get('_route'), $allParams),
-            'current_url_without_pagination' => $router->generate($request->attributes->get('_route'), $allParamsWithoutPagination)
-        );
+            'current_url_without_pagination' => $router->generate(
+                $request->attributes->get('_route'),
+                $allParamsWithoutPagination
+            ),
+        ];
 
         if (array_key_exists('page_index', $allParams) && $allParams['page_index'] > 1) {
             $previousParams = $allParams;
             if (array_key_exists('page_index', $previousParams)) {
-                $previousParams['page_index']--;
+                --$previousParams['page_index'];
             }
             $info['previous_url'] = $router->generate($request->attributes->get('_route'), $previousParams);
         }
@@ -136,17 +153,16 @@ abstract class ApiController
             $headers['Total-Pages'] > $allParams['page_index']) {
             $nextParams = $allParams;
             if (array_key_exists('page_index', $nextParams)) {
-                $nextParams['page_index']++;
+                ++$nextParams['page_index'];
             }
             $info['next_url'] = $router->generate($request->attributes->get('_route'), $nextParams);
         }
 
-
-        if(array_key_exists('Total-Pages', $headers)) {
+        if (array_key_exists('Total-Pages', $headers)) {
             $info['total_page'] = $headers['Total-Pages'];
         }
 
-        if (!is_null($queryParams)) {
+        if (null !== $queryParams) {
             $info['page_index'] = $queryParamsArray['page_index'];
             $info['page_size'] = $queryParamsArray['page_size'];
         }
@@ -155,11 +171,12 @@ abstract class ApiController
     }
 
     /**
+     * @param array $data
      * @param Request $request
      * @param QueryParamsCollection|null $queryParams
-     * @param null $data
      * @param int $status
      * @param array $headers
+     *
      * @return JsonResponse
      */
     protected function jsonResponse(
@@ -167,13 +184,29 @@ abstract class ApiController
         Request $request,
         QueryParamsCollection $queryParams = null,
         $status = 200,
-        $headers = array()
+        $headers = []
     ) {
-        $response = array(
+        $response = [
             'info' => $this->addAdditionalInfo($request, $queryParams, $headers),
-            'data' => $data
-        );
+            'data' => $data,
+        ];
 
         return new JsonResponse($response, $status, $headers);
+    }
+
+    /**
+     * Checks if access is granted.
+     *
+     * @param array $accessLevel
+     * @param string $controller name of the controller
+     *
+     * @return bool
+     */
+    protected function isGranted(array $accessLevel, $controller)
+    {
+        return $this->container->get('security.authorization_checker')->isGranted(
+            $accessLevel,
+            $controller . '_'
+        );
     }
 }

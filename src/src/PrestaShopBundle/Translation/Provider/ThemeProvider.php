@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,25 +17,32 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 namespace PrestaShopBundle\Translation\Provider;
 
+use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeRepository;
 use PrestaShop\TranslationToolsBundle\Translation\Extractor\Util\Flattenizer;
+use PrestaShopBundle\Translation\Extractor\ThemeExtractor;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\MessageCatalogueInterface;
 
 class ThemeProvider extends AbstractProvider
 {
+    /**
+     * @var string the theme name
+     */
     private $themeName;
 
+    /**
+     * @var string the theme resources directory
+     */
     public $themeResourcesDirectory;
 
     /**
@@ -43,16 +51,14 @@ class ThemeProvider extends AbstractProvider
     public $filesystem;
 
     /**
-     * @var \PrestaShop\PrestaShop\Core\Addon\Theme\ThemeRepository
+     * @var ThemeRepository
      */
     public $themeRepository;
 
     /**
-     * @var \PrestaShopBundle\Translation\Extractor\ThemeExtractor
+     * @var ThemeExtractor
      */
     public $themeExtractor;
-
-    private $domain;
 
     /**
      * @var string Path to app/Resources/translations/
@@ -60,25 +66,19 @@ class ThemeProvider extends AbstractProvider
     public $defaultTranslationDir;
 
     /**
-     * Set domain
+     * Get domain.
      *
-     * @param $domain
-     * @return $this
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-
-        return $this;
-    }
-
-    /**
-     * Get domain
+     * @deprecated since 1.7.6, to be removed in the next major
      *
      * @return mixed
      */
     public function getDomain()
     {
+        @trigger_error(
+            'getDomain function is deprecated and will be removed in the next major',
+            E_USER_DEPRECATED
+        );
+
         return $this->domain;
     }
 
@@ -88,12 +88,10 @@ class ThemeProvider extends AbstractProvider
     public function getTranslationDomains()
     {
         if (empty($this->domain)) {
-            return array('*');
-        } else {
-            return array(
-                '^'.$this->getDomain(),
-            );
+            return ['*'];
         }
+
+        return ['^' . $this->domain];
     }
 
     /**
@@ -102,12 +100,10 @@ class ThemeProvider extends AbstractProvider
     public function getFilters()
     {
         if (empty($this->domain)) {
-            return array('*');
-        } else {
-            return array(
-                '#^'.$this->getDomain().'#',
-            );
+            return ['*'];
         }
+
+        return ['#^' . $this->domain . '#'];
     }
 
     /**
@@ -133,34 +129,35 @@ class ThemeProvider extends AbstractProvider
     }
 
     /**
-     * @param null $baseDir
+     * @param string|null $baseDir
+     *
      * @return string Path to app/themes/{themeName}/translations/{locale}
      */
     public function getResourceDirectory($baseDir = null)
     {
-        if (is_null($baseDir)) {
+        if (null === $baseDir) {
             $baseDir = $this->resourceDirectory;
         }
 
-        $resourceDirectory = $baseDir.'/'.$this->themeName.'/translations/'.$this->getLocale();
+        $resourceDirectory = $baseDir . '/' . $this->themeName . '/translations/' . $this->getLocale();
         $this->filesystem->mkdir($resourceDirectory);
 
         return $resourceDirectory;
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getDirectories()
     {
-        return array(
+        return [
             $this->getResourceDirectory(),
             $this->getThemeResourcesDirectory(),
-        );
+        ];
     }
 
     /**
-     * @return string
+     * @return string the path to the Theme translations folder
      */
     public function getThemeResourcesDirectory()
     {
@@ -168,7 +165,7 @@ class ThemeProvider extends AbstractProvider
     }
 
     /**
-     * @param $themeName string The theme name
+     * @param string $themeName The theme name
      *
      * @return self
      */
@@ -180,23 +177,29 @@ class ThemeProvider extends AbstractProvider
     }
 
     /**
-     * @param null $themeName
-     * @return \Symfony\Component\Translation\MessageCatalogue
+     * @param string|null $themeName
+     *
+     * @return MessageCatalogueInterface
      */
     public function getDatabaseCatalogue($themeName = null)
     {
-        if (is_null($themeName)) {
+        if (null === $themeName) {
             $themeName = $this->themeName;
         }
 
         return parent::getDatabaseCatalogue($themeName);
     }
 
+    /**
+     * @throws \Exception
+     *
+     * Will update translations files of the Theme
+     */
     public function synchronizeTheme()
     {
         $theme = $this->themeRepository->getInstanceByName($this->themeName);
 
-        $path = $this->resourceDirectory.DIRECTORY_SEPARATOR.$this->themeName.DIRECTORY_SEPARATOR.'translations';
+        $path = $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->themeName . DIRECTORY_SEPARATOR . 'translations';
 
         $this->filesystem->remove($path);
         $this->filesystem->mkdir($path);
@@ -204,10 +207,9 @@ class ThemeProvider extends AbstractProvider
         $this->themeExtractor
             ->setOutputPath($path)
             ->setThemeProvider($this)
-            ->extract($theme, $this->locale)
-        ;
+            ->extract($theme, $this->locale);
 
-        $translationFilesPath = $path.DIRECTORY_SEPARATOR.$this->locale;
+        $translationFilesPath = $path . DIRECTORY_SEPARATOR . $this->locale;
         Flattenizer::flatten($translationFilesPath, $translationFilesPath, $this->locale, false);
 
         $finder = Finder::create();
@@ -217,44 +219,22 @@ class ThemeProvider extends AbstractProvider
     }
 
     /**
-     * @return \Symfony\Component\Translation\MessageCatalogue
+     * @return MessageCatalogueInterface
+     *
+     * @throws \Exception
      */
     public function getThemeCatalogue()
     {
-        $path = $this->resourceDirectory.DIRECTORY_SEPARATOR.$this->themeName.DIRECTORY_SEPARATOR.'translations';
+        $path = $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->themeName . DIRECTORY_SEPARATOR . 'translations';
 
-        return $this->getCatalogueFromPaths($path, $this->locale, current($this->getFilters()));
+        return $this->getCatalogueFromPaths([$path], $this->locale, current($this->getFilters()));
     }
 
     /**
      * {@inheritdoc}
-     */
-    public function getDefaultCatalogue($empty = true)
-    {
-        $defaultCatalogue = new MessageCatalogue($this->getLocale());
-
-        foreach ($this->getFilters() as $filter) {
-            $filteredCatalogue = $this->getCatalogueFromPaths(
-                array($this->getDefaultResourceDirectory()),
-                $this->getLocale(),
-                $filter
-            );
-            $defaultCatalogue->addCatalogue($filteredCatalogue);
-        }
-
-        if ($empty) {
-            $defaultCatalogue = $this->emptyCatalogue($defaultCatalogue);
-        }
-
-        return $defaultCatalogue;
-    }
-
-    /**
-     * {@inheritdoc}
-     * string Path to app/Resources/translations/{locale}
      */
     public function getDefaultResourceDirectory()
     {
-        return $this->defaultTranslationDir.DIRECTORY_SEPARATOR.$this->locale;
+        return $this->defaultTranslationDir . DIRECTORY_SEPARATOR . $this->locale;
     }
 }

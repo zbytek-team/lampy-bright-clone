@@ -1,8 +1,7 @@
-version: "3"
-
+version: "3.9"
 
 services:
-  mariadb:
+  db:
     image: mariadb:10.8.3
     restart: always
     ports:
@@ -14,10 +13,8 @@ services:
       MARIADB_PASSWORD: admin
       MARIADB_ROOT_USER: root
       MARIADB_ROOT_PASSWORD: admin
-    volumes:
-      - ./mariadb:/var/lib/mysql
-  
-  app:
+
+  presta:
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,7 +23,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      DB_SERVER: mariadb
+      DB_SERVER: db
       DB_NAME: prestashop
       DB_USER: root
       DB_PASSWD: admin
@@ -39,11 +36,11 @@ services:
       PS_FOLDER_ADMIN: admin-dev
       PS_FOLDER_INSTALL: install-dev
       PS_INSTALL_AUTO: 1
-      PS_ENABLE_SSL: 1
+      PS_INSTALL_DB: 1
 
       ADMIN_MAIL: lampy@bright.pl
       ADMIN_PASSWD: lampybright
     volumes:
       - ./src:/var/www/html
     depends_on:
-      - mariadb
+      - db

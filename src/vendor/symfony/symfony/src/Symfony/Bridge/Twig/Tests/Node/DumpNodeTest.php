@@ -29,7 +29,7 @@ class DumpNodeTest extends TestCase
 
         $expected = <<<'EOTXT'
 if ($this->env->isDebug()) {
-    $barvars = array();
+    $barvars = [];
     foreach ($context as $barkey => $barval) {
         if (!$barval instanceof \Twig\Template) {
             $barvars[$barkey] = $barval;
@@ -53,7 +53,7 @@ EOTXT;
 
         $expected = <<<'EOTXT'
     if ($this->env->isDebug()) {
-        $barvars = array();
+        $barvars = [];
         foreach ($context as $barkey => $barval) {
             if (!$barval instanceof \Twig\Template) {
                 $barvars[$barkey] = $barval;
@@ -70,9 +70,9 @@ EOTXT;
 
     public function testOneVar()
     {
-        $vars = new Node(array(
+        $vars = new Node([
             new NameExpression('foo', 7),
-        ));
+        ]);
         $node = new DumpNode('bar', $vars, 7);
 
         $env = new Environment($this->getMockBuilder('Twig\Loader\LoaderInterface')->getMock());
@@ -85,12 +85,11 @@ if ($this->env->isDebug()) {
 }
 
 EOTXT;
+
         if (\PHP_VERSION_ID >= 70000) {
             $expected = preg_replace('/%(.*?)%/', '($context["$1"] ?? null)', $expected);
-        } elseif (\PHP_VERSION_ID >= 50400) {
-            $expected = preg_replace('/%(.*?)%/', '(isset($context["$1"]) ? $context["$1"] : null)', $expected);
         } else {
-            $expected = preg_replace('/%(.*?)%/', '$this->getContext($context, "$1")', $expected);
+            $expected = preg_replace('/%(.*?)%/', '(isset($context["$1"]) ? $context["$1"] : null)', $expected);
         }
 
         $this->assertSame($expected, $compiler->compile($node)->getSource());
@@ -98,10 +97,10 @@ EOTXT;
 
     public function testMultiVars()
     {
-        $vars = new Node(array(
+        $vars = new Node([
             new NameExpression('foo', 7),
             new NameExpression('bar', 7),
-        ));
+        ]);
         $node = new DumpNode('bar', $vars, 7);
 
         $env = new Environment($this->getMockBuilder('Twig\Loader\LoaderInterface')->getMock());
@@ -110,20 +109,18 @@ EOTXT;
         $expected = <<<'EOTXT'
 if ($this->env->isDebug()) {
     // line 7
-    \Symfony\Component\VarDumper\VarDumper::dump(array(
+    \Symfony\Component\VarDumper\VarDumper::dump([
         "foo" => %foo%,
         "bar" => %bar%,
-    ));
+    ]);
 }
 
 EOTXT;
 
         if (\PHP_VERSION_ID >= 70000) {
             $expected = preg_replace('/%(.*?)%/', '($context["$1"] ?? null)', $expected);
-        } elseif (\PHP_VERSION_ID >= 50400) {
-            $expected = preg_replace('/%(.*?)%/', '(isset($context["$1"]) ? $context["$1"] : null)', $expected);
         } else {
-            $expected = preg_replace('/%(.*?)%/', '$this->getContext($context, "$1")', $expected);
+            $expected = preg_replace('/%(.*?)%/', '(isset($context["$1"]) ? $context["$1"] : null)', $expected);
         }
 
         $this->assertSame($expected, $compiler->compile($node)->getSource());

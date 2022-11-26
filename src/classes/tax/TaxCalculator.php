@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,12 +17,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 /**
@@ -33,32 +33,31 @@ class TaxCalculatorCore
 {
     /**
      * COMBINE_METHOD sum taxes
-     * eg: 100€ * (10% + 15%)
+     * eg: 100€ * (10% + 15%).
      */
     const COMBINE_METHOD = 1;
 
     /**
      * ONE_AFTER_ANOTHER_METHOD apply taxes one after another
-     * eg: (100€ * 10%) * 15%
+     * eg: (100€ * 10%) * 15%.
      */
     const ONE_AFTER_ANOTHER_METHOD = 2;
 
     /**
-     * @var array $taxes
+     * @var array
      */
     public $taxes;
 
     /**
-     * @var int $computation_method (COMBINE_METHOD | ONE_AFTER_ANOTHER_METHOD)
+     * @var int (COMBINE_METHOD | ONE_AFTER_ANOTHER_METHOD)
      */
     public $computation_method;
-
 
     /**
      * @param array $taxes
      * @param int $computation_method (COMBINE_METHOD | ONE_AFTER_ANOTHER_METHOD)
      */
-    public function __construct(array $taxes = array(), $computation_method = TaxCalculator::COMBINE_METHOD)
+    public function __construct(array $taxes = [], $computation_method = TaxCalculator::COMBINE_METHOD)
     {
         // sanity check
         foreach ($taxes as $tax) {
@@ -68,13 +67,14 @@ class TaxCalculatorCore
         }
 
         $this->taxes = $taxes;
-        $this->computation_method = (int)$computation_method;
+        $this->computation_method = (int) $computation_method;
     }
 
     /**
-     * Compute and add the taxes to the specified price
+     * Compute and add the taxes to the specified price.
      *
      * @param float $price_te price tax excluded
+     *
      * @return float price with taxes
      */
     public function addTaxes($price_te)
@@ -82,11 +82,11 @@ class TaxCalculatorCore
         return $price_te * (1 + ($this->getTotalRate() / 100));
     }
 
-
     /**
-     * Compute and remove the taxes to the specified price
+     * Compute and remove the taxes to the specified price.
      *
      * @param float $price_ti price tax inclusive
+     *
      * @return float price without taxes
      */
     public function removeTaxes($price_ti)
@@ -114,14 +114,16 @@ class TaxCalculatorCore
             }
         }
 
-        return (float)$taxes;
+        return (float) $taxes;
     }
 
     public function getTaxesName()
     {
         $name = '';
+        $languageId = (int) Context::getContext()->language->id;
+
         foreach ($this->taxes as $tax) {
-            $name .= $tax->name[(int)Context::getContext()->language->id].' - ';
+            $name .= ($tax->name[$languageId] ?? '') . ' - ';
         }
 
         $name = rtrim($name, ' - ');
@@ -130,14 +132,15 @@ class TaxCalculatorCore
     }
 
     /**
-     * Return the tax amount associated to each taxes of the TaxCalculator
+     * Return the tax amount associated to each taxes of the TaxCalculator.
      *
      * @param float $price_te
+     *
      * @return array $taxes_amount
      */
     public function getTaxesAmount($price_te)
     {
-        $taxes_amounts = array();
+        $taxes_amounts = [];
 
         foreach ($this->taxes as $tax) {
             if ($this->computation_method == TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
@@ -152,9 +155,10 @@ class TaxCalculatorCore
     }
 
     /**
-     * Return the total taxes amount
+     * Return the total taxes amount.
      *
      * @param float $price_te
+     *
      * @return float $amount
      */
     public function getTaxesTotalAmount($price_te)

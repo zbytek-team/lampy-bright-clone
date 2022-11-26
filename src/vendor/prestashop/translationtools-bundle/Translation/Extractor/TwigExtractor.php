@@ -28,9 +28,15 @@
 namespace PrestaShop\TranslationToolsBundle\Translation\Extractor;
 
 use PrestaShop\TranslationToolsBundle\Twig\Lexer;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Translation\TwigExtractor as BaseTwigExtractor;
-use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\Extractor\ExtractorInterface;
+use Symfony\Component\Translation\MessageCatalogue;
+use Twig_Environment;
+use Twig_Error;
+use Twig_Source;
 
 class TwigExtractor extends BaseTwigExtractor implements ExtractorInterface
 {
@@ -46,18 +52,24 @@ class TwigExtractor extends BaseTwigExtractor implements ExtractorInterface
     /**
      * The twig environment.
      *
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
     private $twig;
 
     /**
+     * @var Lexer
+     */
+    private $twigLexer;
+
+    /**
      * The twig environment.
      *
-     * @var \Twig_Environment
+     * @var Twig_Environment
      */
-    public function __construct(\Twig_Environment $twig)
+    public function __construct(Twig_Environment $twig)
     {
         $this->twig = $twig;
+        $this->twigLexer = new Lexer($this->twig);
     }
 
     /**
@@ -73,11 +85,19 @@ class TwigExtractor extends BaseTwigExtractor implements ExtractorInterface
 
             try {
                 $this->extractTemplateFile($file, $catalogue);
-            } catch (\Twig_Error $e) {
+            } catch (Twig_Error $e) {
                 if ($file instanceof SplFileInfo) {
-                    $e->setTemplateFile($file->getRelativePathname());
+                    $e->setSourceContext(new Twig_Source(
+                        $e->getSourceContext()->getCode(),
+                        $e->getSourceContext()->getName(),
+                        $file->getRelativePathname()
+                    ));
                 } elseif ($file instanceof \SplFileInfo) {
-                    $e->setTemplateFile($file->getRealPath());
+                    $e->setSourceContext(new Twig_Source(
+                        $e->getSourceContext()->getCode(),
+                        $e->getSourceContext()->getName(),
+                        $file->getRealPath()
+                    ));
                 }
 
                 throw $e;
@@ -94,22 +114,22 @@ class TwigExtractor extends BaseTwigExtractor implements ExtractorInterface
             $file = new \SplFileInfo($file);
         }
 
-        $visitor = $this->twig->getExtension('translator')->getTranslationNodeVisitor();
+        $visitor = $this->twig->getExtension(TranslationExtension::class)->getTranslationNodeVisitor();
         $visitor->enable();
 
         $this->twig->setLexer(new Lexer($this->twig));
 
-        $tokens = $this->twig->tokenize(file_get_contents($file->getPathname()), $file->getFilename());
+        $tokens = $this->twig->tokenize(new Twig_Source(file_get_contents($file->getPathname()), $file->getFilename()));
         $this->twig->parse($tokens);
 
-        $comments = $this->twig->getLexer()->getComments();
+        $comments = $this->twigLexer->getComments();
 
         foreach ($visitor->getMessages() as $message) {
             $domain = $this->resolveDomain(isset($message[1]) ? $message[1] : null);
 
             $catalogue->set(
                 $message[0],
-                $this->prefix.trim($message[0]),
+                $this->prefix . trim($message[0]),
                 $domain
             );
 
@@ -135,28 +155,15 @@ class TwigExtractor extends BaseTwigExtractor implements ExtractorInterface
     }
 
     /**
-     * @param $comments
-     * @param $file
-     * @param $line
-     *
-     * @return array
-     */
-    public function getEntryComment($comments, $file, $line)
-    {
-        foreach ($comments as $comment) {
-            if ($comment['file'] == $file && $comment['line'] == $line) {
-                return $comment['comment'];
-            }
-        }
-    }
-
-    /**
      * @param string $directory
      *
      * @return Finder
      */
     protected function extractFromDirectory($directory)
     {
-        return $this->getFinder()->files()->name('*.twig')->in($directory);
+        return $this->getFinder()->files()
+            ->name('*.twig')
+            ->in($directory)
+            ->exclude($this->getExcludedDirectories());
     }
 }

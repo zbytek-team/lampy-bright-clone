@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
- * Csa Guzzle Collector
+ * Csa Guzzle Collector.
  *
  * @author Charles Sarrazin <charles@sarraz.in>
  */
@@ -27,10 +28,11 @@ class GuzzleCollector extends DataCollector
     const MAX_BODY_SIZE = 0x10000;
 
     private $history;
+
     private $maxBodySize;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param DebugSubscriber $history the request history subscriber
      */
@@ -42,7 +44,7 @@ class GuzzleCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
@@ -56,20 +58,20 @@ class GuzzleCollector extends DataCollector
 
             $req = [
                 'request' => [
-                    'method'  => $request->getMethod(),
+                    'method' => $request->getMethod(),
                     'version' => $request->getProtocolVersion(),
                     'headers' => $request->getHeaders(),
-                    'body'    => $this->cropContent($request->getBody()),
+                    'body' => $this->cropContent($request->getBody()),
                 ],
                 'info' => $info,
-                'uri'     => $request->getUrl(),
+                'uri' => $request->getUrl(),
             ];
 
             if ($response) {
                 $req['response'] = [
                     'reasonPhrase' => $response->getReasonPhrase(),
-                    'headers'      => $response->getHeaders(),
-                    'body'         => $this->cropContent($response->getBody()),
+                    'headers' => $response->getHeaders(),
+                    'body' => $this->cropContent($response->getBody()),
                 ];
             }
 
@@ -78,13 +80,12 @@ class GuzzleCollector extends DataCollector
             if ($error) {
                 $req['error'] = [
                     'message' => $error->getMessage(),
-                    'line'    => $error->getLine(),
-                    'file'    => $error->getFile(),
-                    'code'    => $error->getCode(),
-                    'trace'   => $error->getTraceAsString(),
+                    'line' => $error->getLine(),
+                    'file' => $error->getFile(),
+                    'code' => $error->getCode(),
+                    'trace' => $error->getTraceAsString(),
                 ];
             }
-
 
             if ($cache = $request->getConfig()->get('cache_lookup')) {
                 $req['cache'] = $cache;
@@ -108,7 +109,7 @@ class GuzzleCollector extends DataCollector
 
         $stream->seek(0);
 
-        return '(partial content)' . $stream->read($this->maxBodySize) . '(...)';
+        return '(partial content)'.$stream->read($this->maxBodySize).'(...)';
     }
 
     public function getErrors()
@@ -124,7 +125,7 @@ class GuzzleCollector extends DataCollector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

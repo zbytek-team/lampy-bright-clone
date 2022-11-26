@@ -1,14 +1,17 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname}, 
+Hi {firstname} {lastname},
 
-{employee} chciał przesłać tą dyskusję do Ciebie. 
+Customer Service - Discussion Forwarded
 
-HISTORIA DYSKUSJI: {messages}
+{employee} wanted to forward this discussion to you.
 
-{employee} dodał "{comment}" 		 
+Discussion history: {messages}
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+{employee} added {comment}
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

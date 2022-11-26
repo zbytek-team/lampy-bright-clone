@@ -26,9 +26,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class RegisterEventListenersAndSubscribersPass implements CompilerPassInterface
 {
-    /**
-     * @var string|string[]
-     */
     private $connections;
     private $eventManagers;
     private $managerTemplate;
@@ -67,21 +64,14 @@ class RegisterEventListenersAndSubscribersPass implements CompilerPassInterface
         $taggedSubscribers = $this->findAndSortTags($subscriberTag, $container);
 
         foreach ($taggedSubscribers as $taggedSubscriber) {
-            $id = $taggedSubscriber[0];
-            $taggedSubscriberDef = $container->getDefinition($id);
-
-            if ($taggedSubscriberDef->isAbstract()) {
-                throw new InvalidArgumentException(sprintf('The abstract service "%s" cannot be tagged as a doctrine event subscriber.', $id));
-            }
-
-            $tag = $taggedSubscriber[1];
-            $connections = isset($tag['connection']) ? array($tag['connection']) : array_keys($this->connections);
+            list($id, $tag) = $taggedSubscriber;
+            $connections = isset($tag['connection']) ? [$tag['connection']] : array_keys($this->connections);
             foreach ($connections as $con) {
                 if (!isset($this->connections[$con])) {
-                    throw new RuntimeException(sprintf('The Doctrine connection "%s" referenced in service "%s" does not exist. Available connections names: %s', $con, $taggedSubscriber, implode(', ', array_keys($this->connections))));
+                    throw new RuntimeException(sprintf('The Doctrine connection "%s" referenced in service "%s" does not exist. Available connections names: "%s".', $con, $id, implode('", "', array_keys($this->connections))));
                 }
 
-                $this->getEventManagerDef($container, $con)->addMethodCall('addEventSubscriber', array(new Reference($id)));
+                $this->getEventManagerDef($container, $con)->addMethodCall('addEventSubscriber', [new Reference($id)]);
             }
         }
     }
@@ -92,21 +82,16 @@ class RegisterEventListenersAndSubscribersPass implements CompilerPassInterface
         $taggedListeners = $this->findAndSortTags($listenerTag, $container);
 
         foreach ($taggedListeners as $taggedListener) {
-            $id = $taggedListener[0];
-            $taggedListenerDef = $container->getDefinition($taggedListener[0]);
-            if ($taggedListenerDef->isAbstract()) {
-                throw new InvalidArgumentException(sprintf('The abstract service "%s" cannot be tagged as a doctrine event listener.', $id));
-            }
-
-            $tag = $taggedListener[1];
+            list($id, $tag) = $taggedListener;
+            $taggedListenerDef = $container->getDefinition($id);
             if (!isset($tag['event'])) {
                 throw new InvalidArgumentException(sprintf('Doctrine event listener "%s" must specify the "event" attribute.', $id));
             }
 
-            $connections = isset($tag['connection']) ? array($tag['connection']) : array_keys($this->connections);
+            $connections = isset($tag['connection']) ? [$tag['connection']] : array_keys($this->connections);
             foreach ($connections as $con) {
                 if (!isset($this->connections[$con])) {
-                    throw new RuntimeException(sprintf('The Doctrine connection "%s" referenced in service "%s" does not exist. Available connections names: %s', $con, $id, implode(', ', array_keys($this->connections))));
+                    throw new RuntimeException(sprintf('The Doctrine connection "%s" referenced in service "%s" does not exist. Available connections names: "%s".', $con, $id, implode('", "', array_keys($this->connections))));
                 }
 
                 if ($lazy = !empty($tag['lazy'])) {
@@ -114,7 +99,7 @@ class RegisterEventListenersAndSubscribersPass implements CompilerPassInterface
                 }
 
                 // we add one call per event per service so we have the correct order
-                $this->getEventManagerDef($container, $con)->addMethodCall('addEventListener', array(array($tag['event']), $lazy ? $id : new Reference($id)));
+                $this->getEventManagerDef($container, $con)->addMethodCall('addEventListener', [[$tag['event']], $lazy ? $id : new Reference($id)]);
             }
         }
     }
@@ -135,28 +120,27 @@ class RegisterEventListenersAndSubscribersPass implements CompilerPassInterface
      * and knowing that the \SplPriorityQueue class does not respect the FIFO method,
      * we should not use this class.
      *
-     * @see https://bugs.php.net/bug.php?id=53710
-     * @see https://bugs.php.net/bug.php?id=60926
+     * @see https://bugs.php.net/53710
+     * @see https://bugs.php.net/60926
      *
-     * @param string           $tagName
-     * @param ContainerBuilder $container
+     * @param string $tagName
      *
      * @return array
      */
     private function findAndSortTags($tagName, ContainerBuilder $container)
     {
-        $sortedTags = array();
+        $sortedTags = [];
 
-        foreach ($container->findTaggedServiceIds($tagName) as $serviceId => $tags) {
+        foreach ($container->findTaggedServiceIds($tagName, true) as $serviceId => $tags) {
             foreach ($tags as $attributes) {
                 $priority = isset($attributes['priority']) ? $attributes['priority'] : 0;
-                $sortedTags[$priority][] = array($serviceId, $attributes);
+                $sortedTags[$priority][] = [$serviceId, $attributes];
             }
         }
 
         if ($sortedTags) {
             krsort($sortedTags);
-            $sortedTags = call_user_func_array('array_merge', $sortedTags);
+            $sortedTags = \call_user_func_array('array_merge', $sortedTags);
         }
 
         return $sortedTags;

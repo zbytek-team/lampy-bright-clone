@@ -1,19 +1,17 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname},
+Hi {firstname} {lastname},
 
-Twoje zamówienie zostało wysłane 
+Thank you for shopping with {shop_name}!
 
-Twoje zamówienie o numerze {order_name} zostało wysłane.
+Your order with the reference {order_name} has been shipped.
 
-Dziękujemy za zakupy na stronie {shop_name}! 		 
+Follow your order and download your invoice on our shop, go to the [Order history and details]({history_url}) section of your customer account.
 
-Możesz obejrzeć swoje zamówienie i pobrać fakturę na stronie
-"Historia zamówień" [{history_url}]
-logując się na swoje konto klienta za pomocą strony "Moje konto"
-[{my_account_url}] w naszym sklepie. 
+If you have a guest account, you can follow your order via the [Guest Tracking]({guest_tracking_url}) section on our shop.
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+[{shop_name}]({shop_url})
 
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

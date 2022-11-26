@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,21 +17,20 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
-
 
 namespace PrestaShopBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Shop
+ * Shop.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ShopRepository")
@@ -38,7 +38,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Shop
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(name="id_shop", type="integer")
@@ -47,7 +47,7 @@ class Shop
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\ShopGroup")
+     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\ShopGroup", inversedBy="shops")
      * @ORM\JoinColumn(name="id_shop_group", referencedColumnName="id_shop_group", nullable=false)
      */
     private $shopGroup;
@@ -60,7 +60,14 @@ class Shop
     private $name;
 
     /**
-     * @var integer
+     * @var string
+     *
+     *  @ORM\Column(name="color", type="string", length=50)
+     */
+    private $color;
+
+    /**
+     * @var int
      *
      * @ORM\Column(name="id_category", type="integer")
      */
@@ -74,24 +81,31 @@ class Shop
     private $themeName;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="deleted", type="boolean")
      */
     private $deleted;
 
+    /**
+     * @var Collection
+     *
+     * One group shop has many shops. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\ShopUrl", mappedBy="shop")
+     */
+    private $shopUrls;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -99,7 +113,7 @@ class Shop
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -113,7 +127,7 @@ class Shop
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -123,9 +137,29 @@ class Shop
     }
 
     /**
-     * Set idCategory
+     * @param string $color
      *
-     * @param integer $idCategory
+     * @return Shop
+     */
+    public function setColor(string $color): Shop
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set idCategory.
+     *
+     * @param int $idCategory
      *
      * @return Shop
      */
@@ -137,9 +171,9 @@ class Shop
     }
 
     /**
-     * Get idCategory
+     * Get idCategory.
      *
-     * @return integer
+     * @return int
      */
     public function getIdCategory()
     {
@@ -147,7 +181,7 @@ class Shop
     }
 
     /**
-     * Set themeName
+     * Set themeName.
      *
      * @param string $themeName
      *
@@ -161,7 +195,7 @@ class Shop
     }
 
     /**
-     * Get themeName
+     * Get themeName.
      *
      * @return string
      */
@@ -171,9 +205,9 @@ class Shop
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
      *
      * @return Shop
      */
@@ -185,9 +219,9 @@ class Shop
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -195,9 +229,9 @@ class Shop
     }
 
     /**
-     * Set deleted
+     * Set deleted.
      *
-     * @param boolean $deleted
+     * @param bool $deleted
      *
      * @return Shop
      */
@@ -209,9 +243,9 @@ class Shop
     }
 
     /**
-     * Get deleted
+     * Get deleted.
      *
-     * @return boolean
+     * @return bool
      */
     public function getDeleted()
     {
@@ -219,13 +253,13 @@ class Shop
     }
 
     /**
-     * Set shopGroup
+     * Set shopGroup.
      *
      * @param \PrestaShopBundle\Entity\ShopGroup $shopGroup
      *
      * @return Shop
      */
-    public function setShopGroup(\PrestaShopBundle\Entity\ShopGroup $shopGroup)
+    public function setShopGroup(ShopGroup $shopGroup)
     {
         $this->shopGroup = $shopGroup;
 
@@ -233,12 +267,34 @@ class Shop
     }
 
     /**
-     * Get shopGroup
+     * Get shopGroup.
      *
      * @return \PrestaShopBundle\Entity\ShopGroup
      */
     public function getShopGroup()
     {
         return $this->shopGroup;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getShopUrls(): Collection
+    {
+        return $this->shopUrls;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMainUrl(): bool
+    {
+        foreach ($this->shopUrls as $shopUrl) {
+            if ($shopUrl->getActive() && $shopUrl->getMain()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

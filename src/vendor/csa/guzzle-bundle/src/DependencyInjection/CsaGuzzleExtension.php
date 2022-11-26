@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -16,14 +17,14 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Csa Guzzle Extension
+ * Csa Guzzle Extension.
  *
  * @author Charles Sarrazin <charles@sarraz.in>
  */
@@ -78,6 +79,7 @@ class CsaGuzzleExtension extends Extension
     private function processCacheConfiguration(array $config, ContainerBuilder $container)
     {
         if (!$config['enabled']) {
+            $container->removeDefinition('csa_guzzle.cache.adapter.doctrine');
             $container->removeDefinition('csa_guzzle.subscriber.cache');
 
             return;
@@ -148,7 +150,7 @@ class CsaGuzzleExtension extends Extension
 
     private function buildGuzzleConfig(array $config)
     {
-        foreach (array('message_factory', 'fsm', 'adapter', 'handler') as $service) {
+        foreach (['message_factory', 'fsm', 'adapter', 'handler'] as $service) {
             if (isset($config[$service])) {
                 $config[$service] = new Reference($config[$service]);
             }

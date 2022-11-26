@@ -32,10 +32,10 @@ class Client
     private $proxy;
     private $timeout;
     private $userAgentPrefix;
-    private $userId;
+    private $accountId;
 
     /**
-     * @param int    $userId     your MaxMind user ID
+     * @param int    $accountId  your MaxMind account ID
      * @param string $licenseKey your MaxMind license key
      * @param array  $options    an array of options. Possible keys:
      *                           * `host` - The host to use when connecting to the web service.
@@ -47,11 +47,11 @@ class Client
      *                           username, and password, e.g., `http://username:password@127.0.0.1:10`.
      */
     public function __construct(
-        $userId,
+        $accountId,
         $licenseKey,
         $options = []
     ) {
-        $this->userId = $userId;
+        $this->accountId = $accountId;
         $this->licenseKey = $licenseKey;
 
         $this->httpRequestFactory = isset($options['httpRequestFactory'])
@@ -100,8 +100,8 @@ class Client
      */
     public function post($service, $path, $input)
     {
-        $body = json_encode($input);
-        if ($body === false) {
+        $requestBody = json_encode($input);
+        if ($requestBody === false) {
             throw new InvalidInputException(
                 'Error encoding input as JSON: '
                 . $this->jsonErrorDescription()
@@ -113,12 +113,12 @@ class Client
             ['Content-Type: application/json']
         );
 
-        list($statusCode, $contentType, $body) = $request->post($body);
+        list($statusCode, $contentType, $responseBody) = $request->post($requestBody);
 
         return $this->handleResponse(
             $statusCode,
             $contentType,
-            $body,
+            $responseBody,
             $service,
             $path
         );
@@ -128,12 +128,12 @@ class Client
     {
         $request = $this->createRequest($path);
 
-        list($statusCode, $contentType, $body) = $request->get();
+        list($statusCode, $contentType, $responseBody) = $request->get();
 
         return $this->handleResponse(
             $statusCode,
             $contentType,
-            $body,
+            $responseBody,
             $service,
             $path
         );
@@ -152,7 +152,7 @@ class Client
         array_push(
             $headers,
             'Authorization: Basic '
-            . base64_encode($this->userId . ':' . $this->licenseKey),
+            . base64_encode($this->accountId . ':' . $this->licenseKey),
             'Accept: application/json'
         );
 
@@ -170,11 +170,11 @@ class Client
     }
 
     /**
-     * @param int    $statusCode  the HTTP status code of the response
-     * @param string $contentType the Content-Type of the response
-     * @param string $body        the response body
-     * @param string $service     the name of the service
-     * @param string $path        the path used in the request
+     * @param int    $statusCode   the HTTP status code of the response
+     * @param string $contentType  the Content-Type of the response
+     * @param string $responseBody the response body
+     * @param string $service      the name of the service
+     * @param string $path         the path used in the request
      *
      * @throws AuthenticationException    when there is an issue authenticating the
      *                                    request
@@ -190,19 +190,19 @@ class Client
     private function handleResponse(
         $statusCode,
         $contentType,
-        $body,
+        $responseBody,
         $service,
         $path
     ) {
         if ($statusCode >= 400 && $statusCode <= 499) {
-            $this->handle4xx($statusCode, $contentType, $body, $service, $path);
+            $this->handle4xx($statusCode, $contentType, $responseBody, $service, $path);
         } elseif ($statusCode >= 500) {
             $this->handle5xx($statusCode, $service, $path);
-        } elseif ($statusCode !== 200) {
+        } elseif ($statusCode !== 200 && $statusCode !== 204) {
             $this->handleUnexpectedStatus($statusCode, $service, $path);
         }
 
-        return $this->handleSuccess($body, $service);
+        return $this->handleSuccess($statusCode, $responseBody, $service);
     }
 
     /**
@@ -256,7 +256,7 @@ class Client
         $service,
         $path
     ) {
-        if (strlen($body) === 0) {
+        if (\strlen($body) === 0) {
             throw new HttpException(
                 "Received a $statusCode error for $service with no body",
                 $statusCode,
@@ -325,6 +325,8 @@ class Client
                     $statusCode,
                     $this->urlFor($path)
                 );
+            case 'ACCOUNT_ID_REQUIRED':
+            case 'ACCOUNT_ID_UNKNOWN':
             case 'AUTHORIZATION_INVALID':
             case 'LICENSE_KEY_REQUIRED':
             case 'USER_ID_REQUIRED':
@@ -394,17 +396,33 @@ class Client
     }
 
     /**
-     * @param string $body    the successful request body
-     * @param string $service the service name
+     * @param int    $statusCode the HTTP status code
+     * @param string $body       the successful request body
+     * @param string $service    the service name
      *
-     * @throws WebServiceException if the request body cannot be decoded as
-     *                             JSON
+     * @throws WebServiceException if a response body is included but not
+     *                             expected, or is not expected but not
+     *                             included, or is expected and included
+     *                             but cannot be decoded as JSON
      *
      * @return array the decoded request body
      */
-    private function handleSuccess($body, $service)
+    private function handleSuccess($statusCode, $body, $service)
     {
-        if (strlen($body) === 0) {
+        // A 204 should have no response body
+        if ($statusCode === 204) {
+            if (\strlen($body) !== 0) {
+                throw new WebServiceException(
+                    "Received a 204 response for $service along with an " .
+                    "unexpected HTTP body: $body"
+                );
+            }
+
+            return null;
+        }
+
+        // A 200 should have a valid JSON body
+        if (\strlen($body) === 0) {
             throw new WebServiceException(
                 "Received a 200 response for $service but did not " .
                 'receive a HTTP body.'
@@ -430,7 +448,7 @@ class Client
         // On OS X, when the SSL version is "SecureTransport", the system's
         // keychain will be used.
         if ($curlVersion['ssl_version'] === 'SecureTransport') {
-            return;
+            return null;
         }
         $cert = CaBundle::getSystemCaRootBundlePath();
 

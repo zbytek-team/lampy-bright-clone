@@ -1,11 +1,13 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname}, 
+Hi {firstname} {lastname},
 
-Twój plik {filename} został poprawnie zaimportowany do Twojego
-sklepu. 
+Import finished
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+The file {filename} has been successfully imported to your shop.
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

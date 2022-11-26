@@ -1,10 +1,11 @@
 {**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -15,12 +16,11 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  *}
 
 <div class="leadin">{block name="leadin"}{/block}</div>
@@ -34,7 +34,7 @@
 </script>
 {block name="defaultOptions"}
 {if isset($table_bk) && $table_bk == $table}{capture name='table_count'}{counter name='table_count'}{/capture}{/if}
-{assign var='table_bk' value=$table scope='parent'}
+{assign var='table_bk' value=$table scope='root'}
 <form action="{$current|escape:'html':'UTF-8'}&amp;token={$token|escape:'html':'UTF-8'}" id="{if $table == null}configuration_form{else}{$table}_form{/if}{if isset($smarty.capture.table_count) && $smarty.capture.table_count}_{$smarty.capture.table_count|intval}{/if}" method="post" enctype="multipart/form-data" class="form-horizontal">
 	{foreach $option_list AS $category => $categoryData}
 		{if isset($categoryData['top'])}{$categoryData['top']}{/if}
@@ -78,7 +78,7 @@
 						<div class="col-lg-12">
 							<p class="help-block">
 								<strong>{l s='Check / Uncheck all'}</strong><br />
-								{l s='You are editing this page for a specific shop or group. Click "Yes" to check all fields, "No" to uncheck all.'}<br />
+								{l s='You are editing this page for a specific shop or group. Click "%yes_label%" to check all fields, "%no_label%" to uncheck all.' d='Admin.Design.Help' sprintf=['%yes_label%' => {l s='Yes' d='Admin.Global'}, '%no_label%' => {l s='No' d='Admin.Global'}]}<br />
  								{l s='If you check a field, change its value, and save, the multistore behavior will not apply to this shop (or group), for this particular parameter.'}
 							</p>
 						</div>
@@ -184,7 +184,7 @@
 										</div>
 									{elseif $field['type'] == 'text'}
 										<div class="col-lg-9">{if isset($field['suffix'])}<div class="input-group{if isset($field.class)} {$field.class}{/if}">{/if}
-											<input class="form-control {if isset($field['class'])}{$field['class']}{/if}" type="{$field['type']}"{if isset($field['id'])} id="{$field['id']}"{/if} size="{if isset($field['size'])}{$field['size']|intval}{else}5{/if}" name="{$key}" value="{if isset($field['no_escape']) && $field['no_escape']}{$field['value']|escape:'UTF-8'}{else}{$field['value']|escape:'html':'UTF-8'}{/if}" {if isset($field['autocomplete']) && !$field['autocomplete']}autocomplete="off"{/if}/>
+											<input class="form-control {if isset($field['class'])}{$field['class']}{/if}" type="{$field['type']}"{if isset($field['id'])} id="{$field['id']}"{/if} size="{if isset($field['size'])}{$field['size']|intval}{else}5{/if}" name="{$key}" value="{if isset($field['no_escape']) && $field['no_escape']}{$field['value']}{else}{$field['value']|escape:'html':'UTF-8'}{/if}" {if isset($field['autocomplete']) && !$field['autocomplete']}autocomplete="off"{/if}/>
 											{if isset($field['suffix'])}
 											<span class="input-group-addon">
 												{$field['suffix']|strval}
@@ -387,3 +387,8 @@
 </script>
 {/if}
 {/block}
+{if $has_color_field}
+<script type="text/javascript">
+  $.fn.mColorPicker.defaults.imageFolder = baseDir + 'img/admin/';
+</script>
+{/if}

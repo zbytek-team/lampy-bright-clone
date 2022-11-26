@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,22 +17,25 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShop\PrestaShop\Adapter;
 
 use Hook;
-use PrestaShop\PrestaShop\Adapter\ServiceLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Bridge to execute hooks in modern pages.
+ */
 class HookManager
 {
     /**
-     * Execute modules for specified hook
+     * Execute modules for specified hook.
      *
      * @param string $hook_name Hook Name
      * @param array $hook_args Parameters for the functions
@@ -43,33 +47,39 @@ class HookManager
      *
      * @throws \PrestaShopException
      *
-     * @return string/array modules output
+     * @return string|array|void modules output
      */
     public function exec(
         $hook_name,
-        $hook_args = array(),
+        $hook_args = [],
         $id_module = null,
         $array_return = false,
         $check_exceptions = true,
         $use_push = false,
         $id_shop = null
     ) {
-        global $kernel;
-        if (!is_null($kernel)) {
-            // Ensure Request
-            if (!is_null($kernel->getContainer()->get('request_stack')->getCurrentRequest())) {
-                $hook_args = array_merge(array('request' => $kernel->getContainer()->get('request')), $hook_args);
-            }
+        $sfContainer = SymfonyContainer::getInstance();
+        $request = null;
 
-            // If the Symfony kernel is instanciated, we use it for the event fonctionnality
-            $hookDispatcher = $kernel->getContainer()->get('prestashop.hook.dispatcher');
-            return $hookDispatcher->renderForParameters($hook_name, $hook_args)->getContent();
+        if ($sfContainer instanceof ContainerInterface) {
+            $request = $sfContainer->get('request_stack')->getCurrentRequest();
+        }
+
+        if (null !== $request) {
+            $hook_args = array_merge(['request' => $request], $hook_args);
+
+            // If Symfony application is booted, we use it to dispatch Hooks
+            $hookDispatcher = $sfContainer->get('prestashop.core.hook.dispatcher');
+
+            return $hookDispatcher
+                ->dispatchRenderingWithParameters($hook_name, $hook_args)
+                ->getContent();
         } else {
             try {
                 return Hook::exec($hook_name, $hook_args, $id_module, $array_return, $check_exceptions, $use_push, $id_shop);
             } catch (\Exception $e) {
                 $logger = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\LegacyLogger');
-                $logger->error(sprintf('Exception on hook %s for module %s. %s', $hook_name, $id_module, $e->getMessage()));
+                $logger->error(sprintf('Exception on hook %s for module %s. %s', $hook_name, $id_module, $e->getMessage()), ['object_type' => 'Module', 'object_id' => $id_module, 'allow_duplicate' => true]);
             }
         }
     }

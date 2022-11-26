@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,19 +17,17 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
-
 class HelperTreeShopsCore extends TreeCore
 {
-    const DEFAULT_TEMPLATE             = 'tree_shops.tpl';
+    const DEFAULT_TEMPLATE = 'tree_shops.tpl';
     const DEFAULT_NODE_FOLDER_TEMPLATE = 'tree_node_folder_checkbox_shops.tpl';
-    const DEFAULT_NODE_ITEM_TEMPLATE   = 'tree_node_item_checkbox_shops.tpl';
+    const DEFAULT_NODE_ITEM_TEMPLATE = 'tree_node_item_checkbox_shops.tpl';
 
     private $_lang;
     private $_selected_shops;
@@ -56,6 +55,7 @@ class HelperTreeShopsCore extends TreeCore
     public function setLang($value)
     {
         $this->_lang = $value;
+
         return $this;
     }
 
@@ -93,13 +93,14 @@ class HelperTreeShopsCore extends TreeCore
         }
 
         $this->_selected_shops = $value;
+
         return $this;
     }
 
     public function getSelectedShops()
     {
         if (!isset($this->_selected_shops)) {
-            $this->_selected_shops = array();
+            $this->_selected_shops = [];
         }
 
         return $this->_selected_shops;
@@ -121,32 +122,32 @@ class HelperTreeShopsCore extends TreeCore
         }
 
         if ($use_default_actions) {
-            $this->setActions(array(
+            $this->setActions([
                 new TreeToolbarLink(
-                    'Collapse All',
+                    $this->translator->trans('Collapse all', [], 'Admin.Actions'),
                     '#',
-                    '$(\'#'.$this->getId().'\').tree(\'collapseAll\'); return false;',
+                    '$(\'#' . $this->getId() . '\').tree(\'collapseAll\'); return false;',
                     'icon-collapse-alt'
                 ),
                 new TreeToolbarLink(
-                    'Expand All',
+                    $this->translator->trans('Expand all', [], 'Admin.Actions'),
                     '#',
-                    '$(\'#'.$this->getId().'\').tree(\'expandAll\'); return false;',
+                    '$(\'#' . $this->getId() . '\').tree(\'expandAll\'); return false;',
                     'icon-expand-alt'
                 ),
                 new TreeToolbarLink(
-                    'Check All',
+                    $this->translator->trans('Check all', [], 'Admin.Actions'),
                     '#',
-                    'checkAllAssociatedShops($(\'#'.$this->getId().'\')); return false;',
+                    'checkAllAssociatedShops($(\'#' . $this->getId() . '\')); return false;',
                     'icon-check-sign'
                 ),
                 new TreeToolbarLink(
-                    'Uncheck All',
+                    $this->translator->trans('Uncheck all', [], 'Admin.Actions'),
                     '#',
-                    'uncheckAllAssociatedShops($(\'#'.$this->getId().'\')); return false;',
+                    'uncheckAllAssociatedShops($(\'#' . $this->getId() . '\')); return false;',
                     'icon-check-empty'
-                )
-            ));
+                ),
+            ]);
         }
 
         if ($use_selected_shop) {
@@ -174,17 +175,17 @@ class HelperTreeShopsCore extends TreeCore
                 $html .= $this->getContext()->smarty->createTemplate(
                     $this->getTemplateFile($this->getNodeFolderTemplate()),
                     $this->getContext()->smarty
-                )->assign($this->getAttributes())->assign(array(
+                )->assign($this->getAttributes())->assign([
                     'children' => $this->renderNodes($item['shops']),
-                    'node'     => $item
-                ))->fetch();
+                    'node' => $item,
+                ])->fetch();
             } else {
                 $html .= $this->getContext()->smarty->createTemplate(
                     $this->getTemplateFile($this->getNodeItemTemplate()),
                     $this->getContext()->smarty
-                )->assign($this->getAttributes())->assign(array(
-                    'node' => $item
-                ))->fetch();
+                )->assign($this->getAttributes())->assign([
+                    'node' => $item,
+                ])->fetch();
             }
         }
 

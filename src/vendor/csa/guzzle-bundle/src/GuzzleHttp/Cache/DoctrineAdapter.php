@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -19,7 +20,9 @@ use GuzzleHttp\Message\ResponseInterface;
 class DoctrineAdapter implements StorageAdapterInterface
 {
     private $cache;
+
     private $ttl;
+
     private $messageFactory;
 
     public function __construct(Cache $cache, $ttl = 0)
@@ -42,20 +45,22 @@ class DoctrineAdapter implements StorageAdapterInterface
         $this->cache->save($this->getKey($request), (string) $response, $this->ttl);
     }
 
-    private function getMessageFactory() {
+    private function getMessageFactory()
+    {
         if (null === $this->messageFactory) {
             $this->messageFactory = new MessageFactory();
         }
 
         return $this->messageFactory;
     }
+
     private function getKey(RequestInterface $request)
     {
         return md5(serialize([
-            'method'  => $request->getMethod(),
-            'uri'     => $request->getUrl(),
+            'method' => $request->getMethod(),
+            'uri' => $request->getUrl(),
             'headers' => $request->getHeaders(),
-            'body'    => (string) $request->getBody(),
+            'body' => (string) $request->getBody(),
         ]));
     }
 }

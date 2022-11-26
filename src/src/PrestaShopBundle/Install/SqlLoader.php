@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,17 +17,16 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 namespace PrestaShopBundle\Install;
 
-use PrestaShop\PrestaShop\Adapter\Entity\Db;
+use Db;
 use PrestashopInstallerException;
 
 class SqlLoader
@@ -39,26 +39,26 @@ class SqlLoader
     /**
      * @var array List of keywords which will be replaced in queries
      */
-    protected $metadata = array();
+    protected $metadata = [];
 
     /**
      * @var array List of errors during last parsing
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
-     * @param Db $db
+     * @param Db|null $db
      */
     public function __construct(Db $db = null)
     {
-        if (is_null($db)) {
+        if (null === $db) {
             $db = Db::getInstance();
         }
         $this->db = $db;
     }
 
     /**
-     * Set a list of keywords which will be replaced in queries
+     * Set a list of keywords which will be replaced in queries.
      *
      * @param array $data
      */
@@ -70,12 +70,25 @@ class SqlLoader
     }
 
     /**
-     * Parse a SQL file and execute queries
+     * Parse a SQL file and execute queries.
+     *
+     * @deprecated use parseFile()
      *
      * @param string $filename
      * @param bool $stop_when_fail
      */
     public function parse_file($filename, $stop_when_fail = true)
+    {
+        return $this->parseFile($filename, $stop_when_fail);
+    }
+
+    /**
+     * Parse a SQL file and execute queries.
+     *
+     * @param string $filename
+     * @param bool $stop_when_fail
+     */
+    public function parseFile($filename, $stop_when_fail = true)
     {
         if (!file_exists($filename)) {
             throw new PrestashopInstallerException("File $filename not found");
@@ -85,14 +98,14 @@ class SqlLoader
     }
 
     /**
-     * Parse and execute a list of SQL queries
+     * Parse and execute a list of SQL queries.
      *
      * @param string $content
      * @param bool $stop_when_fail
      */
     public function parse($content, $stop_when_fail = true)
     {
-        $this->errors = array();
+        $this->errors = [];
 
         $content = str_replace(array_keys($this->metadata), array_values($this->metadata), $content);
         $queries = preg_split('#;\s*[\r\n]+#', $content);
@@ -103,11 +116,11 @@ class SqlLoader
             }
 
             if (!$this->db->execute($query)) {
-                $this->errors[] = array(
+                $this->errors[] = [
                     'errno' => $this->db->getNumberError(),
                     'error' => $this->db->getMsgError(),
                     'query' => $query,
-                );
+                ];
 
                 if ($stop_when_fail) {
                     return false;
@@ -119,7 +132,7 @@ class SqlLoader
     }
 
     /**
-     * Get list of errors from last parsing
+     * Get list of errors from last parsing.
      *
      * @return array
      */

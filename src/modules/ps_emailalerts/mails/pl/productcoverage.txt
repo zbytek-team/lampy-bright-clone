@@ -1,13 +1,13 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj, 
+Hi,
 
-Pokrycie zapasów jest mniejsze niż ustawiona wartość minimum,
-która wynosi: {warning_coverage}.
+Your stock cover is now less than the specified minimum of: {warning_coverage}
 
-OBECNE POKRYCIE ZAPASÓW: {current_coverage} 		 
+Current stock cover: {current_coverage}
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+[{shop_name}]({shop_url})
 
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

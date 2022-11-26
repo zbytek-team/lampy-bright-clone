@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,13 +17,13 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
+
 namespace PrestaShopBundle\Service\Hook;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -34,39 +35,56 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class HookEvent extends Event
 {
-    private $hookParameters = array();
+    /**
+     * Hook extra parameters
+     *
+     * @var array
+     */
+    private $hookParameters = [];
+
+    /**
+     * Hook context, such as PrestaShop version or request and controller
+     *
+     * @var array
+     */
+    private $contextParameters = [];
+
+    /**
+     * @param array $contextParameters
+     * @param array $hookParameters
+     */
+    public function __construct(array $contextParameters = null, array $hookParameters = null)
+    {
+        if (null !== $contextParameters) {
+            $this->contextParameters = $contextParameters;
+        }
+
+        if (null !== $hookParameters) {
+            $this->hookParameters = $hookParameters;
+        }
+    }
 
     /**
      * Sets the Hook parameters.
      *
-     * @param array Hook parameters.
-     * @return $this, for fluent use of object.
+     * @param array $parameters
+     *
+     * @return self
      */
     public function setHookParameters($parameters)
     {
         $this->hookParameters = $parameters;
+
         return $this;
     }
 
     /**
-     * Returns Hook parameters and default values.
+     * Returns Hook parameters and context parameters
      *
-     * More values than the param set is returned:
-     * - _ps_version contains PrestaShop version, and is here only if the Hook is triggered by Symfony architecture.
-     * These values can either be overriden by szetHookParameters using the same parameter key.
-     *
-     * @return array The array of hook parameters, more default fixed values.
+     * @return array
      */
     public function getHookParameters()
     {
-        global $kernel;
-
-        $globalParameters = array('_ps_version' => _PS_VERSION_);
-
-        if (!is_null($kernel) && !is_null($kernel->getContainer()->get('request_stack')->getCurrentRequest())) {
-            $globalParameters['request'] = $kernel->getContainer()->get('request');
-        }
-
-        return array_merge($globalParameters, $this->hookParameters);
+        return array_merge($this->contextParameters, $this->hookParameters);
     }
 }

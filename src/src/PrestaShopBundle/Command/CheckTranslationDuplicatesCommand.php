@@ -1,11 +1,12 @@
 <?php
 /**
- * 2007-2017 PrestaShop
+ * Copyright since 2007 PrestaShop SA and Contributors
+ * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
+ * that is bundled with this package in the file LICENSE.md.
  * It is also available through the world-wide-web at this URL:
  * https://opensource.org/licenses/OSL-3.0
  * If you did not receive a copy of the license and are unable to
@@ -16,26 +17,23 @@
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
  * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * needs please refer to https://devdocs.prestashop.com/ for more information.
  *
- * @author    PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2017 PrestaShop SA
+ * @author    PrestaShop SA and Contributors <contact@prestashop.com>
+ * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
- * International Registered Trademark & Property of PrestaShop SA
  */
 
 namespace PrestaShopBundle\Command;
 
-use PrestaShopBundle\Translation\PrestaShopTranslatorTrait;
-
+use PrestaShopBundle\Translation\Translator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class CheckTranslationDuplicatesCommand extends ContainerAwareCommand
 {
-
     protected function configure()
     {
         $this
@@ -54,7 +52,7 @@ class CheckTranslationDuplicatesCommand extends ContainerAwareCommand
         $progress->start();
         $progress->setRedrawFrequency(20);
 
-        $duplicates = array();
+        $duplicates = [];
 
         foreach ($catalogue as $domain => $messages) {
             $nbOfMessages = count($messages);
@@ -62,10 +60,10 @@ class CheckTranslationDuplicatesCommand extends ContainerAwareCommand
             $messages = array_keys($messages);
 
             // We compare strings from the same array, so we have two for() loops
-            for ($i = 0 ; $i < $nbOfMessages ; ++$i) {
-                for ($j = ($i +1) ; $j < $nbOfMessages ; ++$j) {
+            for ($i = 0; $i < $nbOfMessages; ++$i) {
+                for ($j = ($i + 1); $j < $nbOfMessages; ++$j) {
                     if ($this->check($messages[$i], $messages[$j])) {
-                        $duplicates[$domain][] = array($i => $messages[$i], $j => $messages[$j]);
+                        $duplicates[$domain][] = [$i => $messages[$i], $j => $messages[$j]];
                     }
                 }
                 $progress->advance();
@@ -80,17 +78,21 @@ class CheckTranslationDuplicatesCommand extends ContainerAwareCommand
         if (count($duplicates)) {
             $output->writeln('Duplicates found:');
             dump($duplicates);
+
             return count($duplicates, true);
         }
 
         $output->writeln('Awww yisss! There is no duplicate in your translator catalog.');
+
         return 0;
     }
 
     /**
-     * We consider strings as equals if they have the same value after params cleanup
-     * @param String $message1
-     * @param String $message2
+     * We consider strings as equals if they have the same value after params cleanup.
+     *
+     * @param string $message1
+     * @param string $message2
+     *
      * @return bool
      */
     protected function check($message1, $message2)
@@ -103,15 +105,16 @@ class CheckTranslationDuplicatesCommand extends ContainerAwareCommand
      * This allow the algorithm to check if the strings are the same once the parameters made generic
      * i.e: Error when disabling module %module% ==> Error when disabling module ~.
      *
-     * @param String $message
-     * @return String with replaced parameters
+     * @param string $message
+     *
+     * @return string with replaced parameters
      */
     protected function removeParams($message)
     {
         // Remove PrestaShop arguments %<arg>%
-        $message = preg_replace(PrestaShopTranslatorTrait::$regexClassicParams, '~', $message);
+        $message = preg_replace(Translator::$regexClassicParams, '~', $message);
         // Remove all related sprintf arguments
-        $message = preg_replace(PrestaShopTranslatorTrait::$regexSprintfParams, '~', $message);
+        $message = preg_replace(Translator::$regexSprintfParams, '~', $message);
 
         return $message;
     }

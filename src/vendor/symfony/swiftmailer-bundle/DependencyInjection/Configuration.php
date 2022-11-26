@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This class contains the configuration information for the bundle
+ * This class contains the configuration information for the bundle.
  *
  * This information is solely responsible for how the different configuration
  * sections are normalized, and merged.
@@ -28,30 +28,32 @@ class Configuration implements ConfigurationInterface
     private $debug;
 
     /**
-     * Constructor.
-     *
-     * @param Boolean $debug The kernel.debug value
+     * @param bool $debug The kernel.debug value
      */
     public function __construct($debug)
     {
-        $this->debug = (Boolean) $debug;
+        $this->debug = (bool) $debug;
     }
 
     /**
-     * Generates the configuration tree builder.
-     *
-     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('swiftmailer');
+        $treeBuilder = new TreeBuilder('swiftmailer');
+        $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('swiftmailer');
 
         $rootNode
             ->beforeNormalization()
-                ->ifTrue(function ($v) { return is_array($v) && !array_key_exists('mailers', $v) && !array_key_exists('mailer', $v); })
+                ->ifNull()
+                ->thenEmptyArray()
+            ->end()
+            ->beforeNormalization()
+                ->ifTrue(function ($v) {
+                    return \is_array($v) && !\array_key_exists('mailers', $v) && !\array_key_exists('mailer', $v);
+                })
                 ->then(function ($v) {
-                    $mailer = array();
+                    $mailer = [];
                     foreach ($v as $key => $value) {
                         if ('default_mailer' == $key) {
                             continue;
@@ -60,7 +62,7 @@ class Configuration implements ConfigurationInterface
                         unset($v[$key]);
                     }
                     $v['default_mailer'] = isset($v['default_mailer']) ? (string) $v['default_mailer'] : 'default';
-                    $v['mailers'] = array($v['default_mailer'] => $mailer);
+                    $v['mailers'] = [$v['default_mailer'] => $mailer];
 
                     return $v;
                 })
@@ -76,64 +78,77 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Return the mailers node
-     *
      * @return ArrayNodeDefinition
      */
     private function getMailersNode()
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('mailers');
+        $treeBuilder = new TreeBuilder('mailers');
+        $node = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('mailers');
 
         $node
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
                 ->prototype('array')
-            // BC layer for "delivery_address: null" (the case of a string goes through the XML normalization too)
-            ->beforeNormalization()
-                ->ifTrue(function ($v) {
-                    return array_key_exists('delivery_address', $v) && null === $v['delivery_address'];
-                })
-                ->then(function ($v) {
-                    @trigger_error('The swiftmailer.delivery_address configuration key is deprecated since version 2.3.10 and will be removed in 3.0. Use the swiftmailer.delivery_addresses configuration key instead (or remove the empty setting)', E_USER_DEPRECATED);
-                    unset($v['delivery_address']);
-
-                    if (!isset($v['delivery_addresses'])) {
-                        $v['delivery_addresses'] = array();
-                    }
-
-                    return $v;
-                })
-            ->end()
             ->children()
                 ->scalarNode('url')->defaultNull()->end()
                 ->scalarNode('transport')->defaultValue('smtp')->end()
+                ->scalarNode('command')->defaultValue('/usr/sbin/sendmail -bs')->end()
                 ->scalarNode('username')->defaultNull()->end()
                 ->scalarNode('password')->defaultNull()->end()
                 ->scalarNode('host')->defaultValue('localhost')->end()
                 ->scalarNode('port')->defaultNull()->end()
                 ->scalarNode('timeout')->defaultValue(30)->end()
                 ->scalarNode('source_ip')->defaultNull()->end()
+                ->scalarNode('local_domain')->defaultNull()->end()
+                ->arrayNode('stream_options')
+                    ->ignoreExtraKeys(false)
+                    ->normalizeKeys(false)
+                    ->beforeNormalization()
+                        ->ifTrue(function ($v) {
+                            return isset($v['stream-option']);
+                        })
+                        ->then(function ($v) {
+                            $recurse = function ($array) use (&$recurse) {
+                                if (isset($array['name'])) {
+                                    $array = [$array];
+                                }
+                                $n = [];
+                                foreach ($array as $v) {
+                                    $k = $v['name'];
+                                    if (isset($v['value'])) {
+                                        $n[$k] = $v['value'];
+                                    } elseif (isset($v['stream-option'])) {
+                                        $n[$k] = $recurse($v['stream-option']);
+                                    }
+                                }
+
+                                return $n;
+                            };
+
+                            return $recurse($v['stream-option']);
+                        })
+                    ->end()
+                    ->validate()
+                        ->ifTrue(function ($v) {
+                            return !method_exists('Swift_Transport_EsmtpTransport', 'setStreamOptions');
+                        })
+                        ->thenInvalid('stream_options is only available in Swiftmailer 5.4.2 or later.')
+                    ->end()
+                ->end()
                 ->scalarNode('encryption')
                     ->defaultNull()
-                    ->validate()
-                        ->ifNotInArray(array('tls', 'ssl', null))
-                        ->thenInvalid('The %s encryption is not supported')
-                    ->end()
                 ->end()
                 ->scalarNode('auth_mode')
                     ->defaultNull()
-                    ->validate()
-                        ->ifNotInArray(array('plain', 'login', 'cram-md5', null))
-                        ->thenInvalid('The %s authentication mode is not supported')
-                    ->end()
                 ->end()
                 ->scalarNode('sender_address')->end()
                 ->arrayNode('delivery_addresses')
                     ->performNoDeepMerging()
                     ->beforeNormalization()
                         ->ifArray()
-                        ->then(function ($v) { return array_values($v); })
+                        ->then(function ($v) {
+                            return array_filter(array_values($v));
+                        })
                     ->end()
                     ->prototype('scalar')
                     ->end()
@@ -152,13 +167,15 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('id')->defaultNull()->info('Used by "service" type')->end()
                     ->end()
                     ->validate()
-                        ->ifTrue(function ($v) { return 'service' === $v['type'] && empty($v['id']); })
+                        ->ifTrue(function ($v) {
+                            return 'service' === $v['type'] && empty($v['id']);
+                        })
                         ->thenInvalid('You have to configure the service id')
                     ->end()
                 ->end()
             ->end()
-            ->fixXmlConfig('delivery_whitelist_pattern', 'delivery_whitelist')
             ->fixXmlConfig('delivery_address', 'delivery_addresses')
+            ->fixXmlConfig('delivery_whitelist_pattern', 'delivery_whitelist')
             ->children()
                 ->arrayNode('delivery_whitelist')
                     ->prototype('scalar')

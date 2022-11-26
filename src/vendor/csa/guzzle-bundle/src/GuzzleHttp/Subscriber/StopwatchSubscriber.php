@@ -4,6 +4,7 @@
  * This file is part of the CsaGuzzleBundle package
  *
  * (c) Charles Sarrazin <charles@sarraz.in>
+ * (c) PrestaShop and Contributors
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code
@@ -11,15 +12,15 @@
 
 namespace Csa\Bundle\GuzzleBundle\GuzzleHttp\Subscriber;
 
-use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Event\BeforeEvent;
+use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Event\ErrorEvent;
 use GuzzleHttp\Event\RequestEvents;
 use GuzzleHttp\Event\SubscriberInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * Csa Guzzle Stopwatch integration
+ * Csa Guzzle Stopwatch integration.
  *
  * @author Charles Sarrazin <charles@sarraz.in>
  */
@@ -35,9 +36,9 @@ class StopwatchSubscriber implements SubscriberInterface
     public function getEvents()
     {
         return [
-            'before'   => ['onBefore', RequestEvents::EARLY],
+            'before' => ['onBefore', RequestEvents::EARLY],
             'complete' => ['onFinish', RequestEvents::LATE],
-            'error'    => ['onError', RequestEvents::EARLY],
+            'error' => ['onError', RequestEvents::EARLY],
         ];
     }
 

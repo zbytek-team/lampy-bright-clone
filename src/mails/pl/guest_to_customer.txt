@@ -1,19 +1,20 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj {firstname} {lastname}, 
+Hi {firstname} {lastname},
 
-Twoje konto gościa w {shop_name} zostało przekształcone w konto
-klienta. 
+Your guest account has been turned into a customer account
 
-ADRES E-MAIL: {email} 		 
+Congratulations, your guest account for {shop_name} has been turned into a customer account!
 
-Należy zachować ostrożność podczas udostępniania innym tych
-danych do logowania. 
+Email address: {email}
 
-Możesz uzyskać dostęp do konta klienta w naszym sklepie:
-{shop_url} 
+Click on the following link to set up your password:
+{url}
 
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
+You can access your customer account on our shop: [{shop_name}]({shop_url})
 
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)

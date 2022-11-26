@@ -1,36 +1,31 @@
+ 
 
-[{shop_url}] 
+{shop_url}
 
-Witaj, 
+Hi,
 
-Odebrano nowe żądanie zwrotu do {shop_name}. 
+You have received a new return request for {shop_name}.
 
-Szczegóły zwrotu 
+Return Details
 
-ZAMÓWIENIE: {order_name} Złożone w {date}
+Order: {order_name} Placed on {date}
 
-KLIENT: {firstname} {lastname}, ({email}) 
+Customer: {firstname} {lastname}, ({email})
 
-INDEKS
+Reference	Product	Quantity   {items}
 
-PRODUKT
+Delivery address
 
-ILOŚĆ
+{delivery_block_html}
 
-{items} 
+Billing address
 
-Adres dostawy
+{invoice_block_html}
 
-{delivery_block_html} 		 
+Customer message:
 
-Adres do faktury
+{message}
 
-{invoice_block_html} 
+[{shop_name}]({shop_url})
 
-Wiadomość klienta: 
-
-{message} 
-
-{shop_name} [{shop_url}] powered
-by PrestaShop(tm) [http://www.prestashop.com/] 
-
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)
