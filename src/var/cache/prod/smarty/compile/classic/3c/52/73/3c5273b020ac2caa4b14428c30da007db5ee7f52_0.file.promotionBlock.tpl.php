@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-26 15:07:44
+/* Smarty version 3.1.43, created on 2022-11-28 16:29:08
   from '/var/www/html/modules/ps_checkout/views/templates/hook/adminAfterHeader/promotionBlock.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_63821db0c4f921_84897975',
+  'unifunc' => 'content_6384d3c44ac9f3_16841154',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '3c5273b020ac2caa4b14428c30da007db5ee7f52' => 
     array (
       0 => '/var/www/html/modules/ps_checkout/views/templates/hook/adminAfterHeader/promotionBlock.tpl',
-      1 => 1669471433,
+      1 => 1669644305,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_63821db0c4f921_84897975 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6384d3c44ac9f3_16841154 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div class="container">
     <div class="row">

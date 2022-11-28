@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-26 15:08:43
+/* Smarty version 3.1.43, created on 2022-11-28 16:24:15
   from '/var/www/html/modules/ps_checkout/views/templates/hook/displayFooterProduct.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_63821deb5fc5d0_09002169',
+  'unifunc' => 'content_6384d29f50c0c5_99390874',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '0939810b336fac4fb2509c3a1f0ad9d6b4bd4b86' => 
     array (
       0 => '/var/www/html/modules/ps_checkout/views/templates/hook/displayFooterProduct.tpl',
-      1 => 1669471433,
+      1 => 1669644305,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_63821deb5fc5d0_09002169 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6384d29f50c0c5_99390874 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="js-ps_checkout-express-button-container">
 </div>
