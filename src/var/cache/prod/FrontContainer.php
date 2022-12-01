@@ -4102,6 +4102,7 @@ class FrontContainer extends \PrestaShop\PrestaShop\Adapter\Container\LegacyCont
                 63 => 'ps_accounts',
                 64 => 'ps_eventbus',
                 65 => 'paypal',
+                66 => 'bluepayment',
             ],
             'ps_cache_dir' => '/var/www/html/var/cache/prod/',
             'mail_themes_uri' => '/mails/themes',

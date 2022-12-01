@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-28 18:33:52
+/* Smarty version 3.1.43, created on 2022-12-01 20:53:12
   from 'module:psfeaturedproductsviewste' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_6384f100522a43_86671841',
+  'unifunc' => 'content_638906282fd7e5_85301419',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -42,7 +42,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638906282fd7e5_85301419 (Smarty_Internal_Template $_smarty_tpl) {
 ?><section class="featured-products clearfix">
   <h2 class="h2 products-section-title text-uppercase">
     Popularne produkty
@@ -105,7 +105,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
                 <span class="regular-price" aria-label="Cena podstawowa">29,40 zł</span>
                                   <span class="discount-percentage discount-product">-20%</span>
                               
-              
+              <div class="ga-listing"
+     data-product-id="1"
+     data-product-name="Hummingbird printed t-shirt"
+     data-product-brand="Studio Design"
+     data-product-cat="Men"
+     data-product-price="23,52 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   23,52 zł
@@ -180,7 +187,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
                 <span class="regular-price" aria-label="Cena podstawowa">44,16 zł</span>
                                   <span class="discount-percentage discount-product">-20%</span>
                               
-              
+              <div class="ga-listing"
+     data-product-id="2"
+     data-product-name="Hummingbird printed sweater"
+     data-product-brand="Studio Design"
+     data-product-cat="Women"
+     data-product-price="35,33 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   35,33 zł
@@ -251,7 +265,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="3"
+     data-product-name="The best is yet to come&#039; Framed poster"
+     data-product-brand="Graphic Corner"
+     data-product-cat="Art"
+     data-product-price="35,67 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   35,67 zł
@@ -321,7 +342,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="4"
+     data-product-name="The adventure begins Framed poster"
+     data-product-brand="Graphic Corner"
+     data-product-cat="Art"
+     data-product-price="35,67 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   35,67 zł
@@ -391,7 +419,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="5"
+     data-product-name="Today is a good day Framed poster"
+     data-product-brand="Graphic Corner"
+     data-product-cat="Art"
+     data-product-price="35,67 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   35,67 zł
@@ -461,7 +496,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="6"
+     data-product-name="Mug The best is yet to come"
+     data-product-brand="Studio Design"
+     data-product-cat="Home Accessories"
+     data-product-price="14,64 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   14,64 zł
@@ -531,7 +573,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="7"
+     data-product-name="Mug The adventure begins"
+     data-product-brand="Studio Design"
+     data-product-cat="Home Accessories"
+     data-product-price="14,64 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   14,64 zł
@@ -601,7 +650,14 @@ function content_6384f100522a43_86671841 (Smarty_Internal_Template $_smarty_tpl)
         
                       <div class="product-price-and-shipping">
               
-              
+              <div class="ga-listing"
+     data-product-id="8"
+     data-product-name="Mug Today is a good day"
+     data-product-brand="Studio Design"
+     data-product-cat="Home Accessories"
+     data-product-price="14,64 zł"
+></div>
+
 
               <span class="price" aria-label="Cena">
                                                   14,64 zł

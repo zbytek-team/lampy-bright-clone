@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-28 16:24:15
+/* Smarty version 3.1.43, created on 2022-12-01 20:53:29
   from '/var/www/html/modules/ps_checkout/views/templates/hook/displayFooterProduct.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_6384d29f50c0c5_99390874',
+  'unifunc' => 'content_63890639cb6568_39347360',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6384d29f50c0c5_99390874 (Smarty_Internal_Template $_smarty_tpl) {
+function content_63890639cb6568_39347360 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="js-ps_checkout-express-button-container">
 </div>

@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-11-28 18:33:52
+/* Smarty version 3.1.43, created on 2022-12-01 20:53:12
   from 'module:pscustomtextpscustomtext.' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_6384f100556930_50542989',
+  'unifunc' => 'content_638906283178e2_67215195',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -18,7 +18,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_6384f100556930_50542989 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638906283178e2_67215195 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <div id="custom-text">
   <h2><strong>SKLEP Z LAMPAMI BRIGHT</strong></h2>
