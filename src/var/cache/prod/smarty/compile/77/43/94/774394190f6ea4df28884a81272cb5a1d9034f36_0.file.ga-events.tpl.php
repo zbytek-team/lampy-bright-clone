@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-12-01 20:52:00
+/* Smarty version 3.1.43, created on 2022-12-02 16:06:19
   from '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/ga-events.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_638905e012d803_79456310',
+  'unifunc' => 'content_638a146bc929e0_27532922',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '774394190f6ea4df28884a81272cb5a1d9034f36' => 
     array (
       0 => '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/ga-events.tpl',
-      1 => 1669924308,
+      1 => 1669983383,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_638905e012d803_79456310 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638a146bc929e0_27532922 (Smarty_Internal_Template $_smarty_tpl) {
 ?><span>
     <?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['l'][0], array( array('s'=>'Below you will find a list of events and their assigned actions, which will be visible in your Google Analytics dashboard after connection.','mod'=>'bluepayment'),$_smarty_tpl ) );?>
 

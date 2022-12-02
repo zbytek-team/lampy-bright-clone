@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-12-01 20:53:12
+/* Smarty version 3.1.43, created on 2022-12-02 14:43:11
   from '/var/www/html/modules/bluepayment/views/templates/hook/gtag.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_638906284d9933_66960459',
+  'unifunc' => 'content_638a00efc53ca8_26534439',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'fe660fc076f094bdb793894dd2726a5bb3da97f7' => 
     array (
       0 => '/var/www/html/modules/bluepayment/views/templates/hook/gtag.tpl',
-      1 => 1669924308,
+      1 => 1669983383,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_638906284d9933_66960459 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638a00efc53ca8_26534439 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!-- Global site tag (gtag.js) - Google Analytics -->
 
 <?php echo '<script'; ?>
