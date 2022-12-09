@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-12-01 20:52:00
+/* Smarty version 3.1.43, created on 2022-12-02 16:06:19
   from '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/analitics-info.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_638905e01256a3_50028029',
+  'unifunc' => 'content_638a146bc88503_95944144',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f781cc93744b122f5816196e383b63e40411ff8a' => 
     array (
       0 => '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/analitics-info.tpl',
-      1 => 1669924308,
+      1 => 1669983383,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_638905e01256a3_50028029 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638a146bc88503_95944144 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="section-heading">
     <?php echo call_user_func_array( $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_FUNCTION]['l'][0], array( array('s'=>'Learn more about payments','mod'=>'bluepayment'),$_smarty_tpl ) );?>
 

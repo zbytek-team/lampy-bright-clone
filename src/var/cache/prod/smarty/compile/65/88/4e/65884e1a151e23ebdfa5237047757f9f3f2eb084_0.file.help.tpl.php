@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-12-01 20:52:00
+/* Smarty version 3.1.43, created on 2022-12-02 16:06:19
   from '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/help.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_638905e0136059_08835421',
+  'unifunc' => 'content_638a146bca0111_81181811',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '65884e1a151e23ebdfa5237047757f9f3f2eb084' => 
     array (
       0 => '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/help.tpl',
-      1 => 1669924308,
+      1 => 1669983383,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_638905e0136059_08835421 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638a146bca0111_81181811 (Smarty_Internal_Template $_smarty_tpl) {
 ?><ul class="bm-list-icon" style="margin-top: 20px;">
 	<li class="bm-list-icon__item">
 		<img class="bm-list-icon__icon" src="<?php echo call_user_func_array($_smarty_tpl->registered_plugins[ 'modifier' ][ 'escape' ][ 0 ], array( $_smarty_tpl->tpl_vars['src_img']->value,'html','UTF-8' ));?>

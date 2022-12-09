@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.43, created on 2022-12-01 20:52:00
+/* Smarty version 3.1.43, created on 2022-12-02 16:06:19
   from '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/benefits.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.43',
-  'unifunc' => 'content_638905e003f219_44793911',
+  'unifunc' => 'content_638a146bb79446_98574864',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '0684906a9d1e71b410446f463be86b2cf40488f8' => 
     array (
       0 => '/var/www/html/modules/bluepayment/views/templates/admin/_configure/helpers/form/benefits.tpl',
-      1 => 1669924308,
+      1 => 1669983383,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_638905e003f219_44793911 (Smarty_Internal_Template $_smarty_tpl) {
+function content_638a146bb79446_98574864 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="panel">
 
 	<style>
