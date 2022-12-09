@@ -1295,7 +1295,7 @@ CREATE TABLE `ps_admin_filter` (
   `filter_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin_filter_search_id_idx` (`employee`,`shop`,`controller`,`action`,`filter_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1306,7 +1306,7 @@ LOCK TABLES `ps_admin_filter` WRITE;
 /*!40000 ALTER TABLE `ps_admin_filter` DISABLE KEYS */;
 INSERT INTO `ps_admin_filter` VALUES
 (1,1,1,'ProductController','catalogAction','{\"filter_category\":\"\",\"filter_column_id_product\":\"\",\"filter_column_name\":\"\",\"filter_column_reference\":\"\",\"filter_column_name_category\":\"\",\"filter_column_price\":\"\",\"filter_column_sav_quantity\":\"\",\"filter_column_active\":\"\",\"last_offset\":\"0\",\"last_limit\":\"20\",\"last_orderBy\":\"id_product\",\"last_sortOrder\":\"desc\"}',''),
-(2,1,1,'','','{\"orderBy\":\"position\",\"sortOrder\":\"asc\",\"limit\":50,\"filters\":{\"id_category_parent\":\"2\"}}','category'),
+(2,1,1,'','','{\"orderBy\":\"position\",\"sortOrder\":\"asc\",\"limit\":50,\"filters\":{\"id_category_parent\":2}}','category'),
 (3,1,1,'','','{\"orderBy\":\"position\",\"sortOrder\":\"asc\",\"limit\":50,\"filters\":{\"id_cms_category_parent\":1}}','cms_page_category'),
 (4,1,1,'','','{\"orderBy\":\"position\",\"sortOrder\":\"asc\",\"limit\":50,\"filters\":{\"id_cms_category_parent\":1}}','cms_page'),
 (5,1,1,'','','{\"limit\":50,\"orderBy\":\"id_lang\",\"sortOrder\":\"ASC\",\"filters\":[]}','language'),
@@ -1332,8 +1332,10 @@ INSERT INTO `ps_admin_filter` VALUES
 (25,1,1,'','','{\"limit\":50,\"orderBy\":\"id_order_slip\",\"sortOrder\":\"asc\",\"filters\":[]}','credit_slip'),
 (26,1,1,'','','{\"limit\":50,\"orderBy\":\"id_order_message\",\"sortOrder\":\"asc\",\"filters\":[]}','order_message'),
 (27,1,1,'contacts','index','{\"limit\":10,\"orderBy\":\"id_contact\",\"sortOrder\":\"asc\",\"filters\":[]}',''),
-(28,1,1,'','','{\"limit\":50,\"orderBy\":\"id_meta\",\"sortOrder\":\"asc\",\"filters\":[]}','meta'),
-(29,1,1,'profile','index','{\"limit\":10,\"orderBy\":\"id_profile\",\"sortOrder\":\"asc\",\"filters\":[]}','');
+(28,1,1,'','','{\"limit\":50,\"orderBy\":\"title\",\"sortOrder\":\"asc\",\"filters\":[]}','meta'),
+(29,1,1,'profile','index','{\"limit\":10,\"orderBy\":\"id_profile\",\"sortOrder\":\"asc\",\"filters\":[]}',''),
+(30,1,1,'','','{\"limit\":50,\"orderBy\":\"date_add\",\"sortOrder\":\"DESC\",\"filters\":[]}','customer'),
+(31,1,1,'','','{\"limit\":50,\"orderBy\":\"id_address\",\"sortOrder\":\"asc\",\"filters\":[]}','address');
 /*!40000 ALTER TABLE `ps_admin_filter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1416,9 +1418,6 @@ CREATE TABLE `ps_alias` (
 
 LOCK TABLES `ps_alias` WRITE;
 /*!40000 ALTER TABLE `ps_alias` DISABLE KEYS */;
-INSERT INTO `ps_alias` VALUES
-(1,'bloose','blouse',1),
-(2,'blues','blouse',1);
 /*!40000 ALTER TABLE `ps_alias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1580,8 +1579,8 @@ CREATE TABLE `ps_attribute_group_lang` (
 LOCK TABLES `ps_attribute_group_lang` WRITE;
 /*!40000 ALTER TABLE `ps_attribute_group_lang` DISABLE KEYS */;
 INSERT INTO `ps_attribute_group_lang` VALUES
-(1,1,'Size','Size'),
-(2,1,'Color','Color'),
+(1,1,'Rozmiar','Rozmiar'),
+(2,1,'Kolor','Kolor'),
 (3,1,'Dimension','Dimension'),
 (4,1,'Paper Type','Paper Type');
 /*!40000 ALTER TABLE `ps_attribute_group_lang` ENABLE KEYS */;
@@ -1672,20 +1671,20 @@ INSERT INTO `ps_attribute_lang` VALUES
 (2,1,'M'),
 (3,1,'L'),
 (4,1,'XL'),
-(5,1,'Grey'),
-(6,1,'Taupe'),
-(7,1,'Beige'),
-(8,1,'White'),
-(9,1,'Off White'),
-(10,1,'Red'),
-(11,1,'Black'),
-(12,1,'Camel'),
-(13,1,'Orange'),
-(14,1,'Blue'),
-(15,1,'Green'),
-(16,1,'Yellow'),
-(17,1,'Brown'),
-(18,1,'Pink'),
+(5,1,'Szary'),
+(6,1,'Szarobrązowy'),
+(7,1,'Beżowy'),
+(8,1,'Biały'),
+(9,1,'Złamana biel'),
+(10,1,'Czerwony'),
+(11,1,'czarny'),
+(12,1,'Wielbłąd'),
+(13,1,'Pomarańczowy'),
+(14,1,'Niebieski'),
+(15,1,'Zielony'),
+(16,1,'Żółty'),
+(17,1,'Brązowy'),
+(18,1,'Różowy'),
 (19,1,'40x60cm'),
 (20,1,'60x90cm'),
 (21,1,'80x120cm'),
@@ -1759,7 +1758,7 @@ CREATE TABLE `ps_authorization_role` (
   `slug` varchar(191) NOT NULL,
   PRIMARY KEY (`id_authorization_role`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=937 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=941 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1853,6 +1852,10 @@ INSERT INTO `ps_authorization_role` VALUES
 (780,'ROLE_MOD_MODULE_PS_BUYBUTTONLITE_DELETE'),
 (778,'ROLE_MOD_MODULE_PS_BUYBUTTONLITE_READ'),
 (779,'ROLE_MOD_MODULE_PS_BUYBUTTONLITE_UPDATE'),
+(937,'ROLE_MOD_MODULE_PS_CASHONDELIVERY_CREATE'),
+(940,'ROLE_MOD_MODULE_PS_CASHONDELIVERY_DELETE'),
+(938,'ROLE_MOD_MODULE_PS_CASHONDELIVERY_READ'),
+(939,'ROLE_MOD_MODULE_PS_CASHONDELIVERY_UPDATE'),
 (549,'ROLE_MOD_MODULE_PS_CATEGORYTREE_CREATE'),
 (552,'ROLE_MOD_MODULE_PS_CATEGORYTREE_DELETE'),
 (550,'ROLE_MOD_MODULE_PS_CATEGORYTREE_READ'),
@@ -2792,7 +2795,7 @@ INSERT INTO `ps_badge` VALUES
 (75,311,'feature',41,3,15,1,0),
 (76,312,'feature',41,4,20,1,0),
 (77,313,'feature',41,1,5,1,0),
-(78,314,'feature',41,2,10,1,0),
+(78,314,'feature',41,2,10,1,1),
 (79,315,'feature',41,3,15,1,0),
 (80,316,'feature',41,4,20,1,0),
 (81,317,'feature',41,1,5,1,0),
@@ -2856,7 +2859,7 @@ INSERT INTO `ps_badge` VALUES
 (139,15,'feature',5,5,20,0,0),
 (140,16,'feature',5,6,20,0,0),
 (141,17,'achievement',7,1,5,0,1),
-(142,18,'achievement',7,2,10,0,0),
+(142,18,'achievement',7,2,10,0,1),
 (143,19,'feature',8,1,15,0,1),
 (144,20,'feature',8,2,15,0,0),
 (145,21,'feature',9,1,15,0,0),
@@ -2884,13 +2887,13 @@ INSERT INTO `ps_badge` VALUES
 (167,43,'achievement',12,5,25,0,0),
 (168,44,'achievement',12,6,30,0,0),
 (169,45,'achievement',13,1,5,0,1),
-(170,46,'achievement',13,2,10,0,0),
+(170,46,'achievement',13,2,10,0,1),
 (171,47,'achievement',13,3,15,0,0),
 (172,48,'achievement',13,4,20,0,0),
 (173,49,'achievement',13,5,25,0,0),
 (174,50,'achievement',13,6,30,0,0),
 (175,51,'achievement',14,1,5,0,1),
-(176,52,'achievement',14,2,10,0,0),
+(176,52,'achievement',14,2,10,0,1),
 (177,53,'achievement',14,3,15,0,0),
 (178,54,'achievement',14,4,20,0,0),
 (179,55,'achievement',14,5,25,0,0),
@@ -3554,8 +3557,8 @@ CREATE TABLE `ps_carrier_lang` (
 LOCK TABLES `ps_carrier_lang` WRITE;
 /*!40000 ALTER TABLE `ps_carrier_lang` DISABLE KEYS */;
 INSERT INTO `ps_carrier_lang` VALUES
-(1,1,1,'Pick up in-store'),
-(2,1,1,'Delivery next day!'),
+(1,1,1,'Odbiór w sklepie'),
+(2,1,1,'Dostawa następnego dnia!'),
 (3,1,1,'Buy more to pay less!'),
 (4,1,1,'The lighter the cheaper!'),
 (5,1,1,'Odbierz w Paczkomacie'),
@@ -3753,7 +3756,7 @@ CREATE TABLE `ps_cart` (
   KEY `id_shop_group` (`id_shop_group`),
   KEY `id_shop_2` (`id_shop`,`date_upd`),
   KEY `id_shop` (`id_shop`,`date_add`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3773,7 +3776,16 @@ INSERT INTO `ps_cart` VALUES
 (8,1,1,10,'{\"9\":\"10,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-01 20:53:30','2022-12-01 20:53:43','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"e2cb68ed1cd84d3f18238a6cb185295c572a1533\"}'),
 (9,1,1,12,'{\"9\":\"12,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-02 14:26:49','2022-12-02 14:43:24','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"94482b0384b6675a4c7f59d3e78b166c82d60735\"}'),
 (10,1,1,13,'{\"9\":\"13,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-02 14:54:45','2022-12-02 14:56:15','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checkout-payment-step\":{\"step_is_reachable\":false,\"step_is_complete\":false},\"checksum\":\"ab3e08d693a5b02eb5f3151572421976178e2124\"}'),
-(11,1,1,17,'{\"9\":\"17,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-02 14:59:15','2022-12-02 15:11:49','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"b4da1b72c0c7675399df77090f70dbbe232e7689\"}');
+(11,1,1,17,'{\"9\":\"17,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-02 14:59:15','2022-12-02 15:11:49','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"b4da1b72c0c7675399df77090f70dbbe232e7689\"}'),
+(12,1,1,17,'{\"9\":\"17,\"}',1,9,9,1,4,6,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 21:58:50','2022-12-09 22:12:45','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"33857cd79f8b470e06ea6be9af321adb25a261f9\"}'),
+(13,1,1,17,'{\"9\":\"17,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 22:34:28','2022-12-09 22:34:38','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"0387935b88666c6f01dd25c6e28e302975ec684a\"}'),
+(14,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 22:40:40','2022-12-09 23:10:23','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"0387935b88666c6f01dd25c6e28e302975ec684a\"}'),
+(15,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:15:54','2022-12-09 23:25:12','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"e2cb68ed1cd84d3f18238a6cb185295c572a1533\"}'),
+(16,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:41:30','2022-12-09 23:42:19','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"7e9c360b09ed611d51cdb54b4eec5e344245f54e\"}'),
+(17,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:52:02','2022-12-09 23:52:14','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"d83bca80adf70c06f479cfd238694e82fcbb3cf8\"}'),
+(18,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:53:42','2022-12-09 23:53:50','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"1785f0d63edb9df6a46b47be513b7d1e51c5a809\"}'),
+(19,1,1,19,'{\"9\":\"19,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:57:00','2022-12-09 23:57:09','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"465ed24830de37b0a254219cc067665ce69c6922\"}'),
+(20,1,1,16,'{\"9\":\"16,\"}',1,9,9,1,4,4,'923301d010bf0619382c333000b34aa6',0,0,'',0,0,'2022-12-09 23:58:50','2022-12-09 23:59:07','{\"checkout-personal-information-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-addresses-step\":{\"step_is_reachable\":true,\"step_is_complete\":true,\"use_same_address\":true},\"checkout-delivery-step\":{\"step_is_reachable\":true,\"step_is_complete\":true},\"checkout-payment-step\":{\"step_is_reachable\":true,\"step_is_complete\":false},\"checksum\":\"ce6744a7231c67bf5a6afa35442a8f02746f18ea\"}');
 /*!40000 ALTER TABLE `ps_cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3844,7 +3856,16 @@ INSERT INTO `ps_cart_product` VALUES
 (10,7,9,1,0,0,1,'2022-12-02 14:56:06'),
 (10,15,9,1,0,0,1,'2022-12-02 14:54:45'),
 (11,2,9,1,9,0,2,'2022-12-02 15:07:52'),
-(11,20,9,1,0,0,2,'2022-12-02 14:59:23');
+(11,20,9,1,0,0,2,'2022-12-02 14:59:23'),
+(12,20,9,1,0,0,2,'2022-12-09 22:02:58'),
+(13,2,9,1,9,0,1,'2022-12-09 22:34:28'),
+(14,2,9,1,9,0,1,'2022-12-09 22:40:40'),
+(15,1,9,1,1,0,1,'2022-12-09 23:15:54'),
+(16,15,9,1,0,0,1,'2022-12-09 23:42:12'),
+(17,20,9,1,0,0,1,'2022-12-09 23:52:02'),
+(18,6,9,1,0,0,1,'2022-12-09 23:53:42'),
+(19,9,9,1,23,0,1,'2022-12-09 23:57:00'),
+(20,10,9,1,25,0,4,'2022-12-09 23:58:50');
 /*!40000 ALTER TABLE `ps_cart_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4164,7 +4185,7 @@ INSERT INTO `ps_category` VALUES
 (6,2,1,2,9,14,1,'2022-11-26 15:04:16','2022-11-26 15:04:16',1,0),
 (7,6,1,3,10,11,1,'2022-11-26 15:04:16','2022-11-26 15:04:16',0,0),
 (8,6,1,3,12,13,1,'2022-11-26 15:04:16','2022-11-26 15:04:16',1,0),
-(9,2,1,2,15,16,1,'2022-11-26 15:04:16','2022-11-26 15:04:16',2,0);
+(9,2,1,2,15,16,1,'2022-11-26 15:04:16','2022-12-09 23:17:28',2,0);
 /*!40000 ALTER TABLE `ps_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4248,15 +4269,15 @@ CREATE TABLE `ps_category_lang` (
 LOCK TABLES `ps_category_lang` WRITE;
 /*!40000 ALTER TABLE `ps_category_lang` DISABLE KEYS */;
 INSERT INTO `ps_category_lang` VALUES
-(1,1,1,'Root','','root','','',''),
-(2,1,1,'Home','','home','','',''),
+(1,1,1,'Baza','','baza','','',''),
+(2,1,1,'Strona główna','','strona-glowna','','',''),
 (3,1,1,'Clothes','<p>Discover our favorites fashionable discoveries, a selection of cool items to integrate in your wardrobe. Compose a unique style with personality which matches your own.</p>','clothes','','',''),
 (4,1,1,'Men','<p>T-shirts, sweaters, hoodies and men\'s accessories. From basics to original creations, for every style. </p>','men','','',''),
 (5,1,1,'Women','<p>T-shirts, sweaters, hoodies and women\'s accessories. From basics to original creations, for every style. </p>','women','','',''),
-(6,1,1,'Accessories','<p>Items and accessories for your desk, kitchen or living room. Make your house a home with our eye-catching designs. </p>','accessories','','',''),
+(6,1,1,'Produkty powiązane','<p>Items and accessories for your desk, kitchen or living room. Make your house a home with our eye-catching designs. </p>','accessories','','',''),
 (7,1,1,'Stationery','<p>Notebooks, agendas, office accessories and more. Everything you need to combine the pleasant and the useful, either at work or at home. </p>','stationery','','',''),
 (8,1,1,'Home Accessories','<p>Details matter! Liven up your interior with our selection of home accessories. </p>','home-accessories','','',''),
-(9,1,1,'Art','<p>Framed poster and vector images, all you need to give personality to your walls or bring your creative projects to life.</p>','art','','','');
+(9,1,1,'Sztuka','<p>Framed poster and vector images, all you need to give personality to your walls or bring your creative projects to life.</p>','sztuka','','','');
 /*!40000 ALTER TABLE `ps_category_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4467,7 +4488,7 @@ CREATE TABLE `ps_cms_category_lang` (
 LOCK TABLES `ps_cms_category_lang` WRITE;
 /*!40000 ALTER TABLE `ps_cms_category_lang` DISABLE KEYS */;
 INSERT INTO `ps_cms_category_lang` VALUES
-(1,1,1,'Home','','home','','','');
+(1,1,1,'Strona główna','','strona-glowna','','','');
 /*!40000 ALTER TABLE `ps_cms_category_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4652,8 +4673,8 @@ INSERT INTO `ps_condition` VALUES
 (3,3,'configuration','PS_CSS_THEME_CACHE','==','1','','hook','actionAdminPerformanceControllerSaveAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (4,4,'configuration','PS_CIPHER_ALGORITHM','==','1','1','hook','actionAdminPerformanceControllerSaveAfter',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (5,5,'configuration','PS_MEDIA_SERVERS','==','1','','hook','actionAdminPerformanceControllerSaveAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
-(6,6,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','0','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-02 14:30:51'),
-(7,7,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-02 14:30:51'),
+(6,6,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','0','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-09 21:48:44'),
+(7,7,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-09 21:48:44'),
 (8,8,'sql','SELECT COUNT(*) FROM PREFIX_carrier WHERE name NOT IN (\"0\", \"My carrier\")','>','0','2','hook','actionObjectCarrierAddAfter',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (9,9,'sql','SELECT COUNT(*) FROM PREFIX_carrier WHERE name NOT IN (\"0\", \"My carrier\")','>','1','2','hook','actionObjectCarrierAddAfter',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (10,10,'sql','SELECT COUNT(*) FROM PREFIX_product WHERE reference NOT LIKE \"demo_%\"','>','0','1','hook','actionObjectProductAddAfter',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
@@ -4666,64 +4687,64 @@ INSERT INTO `ps_condition` VALUES
 (17,17,'sql','SELECT COUNT(*) FROM PREFIX_contact','>','2','2','hook','actionObjectContactAddAfter',0,'2022-12-01 17:31:06','2022-12-01 18:38:04'),
 (18,18,'sql','SELECT COUNT(*) FROM PREFIX_contact','>','4','2','hook','actionObjectContactAddAfter',0,'2022-12-01 17:31:06','2022-12-01 18:38:04'),
 (19,19,'install','','>','0','1','time','1',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
-(20,20,'install','','>=','7','','time','1',0,'2022-12-01 17:31:06','2022-12-02 14:12:36'),
+(20,20,'install','','>=','7','1','time','1',1,'2022-12-01 17:31:06','2022-12-09 21:44:56'),
 (21,21,'configuration','PS_LOGO','!=','logo.jpg','1','hook','actionAdminThemesControllerUpdate_optionsAfter',1,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (22,22,'sql','SELECT COUNT(*) FROM PREFIX_theme WHERE directory != \"default\" AND directory != \"prestashop\" AND directory ! \"default-bootstrap\"','>','0','0','hook','actionObjectShopUpdateAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
-(23,23,'configuration','PS_LOGGED_ON_ADDONS','==','1','','time','1',0,'2022-12-01 17:31:06','2022-12-02 14:12:36'),
+(23,23,'configuration','PS_LOGGED_ON_ADDONS','==','1','','time','1',0,'2022-12-01 17:31:06','2022-12-09 21:44:56'),
 (24,24,'configuration','PS_MULTISHOP_FEATURE_ACTIVE','==','1','','hook','actionAdminPreferencesControllerUpdate_optionsAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (25,25,'sql','SELECT COUNT(*) FROM PREFIX_shop','>','1','1','hook','actionObjectShopAddAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (26,26,'sql','SELECT COUNT(*) FROM PREFIX_shop','>','4','1','hook','actionObjectShopAddAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (27,27,'sql','SELECT COUNT(*) FROM PREFIX_shop_group','>','5','1','hook','actionObjectShopGroupAddAfter 	',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
 (28,28,'sql','SELECT COUNT(*) FROM PREFIX_shop_group','>','1','1','hook','actionObjectShopGroupAddAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
-(29,29,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','2','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-02 14:30:51'),
+(29,29,'sql','SELECT COUNT(distinct m.id_module) FROM PREFIX_hook h LEFT JOIN PREFIX_hook_module hm ON h.id_hook = hm.id_hook LEFT JOIN PREFIX_module m ON hm.id_module = m.id_module\r\nWHERE (h.name = \"displayPayment\" OR h.name = \"payment\") AND m.name NOT IN (\"bankwire\", \"cheque\", \"cashondelivery\")','>','2','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:06','2022-12-09 21:48:44'),
 (30,30,'sql','SELECT COUNT(*) FROM PREFIX_carrier WHERE name NOT IN (\"0\", \"My carrier\")','>','2','2','hook','actionObjectCarrierAddAfter',0,'2022-12-01 17:31:06','2022-12-01 17:31:06'),
-(31,31,'sql','SELECT SUM(total_paid_tax_excl / c.conversion_rate)\r\nFROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','200','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(32,32,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','2000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(33,33,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','20000','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(34,34,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','200000','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(35,35,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','2000000','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(36,36,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','20000000','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(37,37,'install','','>=','30','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(38,38,'install','','>=','182','','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(39,39,'install','','>=','365','','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(40,40,'install','','>=','730','','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(41,41,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','10','4','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(42,42,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','100','4','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(43,43,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','1000','4','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(44,44,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','10000','3','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(45,45,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','100000','3','time','3',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(46,46,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','1000000','3','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(31,31,'sql','SELECT SUM(total_paid_tax_excl / c.conversion_rate)\r\nFROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','200','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(32,32,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','2000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(33,33,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1 AND reference != \"XKBKNABJK\"','>=','20000','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(34,34,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','200000','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(35,35,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','2000000','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(36,36,'sql',' 	SELECT SUM(total_paid_tax_excl / c.conversion_rate) FROM PREFIX_orders o INNER JOIN PREFIX_currency c ON c.id_currency = o.id_currency WHERE valid = 1','>=','20000000','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(37,37,'install','','>=','30','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(38,38,'install','','>=','182','','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(39,39,'install','','>=','365','','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(40,40,'install','','>=','730','','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(41,41,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','10','4','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(42,42,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','100','4','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(43,43,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','1000','4','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(44,44,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','10000','4','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(45,45,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','100000','4','time','3',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(46,46,'sql','SELECT COUNT(*) FROM PREFIX_guest','>=','1000000','4','time','4',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (47,47,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','2','2','hook','actionObjectCartAddAfter',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(48,48,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','10','6','hook','actionObjectCartAddAfter',0,'2022-12-01 17:31:07','2022-12-02 14:59:16'),
-(49,49,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','100','6','hook','actionObjectCartAddAfter',0,'2022-12-01 17:31:07','2022-12-02 14:59:16'),
-(50,50,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','1000','3','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(51,51,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','10000','2','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(52,52,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','100000','2','time','8',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(48,48,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','10','10','hook','actionObjectCartAddAfter',1,'2022-12-01 17:31:07','2022-12-09 23:15:54'),
+(49,49,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','100','15','hook','actionObjectCartAddAfter',0,'2022-12-01 17:31:07','2022-12-09 23:58:50'),
+(50,50,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','1000','10','time','1',0,'2022-12-01 17:31:07','2022-12-09 23:17:14'),
+(51,51,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','10000','10','time','4',0,'2022-12-01 17:31:07','2022-12-09 23:17:14'),
+(52,52,'sql','SELECT COUNT(*) FROM PREFIX_cart WHERE secure_key != \"b44a6d9efd7a0076a0fbce6b15eaf3b1\"','>=','100000','10','time','8',0,'2022-12-01 17:31:07','2022-12-09 23:17:14'),
 (53,53,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','1','1','hook','actionObjectOrderAddAfter',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(54,54,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','10','5','hook','actionObjectOrderAddAfter',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(55,55,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','100','5','hook','actionObjectOrderAddAfter',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(56,56,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','1000','1','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(57,57,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','10000','1','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(58,58,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','100000','1','time','8',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(54,54,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','10','10','hook','actionObjectOrderAddAfter',1,'2022-12-01 17:31:07','2022-12-09 23:42:24'),
+(55,55,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','100','14','hook','actionObjectOrderAddAfter',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(56,56,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','1000','10','time','2',0,'2022-12-01 17:31:07','2022-12-09 23:43:24'),
+(57,57,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','10000','10','time','4',0,'2022-12-01 17:31:07','2022-12-09 23:43:24'),
+(58,58,'sql','SELECT COUNT(*) FROM PREFIX_orders WHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\")','>=','100000','10','time','8',0,'2022-12-01 17:31:07','2022-12-09 23:43:24'),
 (59,59,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','1','1','hook','actionObjectCustomerAddAfter',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (60,60,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','10','3','hook','actionObjectCustomerAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (61,61,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','100','3','hook','actionObjectCustomerAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(62,62,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','1000','3','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(63,63,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','10000','1','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(64,64,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','100000','1','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(62,62,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','1000','3','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(63,63,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','10000','3','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(64,64,'sql','SELECT COUNT(*) FROM PREFIX_customer WHERE email != \"pub@prestashop.com\"','>=','100000','3','time','4',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (65,65,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','1','0','hook','actionObjectCustomerThreadAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (66,66,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','10','0','hook','actionObjectCustomerThreadAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (67,67,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','100','0','hook','actionObjectCustomerThreadAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(68,68,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','1000','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(69,69,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','10000','0','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(70,70,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','100000','0','time','8',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(71,76,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"CA\",\r\n\"GL\",\r\n\"PM\",\r\n\"US\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(72,79,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"UM\",\r\n\"AS\",\r\n\"AU\",\r\n\"CK\",\r\n\"FJ\",\r\n\"FM\",\r\n\"GU\",\r\n\"KI\",\r\n\"MH,\"\r\n\"MP\",\r\n\"NC\",\r\n\"NF\",\r\n\"NR\",\r\n\"NU\",\r\n\"NZ\",\r\n\"PF\",\r\n\"PG\",\r\n\"PN\",\r\n\"PW\",\r\n\"SB\",\r\n\"TK\",\r\n\"TO\",\r\n\"TV\",\r\n\"VU\",\r\n\"WF\",\r\n\"WS\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(73,85,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"KG\",\r\n\"KZ\",\r\n\"TJ\",\r\n\"TM\",\r\n\"UZ\",\r\n\"AE\",\r\n\"AM\",\r\n\"AZ\",\r\n\"BH\",\r\n\"CY\",\r\n\"GE\",\r\n\"IL\",\r\n\"IQ\",\r\n\"IR\",\r\n\"JO\",\r\n\"KW\",\r\n\"LB\",\r\n\"OM\",\r\n\"QA\",\r\n\"SA\",\r\n\"SY\",\r\n\"TR\",\r\n\"YE\",\r\n\"AF\",\r\n\"BD\",\r\n\"BT\",\r\n\"IN\",\r\n\"IO\",\r\n\"LK\",\r\n\"MV\",\r\n\"NP\",\r\n\"PK\",\r\n\"CN\",\r\n\"HK\",\r\n\"JP\",\r\n\"KP\",\r\n\"KR\",\r\n\"MO\",\r\n\"TW\",\r\n\"MN\",\r\n\"BN\",\r\n\"CC\",\r\n\"CX\",\r\n\"ID\",\r\n\"KH\",\r\n\"LA\",\r\n\"MM\",\r\n\"MY\",\r\n\"PH\",\r\n\"SG\",\r\n\"TH\",\r\n\"TP\",\r\n\"VN\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(74,86,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BZ\",\r\n\"CR\",\r\n\"GT\",\r\n\"HN\",\r\n\"MX\",\r\n\"NI\",\r\n\"PA\",\r\n\"SV\",\r\n\"AG\",\r\n\"AI\",\r\n\"AN\",\r\n\"AW\",\r\n\"BB\",\r\n\"BM\",\r\n\"BS\",\r\n\"CU\",\r\n\"DM\",\r\n\"DO\",\r\n\"GD\",\r\n\"GP\",\r\n\"HT\",\r\n\"JM\",\r\n\"KN\",\r\n\"KY\",\r\n\"LC\",\r\n\"MQ\",\r\n\"MS\",\r\n\"PR\",\r\n\"TC\",\r\n\"TT\",\r\n\"VC\",\r\n\"VG\",\r\n\"VI\",\r\n\"AR\",\r\n\"BO\",\r\n\"BR\",\r\n\"CL\",\r\n\"CO\",\r\n\"EC\",\r\n\"FK\",\r\n\"GF\",\r\n\"GY\",\r\n\"PE\",\r\n\"PY\",\r\n\"SR\",\r\n\"UY\",\r\n\"VE\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(75,87,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BE\",\r\n\"DE\",\r\n\"FR\",\r\n\"FX\",\r\n\"GB\",\r\n\"IE\",\r\n\"LU\",\r\n\"MC\",\r\n\"NL\",\r\n\"IT\",\r\n\"MT\",\r\n\"SM\",\r\n\"VA\",\r\n\"AD\",\r\n\"ES\",\r\n\"GI\",\r\n\"PT\",\r\n\"BY\",\r\n\"EE\",\r\n\"LT\",\r\n\"LV\",\r\n\"MD\",\r\n\"PL\",\r\n\"UA\",\r\n\"AL\",\r\n\"BA\",\r\n\"BG\",\r\n\"GR\",\r\n\"HR\",\r\n\"MK\",\r\n\"RO\",\r\n\"SI\",\r\n\"YU\",\r\n\"RU\",\r\n\"AT\",\r\n\"CH\",\r\n\"CZ\",\r\n\"HU\",\r\n\"LI\",\r\n\"SK\",\r\n\"DK\",\r\n\"FI\",\r\n\"FO\",\r\n\"IS\",\r\n\"NO\",\r\n\"SE\",\r\n\"SJ\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(76,88,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BI\",\r\n\"CF\",\r\n\"CG\",\r\n\"RW\",\r\n\"TD\",\r\n\"ZR\",\r\n\"DJ\",\r\n\"ER\",\r\n\"ET\",\r\n\"KE\",\r\n\"SO\",\r\n\"TZ\",\r\n\"UG\",\r\n\"KM\",\r\n\"MG\",\r\n\"MU\",\r\n\"RE\",\r\n\"SC\",\r\n\"YT\",\r\n\"AO\",\r\n\"BW\",\r\n\"LS\",\r\n\"MW\",\r\n\"MZ\",\r\n\"NA\",\r\n\"SZ\",\r\n\"ZA\",\r\n\"ZM\",\r\n\"ZW\",\r\n\"BF\",\r\n\"BJ\",\r\n\"CI\",\r\n\"CM\",\r\n\"CV\",\r\n\"GA\",\r\n\"GH\",\r\n\"GM\",\r\n\"GN\",\r\n\"GQ\",\r\n\"GW\",\r\n\"LR\",\r\n\"ML\",\r\n\"MR\",\r\n\"NE\",\r\n\"NG\",\r\n\"SL\",\r\n\"SN\",\r\n\"ST\",\r\n\"TG\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(77,89,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"DZ\",\r\n\"EG\",\r\n\"EH\",\r\n\"LY\",\r\n\"MA\",\r\n\"SD\",\r\n\"TN\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
+(68,68,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','1000','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(69,69,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','10000','0','time','4',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(70,70,'sql','SELECT COUNT(*) FROM PREFIX_customer_thread','>=','100000','0','time','8',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(71,76,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"CA\",\r\n\"GL\",\r\n\"PM\",\r\n\"US\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(72,79,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"UM\",\r\n\"AS\",\r\n\"AU\",\r\n\"CK\",\r\n\"FJ\",\r\n\"FM\",\r\n\"GU\",\r\n\"KI\",\r\n\"MH,\"\r\n\"MP\",\r\n\"NC\",\r\n\"NF\",\r\n\"NR\",\r\n\"NU\",\r\n\"NZ\",\r\n\"PF\",\r\n\"PG\",\r\n\"PN\",\r\n\"PW\",\r\n\"SB\",\r\n\"TK\",\r\n\"TO\",\r\n\"TV\",\r\n\"VU\",\r\n\"WF\",\r\n\"WS\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(73,85,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"KG\",\r\n\"KZ\",\r\n\"TJ\",\r\n\"TM\",\r\n\"UZ\",\r\n\"AE\",\r\n\"AM\",\r\n\"AZ\",\r\n\"BH\",\r\n\"CY\",\r\n\"GE\",\r\n\"IL\",\r\n\"IQ\",\r\n\"IR\",\r\n\"JO\",\r\n\"KW\",\r\n\"LB\",\r\n\"OM\",\r\n\"QA\",\r\n\"SA\",\r\n\"SY\",\r\n\"TR\",\r\n\"YE\",\r\n\"AF\",\r\n\"BD\",\r\n\"BT\",\r\n\"IN\",\r\n\"IO\",\r\n\"LK\",\r\n\"MV\",\r\n\"NP\",\r\n\"PK\",\r\n\"CN\",\r\n\"HK\",\r\n\"JP\",\r\n\"KP\",\r\n\"KR\",\r\n\"MO\",\r\n\"TW\",\r\n\"MN\",\r\n\"BN\",\r\n\"CC\",\r\n\"CX\",\r\n\"ID\",\r\n\"KH\",\r\n\"LA\",\r\n\"MM\",\r\n\"MY\",\r\n\"PH\",\r\n\"SG\",\r\n\"TH\",\r\n\"TP\",\r\n\"VN\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(74,86,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BZ\",\r\n\"CR\",\r\n\"GT\",\r\n\"HN\",\r\n\"MX\",\r\n\"NI\",\r\n\"PA\",\r\n\"SV\",\r\n\"AG\",\r\n\"AI\",\r\n\"AN\",\r\n\"AW\",\r\n\"BB\",\r\n\"BM\",\r\n\"BS\",\r\n\"CU\",\r\n\"DM\",\r\n\"DO\",\r\n\"GD\",\r\n\"GP\",\r\n\"HT\",\r\n\"JM\",\r\n\"KN\",\r\n\"KY\",\r\n\"LC\",\r\n\"MQ\",\r\n\"MS\",\r\n\"PR\",\r\n\"TC\",\r\n\"TT\",\r\n\"VC\",\r\n\"VG\",\r\n\"VI\",\r\n\"AR\",\r\n\"BO\",\r\n\"BR\",\r\n\"CL\",\r\n\"CO\",\r\n\"EC\",\r\n\"FK\",\r\n\"GF\",\r\n\"GY\",\r\n\"PE\",\r\n\"PY\",\r\n\"SR\",\r\n\"UY\",\r\n\"VE\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(75,87,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BE\",\r\n\"DE\",\r\n\"FR\",\r\n\"FX\",\r\n\"GB\",\r\n\"IE\",\r\n\"LU\",\r\n\"MC\",\r\n\"NL\",\r\n\"IT\",\r\n\"MT\",\r\n\"SM\",\r\n\"VA\",\r\n\"AD\",\r\n\"ES\",\r\n\"GI\",\r\n\"PT\",\r\n\"BY\",\r\n\"EE\",\r\n\"LT\",\r\n\"LV\",\r\n\"MD\",\r\n\"PL\",\r\n\"UA\",\r\n\"AL\",\r\n\"BA\",\r\n\"BG\",\r\n\"GR\",\r\n\"HR\",\r\n\"MK\",\r\n\"RO\",\r\n\"SI\",\r\n\"YU\",\r\n\"RU\",\r\n\"AT\",\r\n\"CH\",\r\n\"CZ\",\r\n\"HU\",\r\n\"LI\",\r\n\"SK\",\r\n\"DK\",\r\n\"FI\",\r\n\"FO\",\r\n\"IS\",\r\n\"NO\",\r\n\"SE\",\r\n\"SJ\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(76,88,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"BI\",\r\n\"CF\",\r\n\"CG\",\r\n\"RW\",\r\n\"TD\",\r\n\"ZR\",\r\n\"DJ\",\r\n\"ER\",\r\n\"ET\",\r\n\"KE\",\r\n\"SO\",\r\n\"TZ\",\r\n\"UG\",\r\n\"KM\",\r\n\"MG\",\r\n\"MU\",\r\n\"RE\",\r\n\"SC\",\r\n\"YT\",\r\n\"AO\",\r\n\"BW\",\r\n\"LS\",\r\n\"MW\",\r\n\"MZ\",\r\n\"NA\",\r\n\"SZ\",\r\n\"ZA\",\r\n\"ZM\",\r\n\"ZW\",\r\n\"BF\",\r\n\"BJ\",\r\n\"CI\",\r\n\"CM\",\r\n\"CV\",\r\n\"GA\",\r\n\"GH\",\r\n\"GM\",\r\n\"GN\",\r\n\"GQ\",\r\n\"GW\",\r\n\"LR\",\r\n\"ML\",\r\n\"MR\",\r\n\"NE\",\r\n\"NG\",\r\n\"SL\",\r\n\"SN\",\r\n\"ST\",\r\n\"TG\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(77,89,'sql','SELECT IFNULL(id_order, 0) FROM PREFIX_orders o LEFT JOIN PREFIX_address a ON o.id_address_delivery = a.id_address LEFT JOIN PREFIX_country c ON c.id_country = a.id_country WHERE o.valid = 1 AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\" AND c.iso_code IN (\r\n\"DZ\",\r\n\"EG\",\r\n\"EH\",\r\n\"LY\",\r\n\"MA\",\r\n\"SD\",\r\n\"TN\"\r\n)','!=','0','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
 (78,90,'sql','SELECT COUNT(*) FROM PREFIX_employee','>=','2','1','hook','actionObjectEmployeeAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (79,91,'sql','SELECT COUNT(*) FROM PREFIX_employee','>=','3','1','hook','actionObjectEmployeeAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (80,92,'sql','SELECT COUNT(*) FROM PREFIX_employee','>=','5','1','hook','actionObjectEmployeeAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
@@ -4733,9 +4754,9 @@ INSERT INTO `ps_condition` VALUES
 (84,96,'sql','SELECT id_image FROM PREFIX_image WHERE id_image > 26','>','0','0','hook','actionObjectImageAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (85,97,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','50','24','hook','actionObjectImageAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (86,98,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','100','24','hook','actionObjectImageAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(87,99,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','1000','24','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(88,100,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','10000','23','time','4',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(89,101,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','50000','23','time','8',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(87,99,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','1000','24','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(88,100,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','10000','24','time','4',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(89,101,'sql','SELECT COUNT(*) FROM PREFIX_image','>=','50000','24','time','8',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (90,102,'sql','SELECT id_cms FROM PREFIX_cms WHERE id_cms > 5','>','0','0','hook','actionObjectCMSAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (91,103,'sql','SELECT COUNT(*) FROM PREFIX_cart_rule','>=','1','0','hook','actionObjectCartRuleAddAfter 	',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (92,104,'sql','SELECT COUNT(*) FROM PREFIX_cart_rule','>=','10','0','hook','actionObjectCartRuleAddAfter 	',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
@@ -4744,16 +4765,16 @@ INSERT INTO `ps_condition` VALUES
 (95,107,'sql','SELECT COUNT(*) FROM PREFIX_cart_rule','>=','500','0','hook','actionObjectCartRuleAddAfter 	',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (96,108,'sql','SELECT COUNT(*) FROM PREFIX_cart_rule','>=','5000','0','hook','actionObjectCartRuleAddAfter 	',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (97,109,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','1','0','hook','newOrder',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(98,110,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','10','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(99,111,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','100','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(100,112,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','10000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(101,113,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','1000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
-(102,114,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','5000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-02 15:11:54'),
+(98,110,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','10','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(99,111,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','100','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(100,112,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','10000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(101,113,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','1000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
+(102,114,'sql','SELECT COUNT(*) FROM PREFIX_orders o INNER JOIN PREFIX_address a ON a.id_address = o.id_address_delivery\r\nWHERE reference NOT IN (\"XKBKNABJK\", \"OHSATSERP\", \"FFATNOMMJ\", \"UOYEVOLI\", \"KHWLILZLL\") AND a.id_country != \"{config}PS_COUNTRY_DEFAULT{/config}\"','>=','5000','0','hook','actionOrderStatusUpdate',0,'2022-12-01 17:31:07','2022-12-09 23:59:11'),
 (103,132,'sql','SELECT count(id_configuration) FROM PREFIX_configuration WHERE `name` = \'PS_SHOP_DOMAIN\' AND value IN (\'127.0.0.1\', \'localhost\' )','==','1','1','time','1',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(104,136,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%ebay%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(105,140,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%moneybookers%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
+(104,136,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%ebay%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(105,140,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%moneybookers%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
 (106,142,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%paypal%\"','>=','1','1','hook','actionModuleInstallAfter',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(107,158,'install','','>=','90','','time','2',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
+(107,158,'install','','>=','90','','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (108,159,'install','','<=','90','1','time','2',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (109,165,'sql','SELECT COUNT(s.`id_store`) FROM PREFIX_store s WHERE `latitude` NOT IN (\'25.76500500\', \'26.13793600\', \'26.00998700\', \'25.73629600\', \'25.88674000\') AND `longitude` NOT IN (\'-80.24379700\', \'-80.13943500\', \'-80.29447200\', \'-80.24479700\', \'-80.16329200\')','>','0','0','hook','actionAdminStoresControllerSaveAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (110,166,'sql','SELECT COUNT(s.`id_store`) FROM PREFIX_store s WHERE `latitude` NOT IN (\'25.76500500\', \'26.13793600\', \'26.00998700\', \'25.73629600\', \'25.88674000\') AND `longitude` NOT IN (\'-80.24379700\', \'-80.13943500\', \'-80.29447200\', \'-80.24479700\', \'-80.16329200\')','>','1','0','hook','actionAdminStoresControllerSaveAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
@@ -4766,131 +4787,131 @@ INSERT INTO `ps_condition` VALUES
 (117,173,'sql','SELECT COUNT(*) FROM PREFIX_webservice_account','>=','3','0','hook','actionAdminWebserviceControllerSaveAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (118,174,'sql','SELECT COUNT(*) FROM PREFIX_webservice_account','>=','4','0','hook','actionAdminWebserviceControllerSaveAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
 (119,175,'sql','SELECT count(*) FROM	 PREFIX_configuration WHERE name = \'PS_HOSTED_MODE\'','==','0','0','time','1',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(120,209,'configuration','EBAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(121,320,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%shopgate%\" ','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(122,322,'configuration','SHOPGATE_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(123,323,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%shoppingfluxexport%\" ','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
+(120,209,'configuration','EBAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(121,320,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%shopgate%\" ','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(122,322,'configuration','SHOPGATE_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(123,323,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%shoppingfluxexport%\" ','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
 (124,324,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%shoppingfluxexport%\" ','==','0','0','time','1',1,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(125,325,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE name LIKE \'SHOPPINGFLUXEXPORT_CONFIGURATION_OK\' OR name LIKE \'SHOPPINGFLUXEXPORT_CONFIGURED\'','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(126,326,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'MONEYBOOKERS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'MB_PAY_TO_EMAIL \') AND ( value != \'testaccount2@moneybookers.com \'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(127,358,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%ebay%\" AND os.logable = 1','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(128,359,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%ebay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(129,375,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%shopgate%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(130,376,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%shopgate%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(131,377,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%moneybookers%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(132,394,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%sofortbanking%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
+(125,325,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE name LIKE \'SHOPPINGFLUXEXPORT_CONFIGURATION_OK\' OR name LIKE \'SHOPPINGFLUXEXPORT_CONFIGURED\'','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(126,326,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'MONEYBOOKERS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'MB_PAY_TO_EMAIL \') AND ( value != \'testaccount2@moneybookers.com \'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(127,358,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%ebay%\" AND os.logable = 1','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(128,359,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%ebay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(129,375,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%shopgate%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(130,376,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%shopgate%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(131,377,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%moneybookers%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(132,394,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%sofortbanking%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (133,399,'sql','SELECT COUNT(*) FROM PREFIX_product WHERE reference NOT LIKE \"demo_%\"','>','499','1','hook','actionObjectProductAddAfter',0,'2022-12-01 17:31:07','2022-12-01 17:31:07'),
-(134,424,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%alliance3%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(135,425,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ALLIANCE3_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'ALLIANCE_DEMO\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(136,426,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%alliance3%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(137,427,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%alliance3%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(138,428,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%authorizeaim%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(139,429,'configuration','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'AUTHORIZEAIM_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'AUTHORIZE_AIM_SANDBOX\') AND ( value = \'0\'))','==','2','','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(140,430,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%authorizeaim%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(141,431,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%authorizeaim%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
+(134,424,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%alliance3%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(135,425,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ALLIANCE3_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'ALLIANCE_DEMO\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(136,426,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%alliance3%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(137,427,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%alliance3%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(138,428,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%authorizeaim%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(139,429,'configuration','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'AUTHORIZEAIM_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'AUTHORIZE_AIM_SANDBOX\') AND ( value = \'0\'))','==','2','','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(140,430,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%authorizeaim%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(141,431,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%authorizeaim%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
 (142,434,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%bluepay%\"','>=','1','1','hook','actionModuleInstallAfter',1,'2022-12-01 17:31:07','2022-12-01 20:51:49'),
-(143,435,'configuration','BLUEPAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(144,436,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluepay%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(145,437,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluepay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(146,438,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%payplug%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(147,439,'configuration','PAYPLUG_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(148,440,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payplug%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(149,441,'sql','SELECT SUM(o.total_paid) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payplug%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','10000','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(150,442,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%affinityitems%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(151,443,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE name LIKE \'AFFINITYITEMS_CONFIGURATION_OK\' AND value = \'1\'','==','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(152,446,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%dpdpoland%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(153,447,'configuration','DPDPOLAND_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(154,448,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%dpdpoland%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(155,449,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%dpdpoland%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(156,450,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%envoimoinscher%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(157,451,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ENVOIMOINSCHER_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'EMC_ENV \') AND ( value != \'TEST\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(158,452,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%envoimoinscher%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(159,453,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%envoimoinscher%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(160,454,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%klikandpay%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(161,455,'configuration','KLIKANDPAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(162,456,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%klikandpay%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(163,457,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%klikandpay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(164,458,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%clickline%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(165,459,'configuration','CLICKLINE_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(166,460,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%clickline%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(167,461,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%clickline%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(168,462,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%cdiscount%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(169,463,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(170,464,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%cdiscount%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(171,465,'sql','SELECT SUM(o.total_paid) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%cdiscount%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 365 DAY)','>=','500','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(172,467,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%erpillicopresta%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(173,468,'configuration','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ERPILLICOPRESTA_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'ERP_LICENCE_VALIDITY \') AND ( value == \'1\')) OR (( name LIKE \'ERP_MONTH_FREE_ACTIVE \') AND ( value == \'0\'))','==','3','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(174,469,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(175,470,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(176,471,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%netreviews%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(177,472,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'NETREVIEWS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'AVISVERIFIES_URLCERTIFICAT \') AND ( value IS NOT LIKE \'%preprod%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(178,473,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(179,474,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(180,475,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%bluesnap%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(181,476,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'BLUESNAP_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'BLUESNAP_SANDBOX \') AND ( value NOT LIKE \'%sandbox%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(182,477,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluesnap%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(183,478,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluesnap%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(184,479,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%desjardins%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(185,480,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'DESJARDINS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'DESJARDINS_MODE \') AND ( value NOT LIKE \'%test%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(186,481,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%desjardins%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(187,482,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%desjardins%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(188,483,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%firstdata%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(189,484,'configuration','FIRSTDATA_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(190,485,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%firstdata%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(191,486,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%firstdata%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(192,487,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%giveit%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(193,488,'sql','GIVEIT_CONFIGURATION_OK','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(194,489,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(195,490,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(196,491,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%ganalytics%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(197,492,'configuration','GANALYTICS_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(198,493,'sql','SELECT 1','!=','1','1','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(199,494,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(200,496,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%pagseguro%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(201,497,'configuration','PAGSEGURO_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(202,498,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%pagseguro%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(203,499,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%pagseguro%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(204,500,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%paypalmx%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(205,501,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYPALMX_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYPAL_MX_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(206,502,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(207,503,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(208,505,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%paypalusa%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(209,506,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYPALUSA_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYPAL_USA_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(210,507,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalusa%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(211,508,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(212,509,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%payulatam%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(213,510,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYULATAM_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYU_LATAM_TEST\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(214,511,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payulatam%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(215,512,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payulatam%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(216,513,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%prestastats%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(217,514,'configuration','PRESTASTATS_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(218,515,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(219,516,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(220,517,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%riskified%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(221,518,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'RISKIFIED_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'RISKIFIED_MODE\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(222,519,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%riskified%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(223,520,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%riskified%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(224,521,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%simplifycommerce%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(225,522,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'SIMPLIFY_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'SIMPLIFY_MODE\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(226,523,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%simplifycommerce%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(227,524,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%simplifycommerce%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(228,525,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%vtpayment%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(229,526,'configuration','VTPAYMENT_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(230,527,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%vtpayment%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(231,528,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%vtpayment%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(232,529,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%yotpo%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(233,530,'configuration','YOTPO_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(234,531,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(235,532,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(236,533,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%yotpo%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(237,534,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'YOUSTICERESOLUTIONSYSTEM_CONF_OK\') AND ( value = \'1\')) OR (( name LIKE \'YRS_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(238,535,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(239,536,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(240,537,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%loyaltylion%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-02 14:30:51'),
-(241,538,'configuration','LOYALTYLION_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36'),
-(242,539,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(243,540,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-01 20:52:01'),
-(244,542,'sql','SELECT \'{config} PS_VERSION_DB{/config}\' >= \'1.7.0.0\' AND < \'1.8.0.0\'','==','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-02 14:12:36');
+(143,435,'configuration','BLUEPAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(144,436,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluepay%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(145,437,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluepay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(146,438,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%payplug%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(147,439,'configuration','PAYPLUG_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(148,440,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payplug%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(149,441,'sql','SELECT SUM(o.total_paid) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payplug%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','10000','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(150,442,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%affinityitems%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(151,443,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE name LIKE \'AFFINITYITEMS_CONFIGURATION_OK\' AND value = \'1\'','==','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(152,446,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%dpdpoland%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(153,447,'configuration','DPDPOLAND_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(154,448,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%dpdpoland%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(155,449,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%dpdpoland%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(156,450,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%envoimoinscher%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(157,451,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ENVOIMOINSCHER_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'EMC_ENV \') AND ( value != \'TEST\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(158,452,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%envoimoinscher%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(159,453,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%envoimoinscher%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(160,454,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%klikandpay%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(161,455,'configuration','KLIKANDPAY_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(162,456,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%klikandpay%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(163,457,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%klikandpay%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(164,458,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%clickline%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(165,459,'configuration','CLICKLINE_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(166,460,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%clickline%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(167,461,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state LEFT JOIN PREFIX_carrier c ON c.id_carrier = o.id_carrier WHERE c.name like \"%clickline%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','100','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(168,462,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%cdiscount%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(169,463,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(170,464,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%cdiscount%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(171,465,'sql','SELECT SUM(o.total_paid) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%cdiscount%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 365 DAY)','>=','500','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(172,467,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%erpillicopresta%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(173,468,'configuration','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'ERPILLICOPRESTA_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'ERP_LICENCE_VALIDITY \') AND ( value == \'1\')) OR (( name LIKE \'ERP_MONTH_FREE_ACTIVE \') AND ( value == \'0\'))','==','3','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(174,469,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(175,470,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(176,471,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%netreviews%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(177,472,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'NETREVIEWS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'AVISVERIFIES_URLCERTIFICAT \') AND ( value IS NOT LIKE \'%preprod%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(178,473,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(179,474,'sql','SELECT 1','!=','1','1','time','100',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(180,475,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%bluesnap%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(181,476,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'BLUESNAP_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'BLUESNAP_SANDBOX \') AND ( value NOT LIKE \'%sandbox%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(182,477,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluesnap%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(183,478,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%bluesnap%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(184,479,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%desjardins%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(185,480,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'DESJARDINS_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'DESJARDINS_MODE \') AND ( value NOT LIKE \'%test%\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(186,481,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%desjardins%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(187,482,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%desjardins%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(188,483,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%firstdata%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(189,484,'configuration','FIRSTDATA_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(190,485,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%firstdata%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(191,486,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%firstdata%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(192,487,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%giveit%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(193,488,'sql','GIVEIT_CONFIGURATION_OK','>=','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(194,489,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(195,490,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(196,491,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%ganalytics%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(197,492,'configuration','GANALYTICS_CONFIGURATION_OK','==','1','1','time','1',1,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(198,493,'sql','SELECT 1','!=','1','1','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(199,494,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(200,496,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%pagseguro%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(201,497,'configuration','PAGSEGURO_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(202,498,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%pagseguro%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(203,499,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%pagseguro%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(204,500,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%paypalmx%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(205,501,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYPALMX_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYPAL_MX_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(206,502,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(207,503,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(208,505,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%paypalusa%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(209,506,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYPALUSA_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYPAL_USA_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(210,507,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalusa%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(211,508,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%paypalmx%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(212,509,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%payulatam%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(213,510,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'PAYULATAM_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'PAYU_LATAM_TEST\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(214,511,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payulatam%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(215,512,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%payulatam%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(216,513,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%prestastats%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(217,514,'configuration','PRESTASTATS_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(218,515,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(219,516,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(220,517,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%riskified%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(221,518,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'RISKIFIED_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'RISKIFIED_MODE\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(222,519,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%riskified%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(223,520,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%riskified%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(224,521,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%simplifycommerce%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(225,522,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'SIMPLIFY_CONFIGURATION_OK\') AND ( value = \'1\')) OR (( name LIKE \'SIMPLIFY_MODE\') AND ( value = \'1\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(226,523,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%simplifycommerce%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(227,524,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%simplifycommerce%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(228,525,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%vtpayment%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(229,526,'configuration','VTPAYMENT_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(230,527,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%vtpayment%\" AND os.logable = 1','>=','1','0','time','2',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(231,528,'sql','SELECT COUNT(*) FROM PREFIX_orders o LEFT JOIN PREFIX_order_state os ON os.id_order_state = o.current_state WHERE o.module like \"%vtpayment%\" AND os.logable = 1 AND o.date_add > DATE_SUB(NOW(), INTERVAL 90 DAY)','>=','30','0','time','7',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(232,529,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%yotpo%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(233,530,'configuration','YOTPO_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(234,531,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(235,532,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(236,533,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%yotpo%\"','==','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(237,534,'sql','SELECT COUNT(*) FROM PREFIX_configuration WHERE (( name LIKE \'YOUSTICERESOLUTIONSYSTEM_CONF_OK\') AND ( value = \'1\')) OR (( name LIKE \'YRS_SANDBOX\') AND ( value = \'0\'))','==','2','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(238,535,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(239,536,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(240,537,'sql','SELECT COUNT( id_module ) FROM PREFIX_module WHERE `name` like \"%loyaltylion%\"','>=','1','0','hook','actionModuleInstallAfter',0,'2022-12-01 17:31:07','2022-12-09 21:48:44'),
+(241,538,'configuration','LOYALTYLION_CONFIGURATION_OK','==','1','','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(242,539,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(243,540,'sql','SELECT 1','!=','1','1','time','365',0,'2022-12-01 17:31:07','2022-12-09 21:44:56'),
+(244,542,'sql','SELECT \'{config} PS_VERSION_DB{/config}\' >= \'1.7.0.0\' AND < \'1.8.0.0\'','==','1','0','time','1',0,'2022-12-01 17:31:07','2022-12-09 21:44:56');
 /*!40000 ALTER TABLE `ps_condition` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5197,7 +5218,7 @@ CREATE TABLE `ps_configuration` (
   KEY `name` (`name`),
   KEY `id_shop` (`id_shop`),
   KEY `id_shop_group` (`id_shop_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=566 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=586 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -5214,12 +5235,12 @@ INSERT INTO `ps_configuration` VALUES
 (5,NULL,NULL,'PS_GROUP_FEATURE_ACTIVE','1','2022-11-26 15:03:24','2022-11-26 15:03:24'),
 (6,NULL,NULL,'PS_CURRENCY_DEFAULT','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (7,NULL,NULL,'PS_COUNTRY_DEFAULT','14','0000-00-00 00:00:00','2022-11-26 15:03:25'),
-(8,NULL,NULL,'PS_REWRITING_SETTINGS','0','0000-00-00 00:00:00','2022-11-26 15:03:27'),
+(8,NULL,NULL,'PS_REWRITING_SETTINGS',NULL,'0000-00-00 00:00:00','2022-12-09 23:24:22'),
 (9,NULL,NULL,'PS_ORDER_OUT_OF_STOCK','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (10,NULL,NULL,'PS_LAST_QTIES','3','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (11,NULL,NULL,'PS_CONDITIONS','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(12,NULL,NULL,'PS_RECYCLABLE_PACK','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(13,NULL,NULL,'PS_GIFT_WRAPPING','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
+(12,NULL,NULL,'PS_RECYCLABLE_PACK','1','0000-00-00 00:00:00','2022-12-09 23:10:15'),
+(13,NULL,NULL,'PS_GIFT_WRAPPING',NULL,'0000-00-00 00:00:00','2022-12-09 23:10:15'),
 (14,NULL,NULL,'PS_GIFT_WRAPPING_PRICE','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (15,NULL,NULL,'PS_STOCK_MANAGEMENT','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (16,NULL,NULL,'PS_NAVIGATION_PIPE','>','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5235,7 +5256,7 @@ INSERT INTO `ps_configuration` VALUES
 (26,NULL,NULL,'PS_TAX','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (27,NULL,NULL,'PS_SHOP_ENABLE','1','0000-00-00 00:00:00','2022-12-01 19:22:36'),
 (28,NULL,NULL,'PS_NB_DAYS_NEW_PRODUCT','20','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(29,NULL,NULL,'PS_SSL_ENABLED','1','0000-00-00 00:00:00','2022-11-28 16:00:21'),
+(29,NULL,NULL,'PS_SSL_ENABLED','1','0000-00-00 00:00:00','2022-12-09 22:58:44'),
 (30,NULL,NULL,'PS_WEIGHT_UNIT','kg','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (31,NULL,NULL,'PS_BLOCK_CART_AJAX','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (32,NULL,NULL,'PS_ORDER_RETURN','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5309,12 +5330,12 @@ INSERT INTO `ps_configuration` VALUES
 (100,NULL,NULL,'PS_LOCALE_LANGUAGE','pl','0000-00-00 00:00:00','2022-11-26 15:03:25'),
 (101,NULL,NULL,'PS_LOCALE_COUNTRY','pl','0000-00-00 00:00:00','2022-11-26 15:03:25'),
 (102,NULL,NULL,'PS_ATTACHMENT_MAXIMUM_SIZE','8','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(103,NULL,NULL,'PS_SMARTY_CACHE','1','0000-00-00 00:00:00','2022-12-02 14:13:00'),
+(103,NULL,NULL,'PS_SMARTY_CACHE','1','0000-00-00 00:00:00','2022-12-09 22:12:29'),
 (104,NULL,NULL,'PS_DIMENSION_UNIT','cm','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (105,NULL,NULL,'PS_GUEST_CHECKOUT_ENABLED','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(106,NULL,NULL,'PS_DISPLAY_SUPPLIERS',NULL,'0000-00-00 00:00:00','2022-11-28 16:00:21'),
-(107,NULL,NULL,'PS_DISPLAY_MANUFACTURERS','1','0000-00-00 00:00:00','2022-11-28 16:00:21'),
-(108,NULL,NULL,'PS_DISPLAY_BEST_SELLERS','1','0000-00-00 00:00:00','2022-11-28 16:00:21'),
+(106,NULL,NULL,'PS_DISPLAY_SUPPLIERS',NULL,'0000-00-00 00:00:00','2022-12-09 22:58:44'),
+(107,NULL,NULL,'PS_DISPLAY_MANUFACTURERS','1','0000-00-00 00:00:00','2022-12-09 22:58:44'),
+(108,NULL,NULL,'PS_DISPLAY_BEST_SELLERS','1','0000-00-00 00:00:00','2022-12-09 22:58:44'),
 (109,NULL,NULL,'PS_CATALOG_MODE','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (110,NULL,NULL,'PS_GEOLOCATION_WHITELIST','127;::1;188.165.122;209.185.108;209.185.253;209.85.238;209.85.238.11;209.85.238.4;216.239.33.96;216.239.33.97;216.239.33.98;216.239.33.99;216.239.37.98;216.239.37.99;216.239.39.98;216.239.39.99;216.239.41.96;216.239.41.97;216.239.41.98;216.239.41.99;216.239.45.4;216.239.46;216.239.51.96;216.239.51.97;216.239.51.98;216.239.51.99;216.239.53.98;216.239.53.99;216.239.57.96;91.240.109;216.239.57.97;216.239.57.98;216.239.57.99;216.239.59.98;216.239.59.99;216.33.229.163;64.233.173.193;64.233.173.194;64.233.173.195;64.233.173.196;64.233.173.197;64.233.173.198;64.233.173.199;64.233.173.200;64.233.173.201;64.233.173.202;64.233.173.203;64.233.173.204;64.233.173.205;64.233.173.206;64.233.173.207;64.233.173.208;64.233.173.209;64.233.173.210;64.233.173.211;64.233.173.212;64.233.173.213;64.233.173.214;64.233.173.215;64.233.173.216;64.233.173.217;64.233.173.218;64.233.173.219;64.233.173.220;64.233.173.221;64.233.173.222;64.233.173.223;64.233.173.224;64.233.173.225;64.233.173.226;64.233.173.227;64.233.173.228;64.233.173.229;64.233.173.230;64.233.173.231;64.233.173.232;64.233.173.233;64.233.173.234;64.233.173.235;64.233.173.236;64.233.173.237;64.233.173.238;64.233.173.239;64.233.173.240;64.233.173.241;64.233.173.242;64.233.173.243;64.233.173.244;64.233.173.245;64.233.173.246;64.233.173.247;64.233.173.248;64.233.173.249;64.233.173.250;64.233.173.251;64.233.173.252;64.233.173.253;64.233.173.254;64.233.173.255;64.68.80;64.68.81;64.68.82;64.68.83;64.68.84;64.68.85;64.68.86;64.68.87;64.68.88;64.68.89;64.68.90.1;64.68.90.10;64.68.90.11;64.68.90.12;64.68.90.129;64.68.90.13;64.68.90.130;64.68.90.131;64.68.90.132;64.68.90.133;64.68.90.134;64.68.90.135;64.68.90.136;64.68.90.137;64.68.90.138;64.68.90.139;64.68.90.14;64.68.90.140;64.68.90.141;64.68.90.142;64.68.90.143;64.68.90.144;64.68.90.145;64.68.90.146;64.68.90.147;64.68.90.148;64.68.90.149;64.68.90.15;64.68.90.150;64.68.90.151;64.68.90.152;64.68.90.153;64.68.90.154;64.68.90.155;64.68.90.156;64.68.90.157;64.68.90.158;64.68.90.159;64.68.90.16;64.68.90.160;64.68.90.161;64.68.90.162;64.68.90.163;64.68.90.164;64.68.90.165;64.68.90.166;64.68.90.167;64.68.90.168;64.68.90.169;64.68.90.17;64.68.90.170;64.68.90.171;64.68.90.172;64.68.90.173;64.68.90.174;64.68.90.175;64.68.90.176;64.68.90.177;64.68.90.178;64.68.90.179;64.68.90.18;64.68.90.180;64.68.90.181;64.68.90.182;64.68.90.183;64.68.90.184;64.68.90.185;64.68.90.186;64.68.90.187;64.68.90.188;64.68.90.189;64.68.90.19;64.68.90.190;64.68.90.191;64.68.90.192;64.68.90.193;64.68.90.194;64.68.90.195;64.68.90.196;64.68.90.197;64.68.90.198;64.68.90.199;64.68.90.2;64.68.90.20;64.68.90.200;64.68.90.201;64.68.90.202;64.68.90.203;64.68.90.204;64.68.90.205;64.68.90.206;64.68.90.207;64.68.90.208;64.68.90.21;64.68.90.22;64.68.90.23;64.68.90.24;64.68.90.25;64.68.90.26;64.68.90.27;64.68.90.28;64.68.90.29;64.68.90.3;64.68.90.30;64.68.90.31;64.68.90.32;64.68.90.33;64.68.90.34;64.68.90.35;64.68.90.36;64.68.90.37;64.68.90.38;64.68.90.39;64.68.90.4;64.68.90.40;64.68.90.41;64.68.90.42;64.68.90.43;64.68.90.44;64.68.90.45;64.68.90.46;64.68.90.47;64.68.90.48;64.68.90.49;64.68.90.5;64.68.90.50;64.68.90.51;64.68.90.52;64.68.90.53;64.68.90.54;64.68.90.55;64.68.90.56;64.68.90.57;64.68.90.58;64.68.90.59;64.68.90.6;64.68.90.60;64.68.90.61;64.68.90.62;64.68.90.63;64.68.90.64;64.68.90.65;64.68.90.66;64.68.90.67;64.68.90.68;64.68.90.69;64.68.90.7;64.68.90.70;64.68.90.71;64.68.90.72;64.68.90.73;64.68.90.74;64.68.90.75;64.68.90.76;64.68.90.77;64.68.90.78;64.68.90.79;64.68.90.8;64.68.90.80;64.68.90.9;64.68.91;64.68.92;66.249.64;66.249.65;66.249.66;66.249.67;66.249.68;66.249.69;66.249.70;66.249.71;66.249.72;66.249.73;66.249.78;66.249.79;72.14.199;8.6.48','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (111,NULL,NULL,'PS_LOGS_BY_EMAIL','4','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5355,7 +5376,7 @@ INSERT INTO `ps_configuration` VALUES
 (146,NULL,NULL,'PS_CUSTOMIZATION_FEATURE_ACTIVE','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (147,NULL,NULL,'PS_CART_RULE_FEATURE_ACTIVE','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (148,NULL,NULL,'PS_PACK_FEATURE_ACTIVE','1','0000-00-00 00:00:00','2022-11-26 15:08:29'),
-(149,NULL,NULL,'PS_ALIAS_FEATURE_ACTIVE','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
+(149,NULL,NULL,'PS_ALIAS_FEATURE_ACTIVE',NULL,'0000-00-00 00:00:00','2022-12-09 22:53:18'),
 (150,NULL,NULL,'PS_TAX_ADDRESS_TYPE','id_address_delivery','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (151,NULL,NULL,'PS_SHOP_DEFAULT','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (152,NULL,NULL,'PS_CARRIER_DEFAULT_SORT','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5398,7 +5419,7 @@ INSERT INTO `ps_configuration` VALUES
 (189,NULL,NULL,'MANUFACTURER_DISPLAY_TEXT','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (190,NULL,NULL,'MANUFACTURER_DISPLAY_TEXT_NB','5','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (191,NULL,NULL,'NEW_PRODUCTS_NBR','5','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(192,NULL,NULL,'PS_TOKEN_ENABLE','1','0000-00-00 00:00:00','2022-11-28 16:00:21'),
+(192,NULL,NULL,'PS_TOKEN_ENABLE','1','0000-00-00 00:00:00','2022-12-09 22:58:44'),
 (193,NULL,NULL,'PS_STATS_RENDER','graphnvd3','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (194,NULL,NULL,'PS_STATS_OLD_CONNECT_AUTO_CLEAN','never','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (195,NULL,NULL,'PS_STATS_GRID_RENDER','gridhtml','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5445,7 +5466,7 @@ INSERT INTO `ps_configuration` VALUES
 (236,NULL,NULL,'PS_SHOP_NAME','PrestaShop','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (237,NULL,NULL,'PS_SHOP_EMAIL','lampy-bright@op.pl','0000-00-00 00:00:00','2022-12-01 19:07:40'),
 (238,NULL,NULL,'PS_MAIL_METHOD','2','0000-00-00 00:00:00','2022-12-01 18:36:19'),
-(239,NULL,NULL,'PS_SHOP_ACTIVITY',NULL,'0000-00-00 00:00:00','2022-11-28 16:00:21'),
+(239,NULL,NULL,'PS_SHOP_ACTIVITY','14','0000-00-00 00:00:00','2022-12-09 22:58:44'),
 (240,NULL,NULL,'PS_LOGO','logo-1669644759.jpg','0000-00-00 00:00:00','2022-11-28 15:12:39'),
 (241,NULL,NULL,'PS_FAVICON','favicon.ico','0000-00-00 00:00:00','2022-11-28 15:12:39'),
 (242,NULL,NULL,'PS_STORES_ICON','logo_stores.png','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5470,9 +5491,9 @@ INSERT INTO `ps_configuration` VALUES
 (261,NULL,NULL,'PS_ATTRIBUTE_ANCHOR_SEPARATOR','-','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (262,NULL,NULL,'CONF_AVERAGE_PRODUCT_MARGIN','40','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (263,NULL,NULL,'PS_DASHBOARD_SIMULATION','0','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(264,NULL,NULL,'PS_USE_HTMLPURIFIER','1','0000-00-00 00:00:00','2022-11-28 16:00:21'),
+(264,NULL,NULL,'PS_USE_HTMLPURIFIER','1','0000-00-00 00:00:00','2022-12-09 22:58:44'),
 (265,NULL,NULL,'PS_SMARTY_CACHING_TYPE','filesystem','0000-00-00 00:00:00','0000-00-00 00:00:00'),
-(266,NULL,NULL,'PS_SMARTY_LOCAL',NULL,'0000-00-00 00:00:00','2022-12-02 14:13:00'),
+(266,NULL,NULL,'PS_SMARTY_LOCAL',NULL,'0000-00-00 00:00:00','2022-12-09 22:12:29'),
 (267,NULL,NULL,'PS_SMARTY_CLEAR_CACHE','everytime','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (268,NULL,NULL,'PS_DETECT_LANG','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (269,NULL,NULL,'PS_DETECT_COUNTRY','1','0000-00-00 00:00:00','0000-00-00 00:00:00'),
@@ -5499,7 +5520,7 @@ INSERT INTO `ps_configuration` VALUES
 (290,NULL,NULL,'PS_SHOW_LABEL_OOS_LISTING_PAGES','1','0000-00-00 00:00:00','2022-12-01 19:28:04'),
 (291,NULL,NULL,'ADDONS_API_MODULE_CHANNEL','stable','0000-00-00 00:00:00','0000-00-00 00:00:00'),
 (292,NULL,NULL,'PS_INSTALL_XML_LOADERS_ID','{\"authorization_role:TAB_ADMINACCESS_CREATE\":1,\"authorization_role:TAB_ADMINACCESS_READ\":2,\"authorization_role:TAB_ADMINACCESS_UPDATE\":3,\"authorization_role:TAB_ADMINACCESS_DELETE\":4,\"authorization_role:TAB_ADMINADDONSCATALOG_CREATE\":5,\"authorization_role:TAB_ADMINADDONSCATALOG_READ\":6,\"authorization_role:TAB_ADMINADDONSCATALOG_UPDATE\":7,\"authorization_role:TAB_ADMINADDONSCATALOG_DELETE\":8,\"authorization_role:TAB_ADMINADDRESSES_CREATE\":9,\"authorization_role:TAB_ADMINADDRESSES_READ\":10,\"authorization_role:TAB_ADMINADDRESSES_UPDATE\":11,\"authorization_role:TAB_ADMINADDRESSES_DELETE\":12,\"authorization_role:TAB_ADMINADMINPREFERENCES_CREATE\":13,\"authorization_role:TAB_ADMINADMINPREFERENCES_READ\":14,\"authorization_role:TAB_ADMINADMINPREFERENCES_UPDATE\":15,\"authorization_role:TAB_ADMINADMINPREFERENCES_DELETE\":16,\"authorization_role:TAB_ADMINADVANCEDPARAMETERS_CREATE\":17,\"authorization_role:TAB_ADMINADVANCEDPARAMETERS_READ\":18,\"authorization_role:TAB_ADMINADVANCEDPARAMETERS_UPDATE\":19,\"authorization_role:TAB_ADMINADVANCEDPARAMETERS_DELETE\":20,\"authorization_role:TAB_ADMINATTACHMENTS_CREATE\":21,\"authorization_role:TAB_ADMINATTACHMENTS_READ\":22,\"authorization_role:TAB_ADMINATTACHMENTS_UPDATE\":23,\"authorization_role:TAB_ADMINATTACHMENTS_DELETE\":24,\"authorization_role:TAB_ADMINATTRIBUTESGROUPS_CREATE\":25,\"authorization_role:TAB_ADMINATTRIBUTESGROUPS_READ\":26,\"authorization_role:TAB_ADMINATTRIBUTESGROUPS_UPDATE\":27,\"authorization_role:TAB_ADMINATTRIBUTESGROUPS_DELETE\":28,\"authorization_role:TAB_ADMINBACKUP_CREATE\":29,\"authorization_role:TAB_ADMINBACKUP_READ\":30,\"authorization_role:TAB_ADMINBACKUP_UPDATE\":31,\"authorization_role:TAB_ADMINBACKUP_DELETE\":32,\"authorization_role:TAB_ADMINCARRIERS_CREATE\":33,\"authorization_role:TAB_ADMINCARRIERS_READ\":34,\"authorization_role:TAB_ADMINCARRIERS_UPDATE\":35,\"authorization_role:TAB_ADMINCARRIERS_DELETE\":36,\"authorization_role:TAB_ADMINCARTRULES_CREATE\":37,\"authorization_role:TAB_ADMINCARTRULES_READ\":38,\"authorization_role:TAB_ADMINCARTRULES_UPDATE\":39,\"authorization_role:TAB_ADMINCARTRULES_DELETE\":40,\"authorization_role:TAB_ADMINCARTS_CREATE\":41,\"authorization_role:TAB_ADMINCARTS_READ\":42,\"authorization_role:TAB_ADMINCARTS_UPDATE\":43,\"authorization_role:TAB_ADMINCARTS_DELETE\":44,\"authorization_role:TAB_ADMINCATALOG_CREATE\":45,\"authorization_role:TAB_ADMINCATALOG_READ\":46,\"authorization_role:TAB_ADMINCATALOG_UPDATE\":47,\"authorization_role:TAB_ADMINCATALOG_DELETE\":48,\"authorization_role:TAB_ADMINCATEGORIES_CREATE\":49,\"authorization_role:TAB_ADMINCATEGORIES_READ\":50,\"authorization_role:TAB_ADMINCATEGORIES_UPDATE\":51,\"authorization_role:TAB_ADMINCATEGORIES_DELETE\":52,\"authorization_role:TAB_ADMINCMSCONTENT_CREATE\":53,\"authorization_role:TAB_ADMINCMSCONTENT_READ\":54,\"authorization_role:TAB_ADMINCMSCONTENT_UPDATE\":55,\"authorization_role:TAB_ADMINCMSCONTENT_DELETE\":56,\"authorization_role:TAB_ADMINCONTACTS_CREATE\":57,\"authorization_role:TAB_ADMINCONTACTS_READ\":58,\"authorization_role:TAB_ADMINCONTACTS_UPDATE\":59,\"authorization_role:TAB_ADMINCONTACTS_DELETE\":60,\"authorization_role:TAB_ADMINCOUNTRIES_CREATE\":61,\"authorization_role:TAB_ADMINCOUNTRIES_READ\":62,\"authorization_role:TAB_ADMINCOUNTRIES_UPDATE\":63,\"authorization_role:TAB_ADMINCOUNTRIES_DELETE\":64,\"authorization_role:TAB_ADMINCURRENCIES_CREATE\":65,\"authorization_role:TAB_ADMINCURRENCIES_READ\":66,\"authorization_role:TAB_ADMINCURRENCIES_UPDATE\":67,\"authorization_role:TAB_ADMINCURRENCIES_DELETE\":68,\"authorization_role:TAB_ADMINCUSTOMERPREFERENCES_CREATE\":69,\"authorization_role:TAB_ADMINCUSTOMERPREFERENCES_READ\":70,\"authorization_role:TAB_ADMINCUSTOMERPREFERENCES_UPDATE\":71,\"authorization_role:TAB_ADMINCUSTOMERPREFERENCES_DELETE\":72,\"authorization_role:TAB_ADMINCUSTOMERS_CREATE\":73,\"authorization_role:TAB_ADMINCUSTOMERS_READ\":74,\"authorization_role:TAB_ADMINCUSTOMERS_UPDATE\":75,\"authorization_role:TAB_ADMINCUSTOMERS_DELETE\":76,\"authorization_role:TAB_ADMINCUSTOMERTHREADS_CREATE\":77,\"authorization_role:TAB_ADMINCUSTOMERTHREADS_READ\":78,\"authorization_role:TAB_ADMINCUSTOMERTHREADS_UPDATE\":79,\"authorization_role:TAB_ADMINCUSTOMERTHREADS_DELETE\":80,\"authorization_role:TAB_ADMINDASHBOARD_CREATE\":81,\"authorization_role:TAB_ADMINDASHBOARD_READ\":82,\"authorization_role:TAB_ADMINDASHBOARD_UPDATE\":83,\"authorization_role:TAB_ADMINDASHBOARD_DELETE\":84,\"authorization_role:TAB_ADMINDELIVERYSLIP_CREATE\":85,\"authorization_role:TAB_ADMINDELIVERYSLIP_READ\":86,\"authorization_role:TAB_ADMINDELIVERYSLIP_UPDATE\":87,\"authorization_role:TAB_ADMINDELIVERYSLIP_DELETE\":88,\"authorization_role:TAB_ADMINEMAILS_CREATE\":89,\"authorization_role:TAB_ADMINEMAILS_READ\":90,\"authorization_role:TAB_ADMINEMAILS_UPDATE\":91,\"authorization_role:TAB_ADMINEMAILS_DELETE\":92,\"authorization_role:TAB_ADMINEMPLOYEES_CREATE\":93,\"authorization_role:TAB_ADMINEMPLOYEES_READ\":94,\"authorization_role:TAB_ADMINEMPLOYEES_UPDATE\":95,\"authorization_role:TAB_ADMINEMPLOYEES_DELETE\":96,\"authorization_role:TAB_ADMINFEATURES_CREATE\":97,\"authorization_role:TAB_ADMINFEATURES_READ\":98,\"authorization_role:TAB_ADMINFEATURES_UPDATE\":99,\"authorization_role:TAB_ADMINFEATURES_DELETE\":100,\"authorization_role:TAB_ADMINGENDERS_CREATE\":101,\"authorization_role:TAB_ADMINGENDERS_READ\":102,\"authorization_role:TAB_ADMINGENDERS_UPDATE\":103,\"authorization_role:TAB_ADMINGENDERS_DELETE\":104,\"authorization_role:TAB_ADMINGEOLOCATION_CREATE\":105,\"authorization_role:TAB_ADMINGEOLOCATION_READ\":106,\"authorization_role:TAB_ADMINGEOLOCATION_UPDATE\":107,\"authorization_role:TAB_ADMINGEOLOCATION_DELETE\":108,\"authorization_role:TAB_ADMINGROUPS_CREATE\":109,\"authorization_role:TAB_ADMINGROUPS_READ\":110,\"authorization_role:TAB_ADMINGROUPS_UPDATE\":111,\"authorization_role:TAB_ADMINGROUPS_DELETE\":112,\"authorization_role:TAB_ADMINIMAGES_CREATE\":113,\"authorization_role:TAB_ADMINIMAGES_READ\":114,\"authorization_role:TAB_ADMINIMAGES_UPDATE\":115,\"authorization_role:TAB_ADMINIMAGES_DELETE\":116,\"authorization_role:TAB_ADMINIMPORT_CREATE\":117,\"authorization_role:TAB_ADMINIMPORT_READ\":118,\"authorization_role:TAB_ADMINIMPORT_UPDATE\":119,\"authorization_role:TAB_ADMINIMPORT_DELETE\":120,\"authorization_role:TAB_ADMININFORMATION_CREATE\":121,\"authorization_role:TAB_ADMININFORMATION_READ\":122,\"authorization_role:TAB_ADMININFORMATION_UPDATE\":123,\"authorization_role:TAB_ADMININFORMATION_DELETE\":124,\"authorization_role:TAB_ADMININTERNATIONAL_CREATE\":125,\"authorization_role:TAB_ADMININTERNATIONAL_READ\":126,\"authorization_role:TAB_ADMININTERNATIONAL_UPDATE\":127,\"authorization_role:TAB_ADMININTERNATIONAL_DELETE\":128,\"authorization_role:TAB_ADMININVOICES_CREATE\":129,\"authorization_role:TAB_ADMININVOICES_READ\":130,\"authorization_role:TAB_ADMININVOICES_UPDATE\":131,\"authorization_role:TAB_ADMININVOICES_DELETE\":132,\"authorization_role:TAB_ADMINLANGUAGES_CREATE\":133,\"authorization_role:TAB_ADMINLANGUAGES_READ\":134,\"authorization_role:TAB_ADMINLANGUAGES_UPDATE\":135,\"authorization_role:TAB_ADMINLANGUAGES_DELETE\":136,\"authorization_role:TAB_ADMINLINKWIDGET_CREATE\":137,\"authorization_role:TAB_ADMINLINKWIDGET_READ\":138,\"authorization_role:TAB_ADMINLINKWIDGET_UPDATE\":139,\"authorization_role:TAB_ADMINLINKWIDGET_DELETE\":140,\"authorization_role:TAB_ADMINLOCALIZATION_CREATE\":141,\"authorization_role:TAB_ADMINLOCALIZATION_READ\":142,\"authorization_role:TAB_ADMINLOCALIZATION_UPDATE\":143,\"authorization_role:TAB_ADMINLOCALIZATION_DELETE\":144,\"authorization_role:TAB_ADMINLOGS_CREATE\":145,\"authorization_role:TAB_ADMINLOGS_READ\":146,\"authorization_role:TAB_ADMINLOGS_UPDATE\":147,\"authorization_role:TAB_ADMINLOGS_DELETE\":148,\"authorization_role:TAB_ADMINMAINTENANCE_CREATE\":149,\"authorization_role:TAB_ADMINMAINTENANCE_READ\":150,\"authorization_role:TAB_ADMINMAINTENANCE_UPDATE\":151,\"authorization_role:TAB_ADMINMAINTENANCE_DELETE\":152,\"authorization_role:TAB_ADMINMANUFACTURERS_CREATE\":153,\"authorization_role:TAB_ADMINMANUFACTURERS_READ\":154,\"authorization_role:TAB_ADMINMANUFACTURERS_UPDATE\":155,\"authorization_role:TAB_ADMINMANUFACTURERS_DELETE\":156,\"authorization_role:TAB_ADMINMETA_CREATE\":157,\"authorization_role:TAB_ADMINMETA_READ\":158,\"authorization_role:TAB_ADMINMETA_UPDATE\":159,\"authorization_role:TAB_ADMINMETA_DELETE\":160,\"authorization_role:TAB_ADMINMODULES_CREATE\":161,\"authorization_role:TAB_ADMINMODULES_READ\":162,\"authorization_role:TAB_ADMINMODULES_UPDATE\":163,\"authorization_role:TAB_ADMINMODULES_DELETE\":164,\"authorization_role:TAB_ADMINMODULESPOSITIONS_CREATE\":165,\"authorization_role:TAB_ADMINMODULESPOSITIONS_READ\":166,\"authorization_role:TAB_ADMINMODULESPOSITIONS_UPDATE\":167,\"authorization_role:TAB_ADMINMODULESPOSITIONS_DELETE\":168,\"authorization_role:TAB_ADMINMODULESUPDATES_CREATE\":169,\"authorization_role:TAB_ADMINMODULESUPDATES_READ\":170,\"authorization_role:TAB_ADMINMODULESUPDATES_UPDATE\":171,\"authorization_role:TAB_ADMINMODULESUPDATES_DELETE\":172,\"authorization_role:TAB_ADMINMODULESNOTIFICATIONS_CREATE\":173,\"authorization_role:TAB_ADMINMODULESNOTIFICATIONS_READ\":174,\"authorization_role:TAB_ADMINMODULESNOTIFICATIONS_UPDATE\":175,\"authorization_role:TAB_ADMINMODULESNOTIFICATIONS_DELETE\":176,\"authorization_role:TAB_ADMINMODULESSF_CREATE\":177,\"authorization_role:TAB_ADMINMODULESSF_READ\":178,\"authorization_role:TAB_ADMINMODULESSF_UPDATE\":179,\"authorization_role:TAB_ADMINMODULESSF_DELETE\":180,\"authorization_role:TAB_ADMINORDERMESSAGE_CREATE\":181,\"authorization_role:TAB_ADMINORDERMESSAGE_READ\":182,\"authorization_role:TAB_ADMINORDERMESSAGE_UPDATE\":183,\"authorization_role:TAB_ADMINORDERMESSAGE_DELETE\":184,\"authorization_role:TAB_ADMINORDERPREFERENCES_CREATE\":185,\"authorization_role:TAB_ADMINORDERPREFERENCES_READ\":186,\"authorization_role:TAB_ADMINORDERPREFERENCES_UPDATE\":187,\"authorization_role:TAB_ADMINORDERPREFERENCES_DELETE\":188,\"authorization_role:TAB_ADMINORDERS_CREATE\":189,\"authorization_role:TAB_ADMINORDERS_READ\":190,\"authorization_role:TAB_ADMINORDERS_UPDATE\":191,\"authorization_role:TAB_ADMINORDERS_DELETE\":192,\"authorization_role:TAB_ADMINOUTSTANDING_CREATE\":193,\"authorization_role:TAB_ADMINOUTSTANDING_READ\":194,\"authorization_role:TAB_ADMINOUTSTANDING_UPDATE\":195,\"authorization_role:TAB_ADMINOUTSTANDING_DELETE\":196,\"authorization_role:TAB_ADMINPARENTATTRIBUTESGROUPS_CREATE\":197,\"authorization_role:TAB_ADMINPARENTATTRIBUTESGROUPS_READ\":198,\"authorization_role:TAB_ADMINPARENTATTRIBUTESGROUPS_UPDATE\":199,\"authorization_role:TAB_ADMINPARENTATTRIBUTESGROUPS_DELETE\":200,\"authorization_role:TAB_ADMINPARENTCARTRULES_CREATE\":201,\"authorization_role:TAB_ADMINPARENTCARTRULES_READ\":202,\"authorization_role:TAB_ADMINPARENTCARTRULES_UPDATE\":203,\"authorization_role:TAB_ADMINPARENTCARTRULES_DELETE\":204,\"authorization_role:TAB_ADMINPARENTCOUNTRIES_CREATE\":205,\"authorization_role:TAB_ADMINPARENTCOUNTRIES_READ\":206,\"authorization_role:TAB_ADMINPARENTCOUNTRIES_UPDATE\":207,\"authorization_role:TAB_ADMINPARENTCOUNTRIES_DELETE\":208,\"authorization_role:TAB_ADMINPARENTCUSTOMER_CREATE\":209,\"authorization_role:TAB_ADMINPARENTCUSTOMER_READ\":210,\"authorization_role:TAB_ADMINPARENTCUSTOMER_UPDATE\":211,\"authorization_role:TAB_ADMINPARENTCUSTOMER_DELETE\":212,\"authorization_role:TAB_ADMINPARENTCUSTOMERPREFERENCES_CREATE\":213,\"authorization_role:TAB_ADMINPARENTCUSTOMERPREFERENCES_READ\":214,\"authorization_role:TAB_ADMINPARENTCUSTOMERPREFERENCES_UPDATE\":215,\"authorization_role:TAB_ADMINPARENTCUSTOMERPREFERENCES_DELETE\":216,\"authorization_role:TAB_ADMINPARENTCUSTOMERTHREADS_CREATE\":217,\"authorization_role:TAB_ADMINPARENTCUSTOMERTHREADS_READ\":218,\"authorization_role:TAB_ADMINPARENTCUSTOMERTHREADS_UPDATE\":219,\"authorization_role:TAB_ADMINPARENTCUSTOMERTHREADS_DELETE\":220,\"authorization_role:TAB_ADMINPARENTEMPLOYEES_CREATE\":221,\"authorization_role:TAB_ADMINPARENTEMPLOYEES_READ\":222,\"authorization_role:TAB_ADMINPARENTEMPLOYEES_UPDATE\":223,\"authorization_role:TAB_ADMINPARENTEMPLOYEES_DELETE\":224,\"authorization_role:TAB_ADMINPARENTLOCALIZATION_CREATE\":225,\"authorization_role:TAB_ADMINPARENTLOCALIZATION_READ\":226,\"authorization_role:TAB_ADMINPARENTLOCALIZATION_UPDATE\":227,\"authorization_role:TAB_ADMINPARENTLOCALIZATION_DELETE\":228,\"authorization_role:TAB_ADMINPARENTMANUFACTURERS_CREATE\":229,\"authorization_role:TAB_ADMINPARENTMANUFACTURERS_READ\":230,\"authorization_role:TAB_ADMINPARENTMANUFACTURERS_UPDATE\":231,\"authorization_role:TAB_ADMINPARENTMANUFACTURERS_DELETE\":232,\"authorization_role:TAB_ADMINPARENTMODULESSF_CREATE\":233,\"authorization_role:TAB_ADMINPARENTMODULESSF_READ\":234,\"authorization_role:TAB_ADMINPARENTMODULESSF_UPDATE\":235,\"authorization_role:TAB_ADMINPARENTMODULESSF_DELETE\":236,\"authorization_role:TAB_ADMINPARENTMETA_CREATE\":237,\"authorization_role:TAB_ADMINPARENTMETA_READ\":238,\"authorization_role:TAB_ADMINPARENTMETA_UPDATE\":239,\"authorization_role:TAB_ADMINPARENTMETA_DELETE\":240,\"authorization_role:TAB_ADMINPARENTMODULES_CREATE\":241,\"authorization_role:TAB_ADMINPARENTMODULES_READ\":242,\"authorization_role:TAB_ADMINPARENTMODULES_UPDATE\":243,\"authorization_role:TAB_ADMINPARENTMODULES_DELETE\":244,\"authorization_role:TAB_ADMINPARENTORDERPREFERENCES_CREATE\":245,\"authorization_role:TAB_ADMINPARENTORDERPREFERENCES_READ\":246,\"authorization_role:TAB_ADMINPARENTORDERPREFERENCES_UPDATE\":247,\"authorization_role:TAB_ADMINPARENTORDERPREFERENCES_DELETE\":248,\"authorization_role:TAB_ADMINPARENTORDERS_CREATE\":249,\"authorization_role:TAB_ADMINPARENTORDERS_READ\":250,\"authorization_role:TAB_ADMINPARENTORDERS_UPDATE\":251,\"authorization_role:TAB_ADMINPARENTORDERS_DELETE\":252,\"authorization_role:TAB_ADMINPARENTPAYMENT_CREATE\":253,\"authorization_role:TAB_ADMINPARENTPAYMENT_READ\":254,\"authorization_role:TAB_ADMINPARENTPAYMENT_UPDATE\":255,\"authorization_role:TAB_ADMINPARENTPAYMENT_DELETE\":256,\"authorization_role:TAB_ADMINPARENTPREFERENCES_CREATE\":257,\"authorization_role:TAB_ADMINPARENTPREFERENCES_READ\":258,\"authorization_role:TAB_ADMINPARENTPREFERENCES_UPDATE\":259,\"authorization_role:TAB_ADMINPARENTPREFERENCES_DELETE\":260,\"authorization_role:TAB_ADMINPARENTREQUESTSQL_CREATE\":261,\"authorization_role:TAB_ADMINPARENTREQUESTSQL_READ\":262,\"authorization_role:TAB_ADMINPARENTREQUESTSQL_UPDATE\":263,\"authorization_role:TAB_ADMINPARENTREQUESTSQL_DELETE\":264,\"authorization_role:TAB_ADMINPARENTSEARCHCONF_CREATE\":265,\"authorization_role:TAB_ADMINPARENTSEARCHCONF_READ\":266,\"authorization_role:TAB_ADMINPARENTSEARCHCONF_UPDATE\":267,\"authorization_role:TAB_ADMINPARENTSEARCHCONF_DELETE\":268,\"authorization_role:TAB_ADMINPARENTSHIPPING_CREATE\":269,\"authorization_role:TAB_ADMINPARENTSHIPPING_READ\":270,\"authorization_role:TAB_ADMINPARENTSHIPPING_UPDATE\":271,\"authorization_role:TAB_ADMINPARENTSHIPPING_DELETE\":272,\"authorization_role:TAB_ADMINPARENTSTOCKMANAGEMENT_CREATE\":273,\"authorization_role:TAB_ADMINPARENTSTOCKMANAGEMENT_READ\":274,\"authorization_role:TAB_ADMINPARENTSTOCKMANAGEMENT_UPDATE\":275,\"authorization_role:TAB_ADMINPARENTSTOCKMANAGEMENT_DELETE\":276,\"authorization_role:TAB_ADMINPARENTSTORES_CREATE\":277,\"authorization_role:TAB_ADMINPARENTSTORES_READ\":278,\"authorization_role:TAB_ADMINPARENTSTORES_UPDATE\":279,\"authorization_role:TAB_ADMINPARENTSTORES_DELETE\":280,\"authorization_role:TAB_ADMINPARENTTAXES_CREATE\":281,\"authorization_role:TAB_ADMINPARENTTAXES_READ\":282,\"authorization_role:TAB_ADMINPARENTTAXES_UPDATE\":283,\"authorization_role:TAB_ADMINPARENTTAXES_DELETE\":284,\"authorization_role:TAB_ADMINPARENTTHEMES_CREATE\":285,\"authorization_role:TAB_ADMINPARENTTHEMES_READ\":286,\"authorization_role:TAB_ADMINPARENTTHEMES_UPDATE\":287,\"authorization_role:TAB_ADMINPARENTTHEMES_DELETE\":288,\"authorization_role:TAB_ADMINPAYMENT_CREATE\":289,\"authorization_role:TAB_ADMINPAYMENT_READ\":290,\"authorization_role:TAB_ADMINPAYMENT_UPDATE\":291,\"authorization_role:TAB_ADMINPAYMENT_DELETE\":292,\"authorization_role:TAB_ADMINPAYMENTPREFERENCES_CREATE\":293,\"authorization_role:TAB_ADMINPAYMENTPREFERENCES_READ\":294,\"authorization_role:TAB_ADMINPAYMENTPREFERENCES_UPDATE\":295,\"authorization_role:TAB_ADMINPAYMENTPREFERENCES_DELETE\":296,\"authorization_role:TAB_ADMINPERFORMANCE_CREATE\":297,\"authorization_role:TAB_ADMINPERFORMANCE_READ\":298,\"authorization_role:TAB_ADMINPERFORMANCE_UPDATE\":299,\"authorization_role:TAB_ADMINPERFORMANCE_DELETE\":300,\"authorization_role:TAB_ADMINPPREFERENCES_CREATE\":301,\"authorization_role:TAB_ADMINPPREFERENCES_READ\":302,\"authorization_role:TAB_ADMINPPREFERENCES_UPDATE\":303,\"authorization_role:TAB_ADMINPPREFERENCES_DELETE\":304,\"authorization_role:TAB_ADMINPREFERENCES_CREATE\":305,\"authorization_role:TAB_ADMINPREFERENCES_READ\":306,\"authorization_role:TAB_ADMINPREFERENCES_UPDATE\":307,\"authorization_role:TAB_ADMINPREFERENCES_DELETE\":308,\"authorization_role:TAB_ADMINPRODUCTS_CREATE\":309,\"authorization_role:TAB_ADMINPRODUCTS_READ\":310,\"authorization_role:TAB_ADMINPRODUCTS_UPDATE\":311,\"authorization_role:TAB_ADMINPRODUCTS_DELETE\":312,\"authorization_role:TAB_ADMINPROFILES_CREATE\":313,\"authorization_role:TAB_ADMINPROFILES_READ\":314,\"authorization_role:TAB_ADMINPROFILES_UPDATE\":315,\"authorization_role:TAB_ADMINPROFILES_DELETE\":316,\"authorization_role:TAB_ADMINREFERRERS_CREATE\":317,\"authorization_role:TAB_ADMINREFERRERS_READ\":318,\"authorization_role:TAB_ADMINREFERRERS_UPDATE\":319,\"authorization_role:TAB_ADMINREFERRERS_DELETE\":320,\"authorization_role:TAB_ADMINREQUESTSQL_CREATE\":321,\"authorization_role:TAB_ADMINREQUESTSQL_READ\":322,\"authorization_role:TAB_ADMINREQUESTSQL_UPDATE\":323,\"authorization_role:TAB_ADMINREQUESTSQL_DELETE\":324,\"authorization_role:TAB_ADMINRETURN_CREATE\":325,\"authorization_role:TAB_ADMINRETURN_READ\":326,\"authorization_role:TAB_ADMINRETURN_UPDATE\":327,\"authorization_role:TAB_ADMINRETURN_DELETE\":328,\"authorization_role:TAB_ADMINSEARCHCONF_CREATE\":329,\"authorization_role:TAB_ADMINSEARCHCONF_READ\":330,\"authorization_role:TAB_ADMINSEARCHCONF_UPDATE\":331,\"authorization_role:TAB_ADMINSEARCHCONF_DELETE\":332,\"authorization_role:TAB_ADMINSEARCHENGINES_CREATE\":333,\"authorization_role:TAB_ADMINSEARCHENGINES_READ\":334,\"authorization_role:TAB_ADMINSEARCHENGINES_UPDATE\":335,\"authorization_role:TAB_ADMINSEARCHENGINES_DELETE\":336,\"authorization_role:TAB_ADMINSHIPPING_CREATE\":337,\"authorization_role:TAB_ADMINSHIPPING_READ\":338,\"authorization_role:TAB_ADMINSHIPPING_UPDATE\":339,\"authorization_role:TAB_ADMINSHIPPING_DELETE\":340,\"authorization_role:TAB_ADMINSHOPGROUP_CREATE\":341,\"authorization_role:TAB_ADMINSHOPGROUP_READ\":342,\"authorization_role:TAB_ADMINSHOPGROUP_UPDATE\":343,\"authorization_role:TAB_ADMINSHOPGROUP_DELETE\":344,\"authorization_role:TAB_ADMINSHOPURL_CREATE\":345,\"authorization_role:TAB_ADMINSHOPURL_READ\":346,\"authorization_role:TAB_ADMINSHOPURL_UPDATE\":347,\"authorization_role:TAB_ADMINSHOPURL_DELETE\":348,\"authorization_role:TAB_ADMINSLIP_CREATE\":349,\"authorization_role:TAB_ADMINSLIP_READ\":350,\"authorization_role:TAB_ADMINSLIP_UPDATE\":351,\"authorization_role:TAB_ADMINSLIP_DELETE\":352,\"authorization_role:TAB_ADMINSPECIFICPRICERULE_CREATE\":353,\"authorization_role:TAB_ADMINSPECIFICPRICERULE_READ\":354,\"authorization_role:TAB_ADMINSPECIFICPRICERULE_UPDATE\":355,\"authorization_role:TAB_ADMINSPECIFICPRICERULE_DELETE\":356,\"authorization_role:TAB_ADMINSTATES_CREATE\":357,\"authorization_role:TAB_ADMINSTATES_READ\":358,\"authorization_role:TAB_ADMINSTATES_UPDATE\":359,\"authorization_role:TAB_ADMINSTATES_DELETE\":360,\"authorization_role:TAB_ADMINSTATS_CREATE\":361,\"authorization_role:TAB_ADMINSTATS_READ\":362,\"authorization_role:TAB_ADMINSTATS_UPDATE\":363,\"authorization_role:TAB_ADMINSTATS_DELETE\":364,\"authorization_role:TAB_ADMINSTATUSES_CREATE\":365,\"authorization_role:TAB_ADMINSTATUSES_READ\":366,\"authorization_role:TAB_ADMINSTATUSES_UPDATE\":367,\"authorization_role:TAB_ADMINSTATUSES_DELETE\":368,\"authorization_role:TAB_ADMINSTOCK_CREATE\":369,\"authorization_role:TAB_ADMINSTOCK_READ\":370,\"authorization_role:TAB_ADMINSTOCK_UPDATE\":371,\"authorization_role:TAB_ADMINSTOCK_DELETE\":372,\"authorization_role:TAB_ADMINSTOCKCONFIGURATION_CREATE\":373,\"authorization_role:TAB_ADMINSTOCKCONFIGURATION_READ\":374,\"authorization_role:TAB_ADMINSTOCKCONFIGURATION_UPDATE\":375,\"authorization_role:TAB_ADMINSTOCKCONFIGURATION_DELETE\":376,\"authorization_role:TAB_ADMINSTOCKCOVER_CREATE\":377,\"authorization_role:TAB_ADMINSTOCKCOVER_READ\":378,\"authorization_role:TAB_ADMINSTOCKCOVER_UPDATE\":379,\"authorization_role:TAB_ADMINSTOCKCOVER_DELETE\":380,\"authorization_role:TAB_ADMINSTOCKINSTANTSTATE_CREATE\":381,\"authorization_role:TAB_ADMINSTOCKINSTANTSTATE_READ\":382,\"authorization_role:TAB_ADMINSTOCKINSTANTSTATE_UPDATE\":383,\"authorization_role:TAB_ADMINSTOCKINSTANTSTATE_DELETE\":384,\"authorization_role:TAB_ADMINSTOCKMANAGEMENT_CREATE\":385,\"authorization_role:TAB_ADMINSTOCKMANAGEMENT_READ\":386,\"authorization_role:TAB_ADMINSTOCKMANAGEMENT_UPDATE\":387,\"authorization_role:TAB_ADMINSTOCKMANAGEMENT_DELETE\":388,\"authorization_role:TAB_ADMINSTOCKMVT_CREATE\":389,\"authorization_role:TAB_ADMINSTOCKMVT_READ\":390,\"authorization_role:TAB_ADMINSTOCKMVT_UPDATE\":391,\"authorization_role:TAB_ADMINSTOCKMVT_DELETE\":392,\"authorization_role:TAB_ADMINSTORES_CREATE\":393,\"authorization_role:TAB_ADMINSTORES_READ\":394,\"authorization_role:TAB_ADMINSTORES_UPDATE\":395,\"authorization_role:TAB_ADMINSTORES_DELETE\":396,\"authorization_role:TAB_ADMINSUPPLIERS_CREATE\":397,\"authorization_role:TAB_ADMINSUPPLIERS_READ\":398,\"authorization_role:TAB_ADMINSUPPLIERS_UPDATE\":399,\"authorization_role:TAB_ADMINSUPPLIERS_DELETE\":400,\"authorization_role:TAB_ADMINSUPPLYORDERS_CREATE\":401,\"authorization_role:TAB_ADMINSUPPLYORDERS_READ\":402,\"authorization_role:TAB_ADMINSUPPLYORDERS_UPDATE\":403,\"authorization_role:TAB_ADMINSUPPLYORDERS_DELETE\":404,\"authorization_role:TAB_ADMINTAGS_CREATE\":405,\"authorization_role:TAB_ADMINTAGS_READ\":406,\"authorization_role:TAB_ADMINTAGS_UPDATE\":407,\"authorization_role:TAB_ADMINTAGS_DELETE\":408,\"authorization_role:TAB_ADMINTAXES_CREATE\":409,\"authorization_role:TAB_ADMINTAXES_READ\":410,\"authorization_role:TAB_ADMINTAXES_UPDATE\":411,\"authorization_role:TAB_ADMINTAXES_DELETE\":412,\"authorization_role:TAB_ADMINTAXRULESGROUP_CREATE\":413,\"authorization_role:TAB_ADMINTAXRULESGROUP_READ\":414,\"authorization_role:TAB_ADMINTAXRULESGROUP_UPDATE\":415,\"authorization_role:TAB_ADMINTAXRULESGROUP_DELETE\":416,\"authorization_role:TAB_ADMINTHEMES_CREATE\":417,\"authorization_role:TAB_ADMINTHEMES_READ\":418,\"authorization_role:TAB_ADMINTHEMES_UPDATE\":419,\"authorization_role:TAB_ADMINTHEMES_DELETE\":420,\"authorization_role:TAB_ADMINTHEMESCATALOG_CREATE\":421,\"authorization_role:TAB_ADMINTHEMESCATALOG_READ\":422,\"authorization_role:TAB_ADMINTHEMESCATALOG_UPDATE\":423,\"authorization_role:TAB_ADMINTHEMESCATALOG_DELETE\":424,\"authorization_role:TAB_ADMINTRACKING_CREATE\":425,\"authorization_role:TAB_ADMINTRACKING_READ\":426,\"authorization_role:TAB_ADMINTRACKING_UPDATE\":427,\"authorization_role:TAB_ADMINTRACKING_DELETE\":428,\"authorization_role:TAB_ADMINTRANSLATIONS_CREATE\":429,\"authorization_role:TAB_ADMINTRANSLATIONS_READ\":430,\"authorization_role:TAB_ADMINTRANSLATIONS_UPDATE\":431,\"authorization_role:TAB_ADMINTRANSLATIONS_DELETE\":432,\"authorization_role:TAB_ADMINWAREHOUSES_CREATE\":433,\"authorization_role:TAB_ADMINWAREHOUSES_READ\":434,\"authorization_role:TAB_ADMINWAREHOUSES_UPDATE\":435,\"authorization_role:TAB_ADMINWAREHOUSES_DELETE\":436,\"authorization_role:TAB_ADMINWEBSERVICE_CREATE\":437,\"authorization_role:TAB_ADMINWEBSERVICE_READ\":438,\"authorization_role:TAB_ADMINWEBSERVICE_UPDATE\":439,\"authorization_role:TAB_ADMINWEBSERVICE_DELETE\":440,\"authorization_role:TAB_ADMINZONES_CREATE\":441,\"authorization_role:TAB_ADMINZONES_READ\":442,\"authorization_role:TAB_ADMINZONES_UPDATE\":443,\"authorization_role:TAB_ADMINZONES_DELETE\":444,\"authorization_role:TAB_CONFIGURE_CREATE\":445,\"authorization_role:TAB_CONFIGURE_READ\":446,\"authorization_role:TAB_CONFIGURE_UPDATE\":447,\"authorization_role:TAB_CONFIGURE_DELETE\":448,\"authorization_role:TAB_IMPROVE_CREATE\":449,\"authorization_role:TAB_IMPROVE_READ\":450,\"authorization_role:TAB_IMPROVE_UPDATE\":451,\"authorization_role:TAB_IMPROVE_DELETE\":452,\"authorization_role:TAB_SELL_CREATE\":453,\"authorization_role:TAB_SELL_READ\":454,\"authorization_role:TAB_SELL_UPDATE\":455,\"authorization_role:TAB_SELL_DELETE\":456,\"authorization_role:TAB_SHOPPARAMETERS_CREATE\":457,\"authorization_role:TAB_SHOPPARAMETERS_READ\":458,\"authorization_role:TAB_SHOPPARAMETERS_UPDATE\":459,\"authorization_role:TAB_SHOPPARAMETERS_DELETE\":460,\"authorization_role:TAB_ADMINPARENTMAILTHEME_CREATE\":461,\"authorization_role:TAB_ADMINPARENTMAILTHEME_READ\":462,\"authorization_role:TAB_ADMINPARENTMAILTHEME_UPDATE\":463,\"authorization_role:TAB_ADMINPARENTMAILTHEME_DELETE\":464,\"authorization_role:TAB_ADMINMAILTHEME_CREATE\":465,\"authorization_role:TAB_ADMINMAILTHEME_READ\":466,\"authorization_role:TAB_ADMINMAILTHEME_UPDATE\":467,\"authorization_role:TAB_ADMINMAILTHEME_DELETE\":468,\"authorization_role:TAB_ADMINMODULESMANAGE_CREATE\":469,\"authorization_role:TAB_ADMINMODULESMANAGE_READ\":470,\"authorization_role:TAB_ADMINMODULESMANAGE_UPDATE\":471,\"authorization_role:TAB_ADMINMODULESMANAGE_DELETE\":472,\"authorization_role:TAB_ADMINMODULESCATALOG_CREATE\":473,\"authorization_role:TAB_ADMINMODULESCATALOG_READ\":474,\"authorization_role:TAB_ADMINMODULESCATALOG_UPDATE\":475,\"authorization_role:TAB_ADMINMODULESCATALOG_DELETE\":476,\"authorization_role:TAB_ADMINPARENTMODULESCATALOG_CREATE\":477,\"authorization_role:TAB_ADMINPARENTMODULESCATALOG_READ\":478,\"authorization_role:TAB_ADMINPARENTMODULESCATALOG_UPDATE\":479,\"authorization_role:TAB_ADMINPARENTMODULESCATALOG_DELETE\":480,\"authorization_role:TAB_ADMINFEATUREFLAG_CREATE\":481,\"authorization_role:TAB_ADMINFEATUREFLAG_READ\":482,\"authorization_role:TAB_ADMINFEATUREFLAG_UPDATE\":483,\"authorization_role:TAB_ADMINFEATUREFLAG_DELETE\":484,\"profile:SuperAdmin\":\"1\",\"access:access_1_0\":0,\"access:access_1_1\":0,\"access:access_1_2\":0,\"access:access_1_3\":0,\"access:access_1_4\":0,\"access:access_1_5\":0,\"access:access_1_7\":0,\"access:access_1_8\":0,\"access:access_1_9\":0,\"access:access_1_10\":0,\"access:access_1_11\":0,\"access:access_1_13\":0,\"access:access_1_14\":0,\"access:access_1_15\":0,\"access:access_1_16\":0,\"access:access_1_19\":0,\"access:access_1_20\":0,\"access:access_1_21\":0,\"access:access_1_22\":0,\"access:access_1_23\":0,\"access:access_1_24\":0,\"access:access_1_25\":0,\"access:access_1_26\":0,\"access:access_1_27\":0,\"access:access_1_29\":0,\"access:access_1_30\":0,\"access:access_1_32\":0,\"access:access_1_33\":0,\"access:access_1_34\":0,\"access:access_1_35\":0,\"access:access_1_36\":0,\"access:access_1_37\":0,\"access:access_1_39\":0,\"access:access_1_40\":0,\"access:access_1_41\":0,\"access:access_1_42\":0,\"access:access_1_43\":0,\"access:access_1_44\":0,\"access:access_1_45\":0,\"access:access_1_46\":0,\"access:access_1_47\":0,\"access:access_1_49\":0,\"access:access_1_50\":0,\"access:access_1_51\":0,\"access:access_1_53\":0,\"access:access_1_54\":0,\"access:access_1_55\":0,\"access:access_1_56\":0,\"access:access_1_57\":0,\"access:access_1_58\":0,\"access:access_1_59\":0,\"access:access_1_60\":0,\"access:access_1_62\":0,\"access:access_1_63\":0,\"access:access_1_64\":0,\"access:access_1_67\":0,\"access:access_1_68\":0,\"access:access_1_69\":0,\"access:access_1_70\":0,\"access:access_1_71\":0,\"access:access_1_72\":0,\"access:access_1_73\":0,\"access:access_1_74\":0,\"access:access_1_75\":0,\"access:access_1_76\":0,\"access:access_1_77\":0,\"access:access_1_78\":0,\"access:access_1_79\":0,\"access:access_1_81\":0,\"access:access_1_82\":0,\"access:access_1_83\":0,\"access:access_1_84\":0,\"access:access_1_85\":0,\"access:access_1_87\":0,\"access:access_1_88\":0,\"access:access_1_89\":0,\"access:access_1_90\":0,\"access:access_1_91\":0,\"access:access_1_93\":0,\"access:access_1_98\":0,\"access:access_1_99\":0,\"access:access_1_100\":0,\"access:access_1_101\":0,\"access:access_1_102\":0,\"access:access_1_103\":0,\"access:access_1_104\":0,\"access:access_1_105\":0,\"access:access_1_106\":0,\"access:access_1_107\":0,\"access:access_1_108\":0,\"access:access_1_109\":0,\"access:access_1_110\":0,\"access:access_1_111\":0,\"access:access_1_112\":0,\"access:access_1_113\":0,\"access:access_1_114\":0,\"access:access_1_115\":0,\"access:access_1_116\":0,\"access:access_1_117\":0,\"access:access_1_118\":0,\"access:access_1_119\":0,\"access:access_1_120\":0,\"access:access_1_121\":0,\"access:access_1_122\":0,\"access:access_1_123\":0,\"access:access_1_124\":0,\"access:access_1_125\":0,\"access:access_1_126\":0,\"access:access_1_127\":0,\"access:access_1_128\":0,\"access:access_1_129\":0,\"access:access_1_130\":0,\"access:access_1_131\":0,\"access:access_1_132\":0,\"access:access_1_133\":0,\"access:access_1_134\":0,\"access:access_1_135\":0,\"access:access_1_136\":0,\"access:access_1_137\":0,\"access:access_1_138\":0,\"access:access_1_139\":0,\"access:access_1_140\":0,\"access:access_1_141\":0,\"access:access_1_142\":0,\"access:access_1_143\":0,\"access:access_1_144\":0,\"access:access_1_145\":0,\"access:access_1_146\":0,\"access:access_1_147\":0,\"access:access_1_148\":0,\"access:access_1_149\":0,\"access:access_1_150\":0,\"access:access_1_151\":0,\"access:access_1_152\":0,\"access:access_1_153\":0,\"access:access_1_154\":0,\"access:access_1_155\":0,\"access:access_1_156\":0,\"access:access_1_157\":0,\"access:access_1_158\":0,\"access:access_1_159\":0,\"access:access_1_160\":0,\"access:access_1_161\":0,\"access:access_1_162\":0,\"access:access_1_163\":0,\"access:access_1_164\":0,\"access:access_1_165\":0,\"access:access_1_166\":0,\"access:access_1_167\":0,\"access:access_1_168\":0,\"access:access_1_169\":0,\"access:access_1_170\":0,\"access:access_1_171\":0,\"access:access_1_172\":0,\"access:access_1_173\":0,\"access:access_1_174\":0,\"access:access_1_175\":0,\"access:access_1_176\":0,\"access:access_1_177\":0,\"access:access_1_178\":0,\"access:access_1_179\":0,\"access:access_1_180\":0,\"access:access_1_181\":0,\"access:access_1_182\":0,\"access:access_1_183\":0,\"access:access_1_184\":0,\"access:access_1_185\":0,\"access:access_1_186\":0,\"access:access_1_187\":0,\"access:access_1_188\":0,\"access:access_1_189\":0,\"access:access_1_190\":0,\"access:access_1_191\":0,\"access:access_1_192\":0,\"access:access_1_193\":0,\"access:access_1_194\":0,\"access:access_1_195\":0,\"access:access_1_196\":0,\"access:access_1_197\":0,\"access:access_1_198\":0,\"access:access_1_199\":0,\"access:access_1_200\":0,\"access:access_1_201\":0,\"access:access_1_202\":0,\"access:access_1_203\":0,\"access:access_1_204\":0,\"access:access_1_205\":0,\"access:access_1_206\":0,\"access:access_1_207\":0,\"access:access_1_208\":0,\"access:access_1_209\":0,\"access:access_1_210\":0,\"access:access_1_211\":0,\"access:access_1_212\":0,\"access:access_1_213\":0,\"access:access_1_214\":0,\"access:access_1_215\":0,\"access:access_1_216\":0,\"access:access_1_217\":0,\"access:access_1_218\":0,\"access:access_1_219\":0,\"access:access_1_220\":0,\"access:access_1_221\":0,\"access:access_1_222\":0,\"access:access_1_223\":0,\"access:access_1_224\":0,\"access:access_1_225\":0,\"access:access_1_226\":0,\"access:access_1_227\":0,\"access:access_1_228\":0,\"access:access_1_229\":0,\"access:access_1_230\":0,\"access:access_1_231\":0,\"access:access_1_232\":0,\"access:access_1_233\":0,\"access:access_1_234\":0,\"access:access_1_235\":0,\"access:access_1_236\":0,\"access:access_1_237\":0,\"access:access_1_238\":0,\"access:access_1_239\":0,\"access:access_1_240\":0,\"access:access_1_241\":0,\"access:access_1_242\":0,\"access:access_1_243\":0,\"access:access_1_244\":0,\"access:access_1_245\":0,\"access:access_1_246\":0,\"access:access_1_247\":0,\"access:access_1_248\":0,\"access:access_1_249\":0,\"access:access_1_250\":0,\"access:access_1_251\":0,\"access:access_1_252\":0,\"access:access_1_253\":0,\"access:access_1_254\":0,\"access:access_1_255\":0,\"access:access_1_256\":0,\"access:access_1_257\":0,\"access:access_1_258\":0,\"access:access_1_259\":0,\"access:access_1_260\":0,\"access:access_1_261\":0,\"access:access_1_262\":0,\"access:access_1_263\":0,\"access:access_1_264\":0,\"access:access_1_265\":0,\"access:access_1_266\":0,\"access:access_1_267\":0,\"access:access_1_268\":0,\"access:access_1_269\":0,\"access:access_1_270\":0,\"access:access_1_271\":0,\"access:access_1_272\":0,\"access:access_1_273\":0,\"access:access_1_274\":0,\"access:access_1_275\":0,\"access:access_1_276\":0,\"access:access_1_277\":0,\"access:access_1_278\":0,\"access:access_1_279\":0,\"access:access_1_280\":0,\"access:access_1_281\":0,\"access:access_1_282\":0,\"access:access_1_283\":0,\"access:access_1_284\":0,\"access:access_1_285\":0,\"access:access_1_286\":0,\"access:access_1_287\":0,\"access:access_1_288\":0,\"access:access_1_289\":0,\"access:access_1_290\":0,\"access:access_1_291\":0,\"access:access_1_292\":0,\"access:access_1_293\":0,\"access:access_1_294\":0,\"access:access_1_295\":0,\"access:access_1_296\":0,\"access:access_1_297\":0,\"access:access_1_298\":0,\"access:access_1_299\":0,\"access:access_1_300\":0,\"access:access_1_301\":0,\"access:access_1_302\":0,\"access:access_1_303\":0,\"access:access_1_304\":0,\"access:access_1_305\":0,\"access:access_1_306\":0,\"access:access_1_307\":0,\"access:access_1_308\":0,\"access:access_1_309\":0,\"access:access_1_310\":0,\"access:access_1_311\":0,\"access:access_1_312\":0,\"access:access_1_313\":0,\"access:access_1_314\":0,\"access:access_1_315\":0,\"access:access_1_316\":0,\"access:access_1_317\":0,\"access:access_1_318\":0,\"access:access_1_319\":0,\"access:access_1_320\":0,\"access:access_1_321\":0,\"access:access_1_322\":0,\"access:access_1_323\":0,\"access:access_1_324\":0,\"access:access_1_325\":0,\"access:access_1_326\":0,\"access:access_1_327\":0,\"access:access_1_328\":0,\"access:access_1_329\":0,\"access:access_1_330\":0,\"access:access_1_331\":0,\"access:access_1_332\":0,\"access:access_1_333\":0,\"access:access_1_334\":0,\"access:access_1_335\":0,\"access:access_1_336\":0,\"access:access_1_337\":0,\"access:access_1_338\":0,\"access:access_1_339\":0,\"access:access_1_340\":0,\"access:access_1_341\":0,\"access:access_1_342\":0,\"access:access_1_343\":0,\"access:access_1_344\":0,\"access:access_1_345\":0,\"access:access_1_346\":0,\"access:access_1_347\":0,\"access:access_1_348\":0,\"access:access_1_349\":0,\"access:access_1_350\":0,\"access:access_1_351\":0,\"access:access_1_352\":0,\"access:access_1_353\":0,\"access:access_1_354\":0,\"access:access_1_355\":0,\"access:access_1_356\":0,\"access:access_1_357\":0,\"access:access_1_358\":0,\"access:access_1_359\":0,\"access:access_1_360\":0,\"access:access_1_361\":0,\"access:access_1_362\":0,\"access:access_1_363\":0,\"access:access_1_364\":0,\"access:access_1_365\":0,\"access:access_1_366\":0,\"access:access_1_367\":0,\"access:access_1_368\":0,\"access:access_1_369\":0,\"access:access_1_370\":0,\"access:access_1_371\":0,\"access:access_1_372\":0,\"access:access_1_373\":0,\"access:access_1_374\":0,\"access:access_1_375\":0,\"access:access_1_376\":0,\"access:access_1_377\":0,\"access:access_1_378\":0,\"access:access_1_379\":0,\"access:access_1_380\":0,\"access:access_1_381\":0,\"access:access_1_382\":0,\"access:access_1_383\":0,\"access:access_1_384\":0,\"access:access_1_385\":0,\"access:access_1_386\":0,\"access:access_1_387\":0,\"access:access_1_388\":0,\"access:access_1_389\":0,\"access:access_1_390\":0,\"access:access_1_391\":0,\"access:access_1_392\":0,\"access:access_1_393\":0,\"access:access_1_394\":0,\"access:access_1_395\":0,\"access:access_1_396\":0,\"access:access_1_397\":0,\"access:access_1_398\":0,\"access:access_1_399\":0,\"access:access_1_400\":0,\"access:access_1_401\":0,\"access:access_1_402\":0,\"access:access_1_403\":0,\"access:access_1_404\":0,\"access:access_1_405\":0,\"access:access_1_406\":0,\"access:access_1_407\":0,\"access:access_1_408\":0,\"access:access_1_409\":0,\"access:access_1_410\":0,\"access:access_1_411\":0,\"access:access_1_412\":0,\"access:access_1_413\":0,\"access:access_1_414\":0,\"access:access_1_415\":0,\"access:access_1_416\":0,\"access:access_1_417\":0,\"access:access_1_418\":0,\"access:access_1_419\":0,\"access:access_1_420\":0,\"access:access_1_421\":0,\"access:access_1_422\":0,\"access:access_1_423\":0,\"access:access_1_424\":0,\"access:access_1_425\":0,\"access:access_1_426\":0,\"access:access_1_427\":0,\"access:access_1_428\":0,\"access:access_1_429\":0,\"access:access_1_430\":0,\"access:access_1_431\":0,\"access:access_1_432\":0,\"access:access_1_433\":0,\"access:access_1_434\":0,\"access:access_1_435\":0,\"access:access_1_436\":0,\"access:access_1_437\":0,\"access:access_1_438\":0,\"access:access_1_439\":0,\"access:access_1_440\":0,\"access:access_1_441\":0,\"access:access_1_442\":0,\"access:access_1_443\":0,\"access:access_1_444\":0,\"access:access_1_445\":0,\"access:access_1_446\":0,\"access:access_1_447\":0,\"access:access_1_448\":0,\"access:access_1_449\":0,\"access:access_1_450\":0,\"access:access_1_451\":0,\"access:access_1_452\":0,\"access:access_1_453\":0,\"access:access_1_454\":0,\"access:access_1_455\":0,\"access:access_1_456\":0,\"access:access_1_457\":0,\"access:access_1_458\":0,\"access:access_1_459\":0,\"access:access_1_460\":0,\"access:access_1_461\":0,\"access:access_1_462\":0,\"access:access_1_463\":0,\"access:access_1_464\":0,\"access:access_1_465\":0,\"access:access_1_466\":0,\"access:access_1_467\":0,\"access:access_1_468\":0,\"access:access_1_469\":0,\"access:access_1_470\":0,\"access:access_1_471\":0,\"access:access_1_472\":0,\"access:access_1_473\":0,\"access:access_1_474\":0,\"access:access_1_475\":0,\"access:access_1_476\":0,\"access:access_1_477\":0,\"access:access_1_478\":0,\"access:access_1_479\":0,\"access:access_1_480\":0,\"access:access_1_481\":0,\"access:access_1_482\":0,\"access:access_1_483\":0,\"access:access_1_484\":0,\"access:access_1_485\":0,\"access:access_1_486\":0,\"access:access_1_487\":0,\"access:access_1_488\":0,\"zone:Europe\":\"1\",\"zone:North_America\":\"2\",\"zone:Asia\":\"3\",\"zone:Africa\":\"4\",\"zone:Oceania\":\"5\",\"zone:South_America\":\"6\",\"zone:Europe_out_E_U\":\"7\",\"zone:Central_America_Antilla\":\"8\",\"country:DE\":1,\"country:AT\":2,\"country:BE\":3,\"country:CA\":4,\"country:CN\":5,\"country:ES\":6,\"country:FI\":7,\"country:FR\":8,\"country:GR\":9,\"country:IT\":10,\"country:JP\":11,\"country:LU\":12,\"country:NL\":13,\"country:PL\":14,\"country:PT\":15,\"country:CZ\":16,\"country:GB\":17,\"country:SE\":18,\"country:CH\":19,\"country:DK\":20,\"country:US\":21,\"country:HK\":22,\"country:NO\":23,\"country:AU\":24,\"country:SG\":25,\"country:IE\":26,\"country:NZ\":27,\"country:KR\":28,\"country:IL\":29,\"country:ZA\":30,\"country:NG\":31,\"country:CI\":32,\"country:TG\":33,\"country:BO\":34,\"country:MU\":35,\"country:RO\":36,\"country:SK\":37,\"country:DZ\":38,\"country:AS\":39,\"country:AD\":40,\"country:AO\":41,\"country:AI\":42,\"country:AG\":43,\"country:AR\":44,\"country:AM\":45,\"country:AW\":46,\"country:AZ\":47,\"country:BS\":48,\"country:BH\":49,\"country:BD\":50,\"country:BB\":51,\"country:BY\":52,\"country:BZ\":53,\"country:BJ\":54,\"country:BM\":55,\"country:BT\":56,\"country:BW\":57,\"country:BR\":58,\"country:BN\":59,\"country:BF\":60,\"country:MM\":61,\"country:BI\":62,\"country:KH\":63,\"country:CM\":64,\"country:CV\":65,\"country:CF\":66,\"country:TD\":67,\"country:CL\":68,\"country:CO\":69,\"country:KM\":70,\"country:CD\":71,\"country:CG\":72,\"country:CR\":73,\"country:HR\":74,\"country:CU\":75,\"country:CY\":76,\"country:DJ\":77,\"country:DM\":78,\"country:DO\":79,\"country:TL\":80,\"country:EC\":81,\"country:EG\":82,\"country:SV\":83,\"country:GQ\":84,\"country:ER\":85,\"country:EE\":86,\"country:ET\":87,\"country:FK\":88,\"country:FO\":89,\"country:FJ\":90,\"country:GA\":91,\"country:GM\":92,\"country:GE\":93,\"country:GH\":94,\"country:GD\":95,\"country:GL\":96,\"country:GI\":97,\"country:GP\":98,\"country:GU\":99,\"country:GT\":100,\"country:GG\":101,\"country:GN\":102,\"country:GW\":103,\"country:GY\":104,\"country:HT\":105,\"country:VA\":106,\"country:HN\":107,\"country:IS\":108,\"country:IN\":109,\"country:ID\":110,\"country:IR\":111,\"country:IQ\":112,\"country:IM\":113,\"country:JM\":114,\"country:JE\":115,\"country:JO\":116,\"country:KZ\":117,\"country:KE\":118,\"country:KI\":119,\"country:KP\":120,\"country:KW\":121,\"country:KG\":122,\"country:LA\":123,\"country:LV\":124,\"country:LB\":125,\"country:LS\":126,\"country:LR\":127,\"country:LY\":128,\"country:LI\":129,\"country:LT\":130,\"country:MO\":131,\"country:MK\":132,\"country:MG\":133,\"country:MW\":134,\"country:MY\":135,\"country:MV\":136,\"country:ML\":137,\"country:MT\":138,\"country:MH\":139,\"country:MQ\":140,\"country:MR\":141,\"country:HU\":142,\"country:YT\":143,\"country:MX\":144,\"country:FM\":145,\"country:MD\":146,\"country:MC\":147,\"country:MN\":148,\"country:ME\":149,\"country:MS\":150,\"country:MA\":151,\"country:MZ\":152,\"country:NA\":153,\"country:NR\":154,\"country:NP\":155,\"country:NC\":156,\"country:NI\":157,\"country:NE\":158,\"country:NU\":159,\"country:NF\":160,\"country:MP\":161,\"country:OM\":162,\"country:PK\":163,\"country:PW\":164,\"country:PS\":165,\"country:PA\":166,\"country:PG\":167,\"country:PY\":168,\"country:PE\":169,\"country:PH\":170,\"country:PN\":171,\"country:PR\":172,\"country:QA\":173,\"country:RE\":174,\"country:RU\":175,\"country:RW\":176,\"country:BL\":177,\"country:KN\":178,\"country:LC\":179,\"country:MF\":180,\"country:PM\":181,\"country:VC\":182,\"country:WS\":183,\"country:SM\":184,\"country:ST\":185,\"country:SA\":186,\"country:SN\":187,\"country:RS\":188,\"country:SC\":189,\"country:SL\":190,\"country:SI\":191,\"country:SB\":192,\"country:SO\":193,\"country:GS\":194,\"country:LK\":195,\"country:SD\":196,\"country:SR\":197,\"country:SJ\":198,\"country:SZ\":199,\"country:SY\":200,\"country:TW\":201,\"country:TJ\":202,\"country:TZ\":203,\"country:TH\":204,\"country:TK\":205,\"country:TO\":206,\"country:TT\":207,\"country:TN\":208,\"country:TR\":209,\"country:TM\":210,\"country:TC\":211,\"country:TV\":212,\"country:UG\":213,\"country:UA\":214,\"country:AE\":215,\"country:UY\":216,\"country:UZ\":217,\"country:VU\":218,\"country:VE\":219,\"country:VN\":220,\"country:VG\":221,\"country:VI\":222,\"country:WF\":223,\"country:EH\":224,\"country:YE\":225,\"country:ZM\":226,\"country:ZW\":227,\"country:AL\":228,\"country:AF\":229,\"country:AQ\":230,\"country:BA\":231,\"country:IO\":232,\"country:BG\":233,\"country:KY\":234,\"country:CX\":235,\"country:CC\":236,\"country:CK\":237,\"country:GF\":238,\"country:PF\":239,\"country:TF\":240,\"country:AX\":241,\"address_format:address_format_1\":\"0\",\"address_format:address_format_2\":\"0\",\"address_format:address_format_3\":\"0\",\"address_format:address_format_4\":\"0\",\"address_format:address_format_5\":\"0\",\"address_format:address_format_6\":\"0\",\"address_format:address_format_7\":\"0\",\"address_format:address_format_8\":\"0\",\"address_format:address_format_9\":\"0\",\"address_format:address_format_10\":\"0\",\"address_format:address_format_11\":\"0\",\"address_format:address_format_12\":\"0\",\"address_format:address_format_13\":\"0\",\"address_format:address_format_14\":\"0\",\"address_format:address_format_15\":\"0\",\"address_format:address_format_16\":\"0\",\"address_format:address_format_17\":\"0\",\"address_format:address_format_18\":\"0\",\"address_format:address_format_19\":\"0\",\"address_format:address_format_20\":\"0\",\"address_format:address_format_21\":\"0\",\"address_format:address_format_22\":\"0\",\"address_format:address_format_23\":\"0\",\"address_format:address_format_24\":\"0\",\"address_format:address_format_25\":\"0\",\"address_format:address_format_26\":\"0\",\"address_format:address_format_27\":\"0\",\"address_format:address_format_28\":\"0\",\"address_format:address_format_29\":\"0\",\"address_format:address_format_30\":\"0\",\"address_format:address_format_31\":\"0\",\"address_format:address_format_32\":\"0\",\"address_format:address_format_33\":\"0\",\"address_format:address_format_34\":\"0\",\"address_format:address_format_35\":\"0\",\"address_format:address_format_36\":\"0\",\"address_format:address_format_37\":\"0\",\"address_format:address_format_38\":\"0\",\"address_format:address_format_39\":\"0\",\"address_format:address_format_40\":\"0\",\"address_format:address_format_41\":\"0\",\"address_format:address_format_42\":\"0\",\"address_format:address_format_43\":\"0\",\"address_format:address_format_44\":\"0\",\"address_format:address_format_45\":\"0\",\"address_format:address_format_46\":\"0\",\"address_format:address_format_47\":\"0\",\"address_format:address_format_48\":\"0\",\"address_format:address_format_49\":\"0\",\"address_format:address_format_50\":\"0\",\"address_format:address_format_51\":\"0\",\"address_format:address_format_52\":\"0\",\"address_format:address_format_53\":\"0\",\"address_format:address_format_54\":\"0\",\"address_format:address_format_55\":\"0\",\"address_format:address_format_56\":\"0\",\"address_format:address_format_57\":\"0\",\"address_format:address_format_58\":\"0\",\"address_format:address_format_59\":\"0\",\"address_format:address_format_60\":\"0\",\"address_format:address_format_61\":\"0\",\"address_format:address_format_62\":\"0\",\"address_format:address_format_63\":\"0\",\"address_format:address_format_64\":\"0\",\"address_format:address_format_65\":\"0\",\"address_format:address_format_66\":\"0\",\"address_format:address_format_67\":\"0\",\"address_format:address_format_68\":\"0\",\"address_format:address_format_69\":\"0\",\"address_format:address_format_70\":\"0\",\"address_format:address_format_71\":\"0\",\"address_format:address_format_72\":\"0\",\"address_format:address_format_73\":\"0\",\"address_format:address_format_74\":\"0\",\"address_format:address_format_75\":\"0\",\"address_format:address_format_76\":\"0\",\"address_format:address_format_77\":\"0\",\"address_format:address_format_78\":\"0\",\"address_format:address_format_79\":\"0\",\"address_format:address_format_80\":\"0\",\"address_format:address_format_81\":\"0\",\"address_format:address_format_82\":\"0\",\"address_format:address_format_83\":\"0\",\"address_format:address_format_84\":\"0\",\"address_format:address_format_85\":\"0\",\"address_format:address_format_86\":\"0\",\"address_format:address_format_87\":\"0\",\"address_format:address_format_88\":\"0\",\"address_format:address_format_89\":\"0\",\"address_format:address_format_90\":\"0\",\"address_format:address_format_91\":\"0\",\"address_format:address_format_92\":\"0\",\"address_format:address_format_93\":\"0\",\"address_format:address_format_94\":\"0\",\"address_format:address_format_95\":\"0\",\"address_format:address_format_96\":\"0\",\"address_format:address_format_97\":\"0\",\"address_format:address_format_98\":\"0\",\"address_format:address_format_99\":\"0\",\"address_format:address_format_100\":\"0\",\"address_format:address_format_101\":\"0\",\"address_format:address_format_102\":\"0\",\"address_format:address_format_103\":\"0\",\"address_format:address_format_104\":\"0\",\"address_format:address_format_105\":\"0\",\"address_format:address_format_107\":\"0\",\"address_format:address_format_108\":\"0\",\"address_format:address_format_109\":\"0\",\"address_format:address_format_110\":\"0\",\"address_format:address_format_111\":\"0\",\"address_format:address_format_112\":\"0\",\"address_format:address_format_113\":\"0\",\"address_format:address_format_114\":\"0\",\"address_format:address_format_115\":\"0\",\"address_format:address_format_116\":\"0\",\"address_format:address_format_117\":\"0\",\"address_format:address_format_118\":\"0\",\"address_format:address_format_119\":\"0\",\"address_format:address_format_120\":\"0\",\"address_format:address_format_121\":\"0\",\"address_format:address_format_122\":\"0\",\"address_format:address_format_123\":\"0\",\"address_format:address_format_124\":\"0\",\"address_format:address_format_125\":\"0\",\"address_format:address_format_126\":\"0\",\"address_format:address_format_127\":\"0\",\"address_format:address_format_128\":\"0\",\"address_format:address_format_129\":\"0\",\"address_format:address_format_130\":\"0\",\"address_format:address_format_131\":\"0\",\"address_format:address_format_132\":\"0\",\"address_format:address_format_133\":\"0\",\"address_format:address_format_134\":\"0\",\"address_format:address_format_135\":\"0\",\"address_format:address_format_136\":\"0\",\"address_format:address_format_137\":\"0\",\"address_format:address_format_138\":\"0\",\"address_format:address_format_139\":\"0\",\"address_format:address_format_140\":\"0\",\"address_format:address_format_141\":\"0\",\"address_format:address_format_142\":\"0\",\"address_format:address_format_143\":\"0\",\"address_format:address_format_144\":\"0\",\"address_format:address_format_145\":\"0\",\"address_format:address_format_146\":\"0\",\"address_format:address_format_147\":\"0\",\"address_format:address_format_148\":\"0\",\"address_format:address_format_149\":\"0\",\"address_format:address_format_150\":\"0\",\"address_format:address_format_151\":\"0\",\"address_format:address_format_152\":\"0\",\"address_format:address_format_153\":\"0\",\"address_format:address_format_154\":\"0\",\"address_format:address_format_155\":\"0\",\"address_format:address_format_156\":\"0\",\"address_format:address_format_158\":\"0\",\"address_format:address_format_159\":\"0\",\"address_format:address_format_160\":\"0\",\"address_format:address_format_161\":\"0\",\"address_format:address_format_162\":\"0\",\"address_format:address_format_163\":\"0\",\"address_format:address_format_164\":\"0\",\"address_format:address_format_165\":\"0\",\"address_format:address_format_166\":\"0\",\"address_format:address_format_167\":\"0\",\"address_format:address_format_168\":\"0\",\"address_format:address_format_169\":\"0\",\"address_format:address_format_170\":\"0\",\"address_format:address_format_171\":\"0\",\"address_format:address_format_172\":\"0\",\"address_format:address_format_173\":\"0\",\"address_format:address_format_174\":\"0\",\"address_format:address_format_175\":\"0\",\"address_format:address_format_176\":\"0\",\"address_format:address_format_177\":\"0\",\"address_format:address_format_178\":\"0\",\"address_format:address_format_179\":\"0\",\"address_format:address_format_180\":\"0\",\"address_format:address_format_181\":\"0\",\"address_format:address_format_182\":\"0\",\"address_format:address_format_183\":\"0\",\"address_format:address_format_184\":\"0\",\"address_format:address_format_185\":\"0\",\"address_format:address_format_186\":\"0\",\"address_format:address_format_187\":\"0\",\"address_format:address_format_188\":\"0\",\"address_format:address_format_189\":\"0\",\"address_format:address_format_190\":\"0\",\"address_format:address_format_191\":\"0\",\"address_format:address_format_192\":\"0\",\"address_format:address_format_193\":\"0\",\"address_format:address_format_194\":\"0\",\"address_format:address_format_195\":\"0\",\"address_format:address_format_196\":\"0\",\"address_format:address_format_197\":\"0\",\"address_format:address_format_198\":\"0\",\"address_format:address_format_199\":\"0\",\"address_format:address_format_200\":\"0\",\"address_format:address_format_201\":\"0\",\"address_format:address_format_202\":\"0\",\"address_format:address_format_203\":\"0\",\"address_format:address_format_204\":\"0\",\"address_format:address_format_205\":\"0\",\"address_format:address_format_206\":\"0\",\"address_format:address_format_207\":\"0\",\"address_format:address_format_208\":\"0\",\"address_format:address_format_209\":\"0\",\"address_format:address_format_210\":\"0\",\"address_format:address_format_211\":\"0\",\"address_format:address_format_212\":\"0\",\"address_format:address_format_213\":\"0\",\"address_format:address_format_214\":\"0\",\"address_format:address_format_215\":\"0\",\"address_format:address_format_216\":\"0\",\"address_format:address_format_217\":\"0\",\"address_format:address_format_218\":\"0\",\"address_format:address_format_219\":\"0\",\"address_format:address_format_220\":\"0\",\"address_format:address_format_221\":\"0\",\"address_format:address_format_222\":\"0\",\"address_format:address_format_223\":\"0\",\"address_format:address_format_224\":\"0\",\"address_format:address_format_225\":\"0\",\"address_format:address_format_226\":\"0\",\"address_format:address_format_227\":\"0\",\"address_format:address_format_228\":\"0\",\"address_format:address_format_229\":\"0\",\"address_format:address_format_230\":\"0\",\"address_format:address_format_231\":\"0\",\"address_format:address_format_232\":\"0\",\"address_format:address_format_233\":\"0\",\"address_format:address_format_235\":\"0\",\"address_format:address_format_236\":\"0\",\"address_format:address_format_237\":\"0\",\"address_format:address_format_238\":\"0\",\"address_format:address_format_239\":\"0\",\"address_format:address_format_240\":\"0\",\"address_format:address_format_241\":\"0\",\"address_format:address_format_242\":\"0\",\"address_format:address_format_243\":\"0\",\"address_format:address_format_244\":\"0\",\"carrier:carrier_1\":\"1\",\"group:Visitor\":\"1\",\"group:Guest\":\"2\",\"group:Customer\":\"3\",\"carrier_group:carrier_group_1_1\":0,\"carrier_group:carrier_group_1_2\":0,\"carrier_group:carrier_group_1_3\":0,\"carrier_tax_rules_group_shop:carrier_tax_rules_group_shop_1_1_1\":0,\"carrier_zone:carrier_zone_1_1\":0,\"category:Root\":\"1\",\"category:Home\":\"2\",\"category_group:category_group_1_1\":0,\"category_group:category_group_1_2\":0,\"category_group:category_group_1_3\":0,\"cms_category:Home\":\"1\",\"cms:Delivery\":\"1\",\"cms:Legal_Notice\":\"2\",\"cms:Terms_and_conditions_of_use\":\"3\",\"cms:About_us\":\"4\",\"cms:Secure_payment\":\"5\",\"cms_role:\":\"2\",\"configuration:PS_CURRENCY_DEFAULT\":6,\"configuration:PS_COUNTRY_DEFAULT\":7,\"configuration:PS_REWRITING_SETTINGS\":8,\"configuration:PS_ORDER_OUT_OF_STOCK\":9,\"configuration:PS_LAST_QTIES\":10,\"configuration:PS_CONDITIONS\":11,\"configuration:PS_RECYCLABLE_PACK\":12,\"configuration:PS_GIFT_WRAPPING\":13,\"configuration:PS_GIFT_WRAPPING_PRICE\":14,\"configuration:PS_STOCK_MANAGEMENT\":15,\"configuration:PS_NAVIGATION_PIPE\":16,\"configuration:PS_PRODUCTS_PER_PAGE\":17,\"configuration:PS_PURCHASE_MINIMUM\":18,\"configuration:PS_PRODUCTS_ORDER_WAY\":19,\"configuration:PS_PRODUCTS_ORDER_BY\":20,\"configuration:PS_DISPLAY_QTIES\":21,\"configuration:PS_SHIPPING_HANDLING\":22,\"configuration:PS_SHIPPING_FREE_PRICE\":23,\"configuration:PS_SHIPPING_FREE_WEIGHT\":24,\"configuration:PS_SHIPPING_METHOD\":25,\"configuration:PS_TAX\":26,\"configuration:PS_SHOP_ENABLE\":27,\"configuration:PS_NB_DAYS_NEW_PRODUCT\":28,\"configuration:PS_SSL_ENABLED\":29,\"configuration:PS_WEIGHT_UNIT\":30,\"configuration:PS_BLOCK_CART_AJAX\":31,\"configuration:PS_ORDER_RETURN\":32,\"configuration:PS_ORDER_RETURN_NB_DAYS\":33,\"configuration:PS_MAIL_TYPE\":34,\"configuration:PS_PRODUCT_PICTURE_MAX_SIZE\":35,\"configuration:PS_PRODUCT_PICTURE_WIDTH\":36,\"configuration:PS_PRODUCT_PICTURE_HEIGHT\":37,\"configuration:PS_INVOICE_PREFIX\":38,\"configuration:PS_INVCE_INVOICE_ADDR_RULES\":39,\"configuration:PS_INVCE_DELIVERY_ADDR_RULES\":40,\"configuration:PS_DELIVERY_PREFIX\":41,\"configuration:PS_DELIVERY_NUMBER\":42,\"configuration:PS_RETURN_PREFIX\":43,\"configuration:PS_INVOICE\":44,\"configuration:PS_PASSWD_TIME_BACK\":45,\"configuration:PS_PASSWD_TIME_FRONT\":46,\"configuration:PS_PASSWD_RESET_VALIDITY\":47,\"configuration:PS_DISP_UNAVAILABLE_ATTR\":48,\"configuration:PS_SEARCH_INDEXATION\":49,\"configuration:PS_SEARCH_FUZZY\":50,\"configuration:PS_SEARCH_FUZZY_MAX_LOOP\":51,\"configuration:PS_SEARCH_MAX_WORD_LENGTH\":52,\"configuration:PS_SEARCH_MINWORDLEN\":53,\"configuration:PS_SEARCH_BLACKLIST\":54,\"configuration:PS_SEARCH_WEIGHT_PNAME\":55,\"configuration:PS_SEARCH_WEIGHT_REF\":56,\"configuration:PS_SEARCH_WEIGHT_SHORTDESC\":57,\"configuration:PS_SEARCH_WEIGHT_DESC\":58,\"configuration:PS_SEARCH_WEIGHT_CNAME\":59,\"configuration:PS_SEARCH_WEIGHT_MNAME\":60,\"configuration:PS_SEARCH_WEIGHT_TAG\":61,\"configuration:PS_SEARCH_WEIGHT_ATTRIBUTE\":62,\"configuration:PS_SEARCH_WEIGHT_FEATURE\":63,\"configuration:PS_SEARCH_AJAX\":64,\"configuration:PS_TIMEZONE\":65,\"configuration:PS_THEME_V11\":66,\"configuration:PRESTASTORE_LIVE\":67,\"configuration:PS_TIN_ACTIVE\":68,\"configuration:PS_SHOW_ALL_MODULES\":69,\"configuration:PS_BACKUP_ALL\":70,\"configuration:PS_1_3_UPDATE_DATE\":71,\"configuration:PS_PRICE_ROUND_MODE\":72,\"configuration:PS_1_3_2_UPDATE_DATE\":73,\"configuration:PS_CONDITIONS_CMS_ID\":74,\"configuration:TRACKING_DIRECT_TRAFFIC\":75,\"configuration:PS_VOLUME_UNIT\":76,\"configuration:PS_CIPHER_ALGORITHM\":77,\"configuration:PS_ATTRIBUTE_CATEGORY_DISPLAY\":78,\"configuration:PS_CUSTOMER_SERVICE_FILE_UPLOAD\":79,\"configuration:PS_CUSTOMER_SERVICE_SIGNATURE\":80,\"configuration:PS_BLOCK_BESTSELLERS_DISPLAY\":81,\"configuration:PS_BLOCK_NEWPRODUCTS_DISPLAY\":82,\"configuration:PS_BLOCK_SPECIALS_DISPLAY\":83,\"configuration:PS_STOCK_MVT_REASON_DEFAULT\":84,\"configuration:PS_SPECIFIC_PRICE_PRIORITIES\":85,\"configuration:PS_TAX_DISPLAY\":86,\"configuration:PS_SMARTY_FORCE_COMPILE\":87,\"configuration:PS_DISTANCE_UNIT\":88,\"configuration:PS_STORES_DISPLAY_CMS\":89,\"configuration:SHOP_LOGO_WIDTH\":90,\"configuration:SHOP_LOGO_HEIGHT\":91,\"configuration:EDITORIAL_IMAGE_WIDTH\":92,\"configuration:EDITORIAL_IMAGE_HEIGHT\":93,\"configuration:PS_STATSDATA_CUSTOMER_PAGESVIEWS\":94,\"configuration:PS_STATSDATA_PAGESVIEWS\":95,\"configuration:PS_STATSDATA_PLUGINS\":96,\"configuration:PS_GEOLOCATION_ENABLED\":97,\"configuration:PS_ALLOWED_COUNTRIES\":98,\"configuration:PS_GEOLOCATION_BEHAVIOR\":99,\"configuration:PS_LOCALE_LANGUAGE\":100,\"configuration:PS_LOCALE_COUNTRY\":101,\"configuration:PS_ATTACHMENT_MAXIMUM_SIZE\":102,\"configuration:PS_SMARTY_CACHE\":103,\"configuration:PS_DIMENSION_UNIT\":104,\"configuration:PS_GUEST_CHECKOUT_ENABLED\":105,\"configuration:PS_DISPLAY_SUPPLIERS\":106,\"configuration:PS_DISPLAY_MANUFACTURERS\":107,\"configuration:PS_DISPLAY_BEST_SELLERS\":108,\"configuration:PS_CATALOG_MODE\":109,\"configuration:PS_GEOLOCATION_WHITELIST\":110,\"configuration:PS_LOGS_BY_EMAIL\":111,\"configuration:PS_COOKIE_CHECKIP\":112,\"configuration:PS_COOKIE_SAMESITE\":113,\"configuration:PS_USE_ECOTAX\":114,\"configuration:PS_CANONICAL_REDIRECT\":115,\"configuration:PS_IMG_UPDATE_TIME\":116,\"configuration:PS_BACKUP_DROP_TABLE\":117,\"configuration:PS_OS_CHEQUE\":118,\"configuration:PS_OS_PAYMENT\":119,\"configuration:PS_OS_PREPARATION\":120,\"configuration:PS_OS_SHIPPING\":121,\"configuration:PS_OS_DELIVERED\":122,\"configuration:PS_OS_CANCELED\":123,\"configuration:PS_OS_REFUND\":124,\"configuration:PS_OS_ERROR\":125,\"configuration:PS_OS_OUTOFSTOCK\":126,\"configuration:PS_OS_BANKWIRE\":127,\"configuration:PS_OS_WS_PAYMENT\":128,\"configuration:PS_OS_OUTOFSTOCK_PAID\":129,\"configuration:PS_OS_OUTOFSTOCK_UNPAID\":130,\"configuration:PS_OS_COD_VALIDATION\":131,\"configuration:PS_LEGACY_IMAGES\":132,\"configuration:PS_IMAGE_QUALITY\":133,\"configuration:PS_PNG_QUALITY\":134,\"configuration:PS_JPEG_QUALITY\":135,\"configuration:PS_COOKIE_LIFETIME_FO\":136,\"configuration:PS_COOKIE_LIFETIME_BO\":137,\"configuration:PS_RESTRICT_DELIVERED_COUNTRIES\":138,\"configuration:PS_SHOW_NEW_ORDERS\":139,\"configuration:PS_SHOW_NEW_CUSTOMERS\":140,\"configuration:PS_SHOW_NEW_MESSAGES\":141,\"configuration:PS_FEATURE_FEATURE_ACTIVE\":142,\"configuration:PS_COMBINATION_FEATURE_ACTIVE\":143,\"configuration:PS_SPECIFIC_PRICE_FEATURE_ACTIVE\":144,\"configuration:PS_VIRTUAL_PROD_FEATURE_ACTIVE\":145,\"configuration:PS_CUSTOMIZATION_FEATURE_ACTIVE\":146,\"configuration:PS_CART_RULE_FEATURE_ACTIVE\":147,\"configuration:PS_PACK_FEATURE_ACTIVE\":148,\"configuration:PS_ALIAS_FEATURE_ACTIVE\":149,\"configuration:PS_TAX_ADDRESS_TYPE\":150,\"configuration:PS_SHOP_DEFAULT\":151,\"configuration:PS_CARRIER_DEFAULT_SORT\":152,\"configuration:PS_STOCK_MVT_INC_REASON_DEFAULT\":153,\"configuration:PS_STOCK_MVT_DEC_REASON_DEFAULT\":154,\"configuration:PS_ADVANCED_STOCK_MANAGEMENT\":155,\"configuration:PS_STOCK_MVT_TRANSFER_TO\":156,\"configuration:PS_STOCK_MVT_TRANSFER_FROM\":157,\"configuration:PS_CARRIER_DEFAULT_ORDER\":158,\"configuration:PS_STOCK_MVT_SUPPLY_ORDER\":159,\"configuration:PS_STOCK_CUSTOMER_ORDER_CANCEL_REASON\":160,\"configuration:PS_STOCK_CUSTOMER_RETURN_REASON\":161,\"configuration:PS_STOCK_MVT_INC_EMPLOYEE_EDITION\":162,\"configuration:PS_STOCK_MVT_DEC_EMPLOYEE_EDITION\":163,\"configuration:PS_STOCK_CUSTOMER_ORDER_REASON\":164,\"configuration:PS_UNIDENTIFIED_GROUP\":165,\"configuration:PS_GUEST_GROUP\":166,\"configuration:PS_CUSTOMER_GROUP\":167,\"configuration:PS_SMARTY_CONSOLE\":168,\"configuration:PS_INVOICE_MODEL\":169,\"configuration:PS_LIMIT_UPLOAD_IMAGE_VALUE\":170,\"configuration:PS_LIMIT_UPLOAD_FILE_VALUE\":171,\"configuration:MB_PAY_TO_EMAIL\":172,\"configuration:MB_SECRET_WORD\":173,\"configuration:MB_HIDE_LOGIN\":174,\"configuration:MB_ID_LOGO\":175,\"configuration:MB_ID_LOGO_WALLET\":176,\"configuration:MB_PARAMETERS\":177,\"configuration:MB_PARAMETERS_2\":178,\"configuration:MB_DISPLAY_MODE\":179,\"configuration:MB_CANCEL_URL\":180,\"configuration:MB_LOCAL_METHODS\":181,\"configuration:MB_INTER_METHODS\":182,\"configuration:BANK_WIRE_CURRENCIES\":183,\"configuration:CHEQUE_CURRENCIES\":184,\"configuration:PRODUCTS_VIEWED_NBR\":185,\"configuration:BLOCK_CATEG_DHTML\":186,\"configuration:BLOCK_CATEG_MAX_DEPTH\":187,\"configuration:MANUFACTURER_DISPLAY_FORM\":188,\"configuration:MANUFACTURER_DISPLAY_TEXT\":189,\"configuration:MANUFACTURER_DISPLAY_TEXT_NB\":190,\"configuration:NEW_PRODUCTS_NBR\":191,\"configuration:PS_TOKEN_ENABLE\":192,\"configuration:PS_STATS_RENDER\":193,\"configuration:PS_STATS_OLD_CONNECT_AUTO_CLEAN\":194,\"configuration:PS_STATS_GRID_RENDER\":195,\"configuration:BLOCKTAGS_NBR\":196,\"configuration:CHECKUP_DESCRIPTIONS_LT\":197,\"configuration:CHECKUP_DESCRIPTIONS_GT\":198,\"configuration:CHECKUP_IMAGES_LT\":199,\"configuration:CHECKUP_IMAGES_GT\":200,\"configuration:CHECKUP_SALES_LT\":201,\"configuration:CHECKUP_SALES_GT\":202,\"configuration:CHECKUP_STOCK_LT\":203,\"configuration:CHECKUP_STOCK_GT\":204,\"configuration:FOOTER_CMS\":205,\"configuration:FOOTER_BLOCK_ACTIVATION\":206,\"configuration:FOOTER_POWEREDBY\":207,\"configuration:BLOCKADVERT_LINK\":208,\"configuration:BLOCKSTORE_IMG\":209,\"configuration:BLOCKADVERT_IMG_EXT\":210,\"configuration:MOD_BLOCKTOPMENU_ITEMS\":211,\"configuration:MOD_BLOCKTOPMENU_SEARCH\":212,\"configuration:blocksocial_facebook\":213,\"configuration:blocksocial_twitter\":214,\"configuration:blocksocial_rss\":215,\"configuration:blockcontactinfos_company\":216,\"configuration:blockcontactinfos_address\":217,\"configuration:blockcontactinfos_phone\":218,\"configuration:blockcontactinfos_email\":219,\"configuration:blockcontact_telnumber\":220,\"configuration:blockcontact_email\":221,\"configuration:SUPPLIER_DISPLAY_TEXT\":222,\"configuration:SUPPLIER_DISPLAY_TEXT_NB\":223,\"configuration:SUPPLIER_DISPLAY_FORM\":224,\"configuration:BLOCK_CATEG_NBR_COLUMN_FOOTER\":225,\"configuration:UPGRADER_BACKUPDB_FILENAME\":226,\"configuration:UPGRADER_BACKUPFILES_FILENAME\":227,\"configuration:BLOCKREINSURANCE_NBBLOCKS\":228,\"configuration:HOMESLIDER_WIDTH\":229,\"configuration:HOMESLIDER_SPEED\":230,\"configuration:HOMESLIDER_PAUSE\":231,\"configuration:HOMESLIDER_LOOP\":232,\"configuration:PS_BASE_DISTANCE_UNIT\":233,\"configuration:PS_SHOP_DOMAIN\":234,\"configuration:PS_SHOP_DOMAIN_SSL\":235,\"configuration:PS_SHOP_NAME\":236,\"configuration:PS_SHOP_EMAIL\":237,\"configuration:PS_MAIL_METHOD\":238,\"configuration:PS_SHOP_ACTIVITY\":239,\"configuration:PS_LOGO\":240,\"configuration:PS_FAVICON\":241,\"configuration:PS_STORES_ICON\":242,\"configuration:PS_ROOT_CATEGORY\":243,\"configuration:PS_HOME_CATEGORY\":244,\"configuration:PS_CONFIGURATION_AGREMENT\":245,\"configuration:PS_MAIL_SERVER\":246,\"configuration:PS_MAIL_USER\":247,\"configuration:PS_MAIL_PASSWD\":248,\"configuration:PS_MAIL_SMTP_ENCRYPTION\":249,\"configuration:PS_MAIL_SMTP_PORT\":250,\"configuration:PS_MAIL_COLOR\":251,\"configuration:NW_SALT\":252,\"configuration:PS_PAYMENT_LOGO_CMS_ID\":253,\"configuration:HOME_FEATURED_NBR\":254,\"configuration:SEK_MIN_OCCURENCES\":255,\"configuration:SEK_FILTER_KW\":256,\"configuration:PS_ALLOW_MOBILE_DEVICE\":257,\"configuration:PS_CUSTOMER_CREATION_EMAIL\":258,\"configuration:PS_SMARTY_CONSOLE_KEY\":259,\"configuration:PS_DASHBOARD_USE_PUSH\":260,\"configuration:PS_ATTRIBUTE_ANCHOR_SEPARATOR\":261,\"configuration:CONF_AVERAGE_PRODUCT_MARGIN\":262,\"configuration:PS_DASHBOARD_SIMULATION\":263,\"configuration:PS_USE_HTMLPURIFIER\":264,\"configuration:PS_SMARTY_CACHING_TYPE\":265,\"configuration:PS_SMARTY_LOCAL\":266,\"configuration:PS_SMARTY_CLEAR_CACHE\":267,\"configuration:PS_DETECT_LANG\":268,\"configuration:PS_DETECT_COUNTRY\":269,\"configuration:PS_ROUND_TYPE\":270,\"configuration:PS_LOG_EMAILS\":271,\"configuration:PS_CUSTOMER_OPTIN\":272,\"configuration:PS_CUSTOMER_BIRTHDATE\":273,\"configuration:PS_PACK_STOCK_TYPE\":274,\"configuration:PS_LOG_MODULE_PERFS_MODULO\":275,\"configuration:PS_DISALLOW_HISTORY_REORDERING\":276,\"configuration:PS_DISPLAY_PRODUCT_WEIGHT\":277,\"configuration:PS_PRODUCT_WEIGHT_PRECISION\":278,\"configuration:PS_ACTIVE_CRONJOB_EXCHANGE_RATE\":279,\"configuration:PS_ORDER_RECALCULATE_SHIPPING\":280,\"configuration:PS_MAINTENANCE_TEXT\":281,\"configuration:PS_PRODUCT_SHORT_DESC_LIMIT\":282,\"configuration:PS_LABEL_IN_STOCK_PRODUCTS\":283,\"configuration:PS_LABEL_OOS_PRODUCTS_BOA\":284,\"configuration:PS_LABEL_OOS_PRODUCTS_BOD\":285,\"configuration:PS_CATALOG_MODE_WITH_PRICES\":286,\"configuration:PS_MAIL_THEME\":287,\"configuration:PS_ORDER_PRODUCTS_NB_PER_PAGE\":288,\"configuration:PS_LOGS_EMAIL_RECEIVERS\":289,\"configuration:PS_SHOW_LABEL_OOS_LISTING_PAGES\":290,\"configuration:ADDONS_API_MODULE_CHANNEL\":291,\"contact:Webmaster\":\"1\",\"contact:Customer_service\":\"2\",\"gender:Mr\":\"1\",\"gender:Mrs\":\"2\",\"hook:actionValidateOrder\":1,\"hook:displayMaintenance\":2,\"hook:displayCartModalContent\":3,\"hook:displayCartModalFooter\":4,\"hook:displayProductPageDrawer\":5,\"hook:actionPaymentConfirmation\":6,\"hook:displayPaymentReturn\":7,\"hook:actionUpdateQuantity\":8,\"hook:displayRightColumn\":9,\"hook:displayWrapperTop\":10,\"hook:displayWrapperBottom\":11,\"hook:displayContentWrapperTop\":12,\"hook:displayContentWrapperBottom\":13,\"hook:displayLeftColumn\":14,\"hook:displayHome\":15,\"hook:displayHeader\":16,\"hook:actionCartSave\":17,\"hook:actionAuthentication\":18,\"hook:actionProductAdd\":19,\"hook:actionProductUpdate\":20,\"hook:displayAfterTitleTag\":21,\"hook:displayAfterBodyOpeningTag\":22,\"hook:displayBanner\":23,\"hook:displayBeforeBodyClosingTag\":24,\"hook:displayTop\":25,\"hook:displayNavFullWidth\":26,\"hook:displayRightColumnProduct\":27,\"hook:actionProductDelete\":28,\"hook:actionObjectProductInCartDeleteBefore\":29,\"hook:actionObjectProductInCartDeleteAfter\":30,\"hook:displayFooterProduct\":31,\"hook:displayInvoice\":32,\"hook:actionOrderStatusUpdate\":33,\"hook:displayAdminGridTableBefore\":571,\"hook:displayAdminGridTableAfter\":572,\"hook:displayAdminOrder\":36,\"hook:displayAdminOrderTabOrder\":37,\"hook:displayAdminOrderTabShip\":38,\"hook:displayAdminOrderContentOrder\":39,\"hook:displayAdminOrderContentShip\":40,\"hook:displayFooter\":41,\"hook:displayPDFInvoice\":42,\"hook:displayInvoiceLegalFreeText\":43,\"hook:displayAdminCustomers\":44,\"hook:displayAdminCustomersAddressesItemAction\":45,\"hook:displayOrderConfirmation\":46,\"hook:actionCustomerAccountAdd\":47,\"hook:actionCustomerAccountUpdate\":48,\"hook:displayCustomerAccount\":49,\"hook:actionOrderSlipAdd\":50,\"hook:displayShoppingCartFooter\":51,\"hook:displayCreateAccountEmailFormBottom\":52,\"hook:displayAuthenticateFormBottom\":53,\"hook:displayCustomerAccountForm\":54,\"hook:displayAdminStatsModules\":55,\"hook:displayAdminStatsGraphEngine\":56,\"hook:actionOrderReturn\":57,\"hook:displayProductAdditionalInfo\":58,\"hook:displayBackOfficeHome\":59,\"hook:displayAdminStatsGridEngine\":60,\"hook:actionWatermark\":61,\"hook:actionProductCancel\":62,\"hook:displayLeftColumnProduct\":63,\"hook:actionProductOutOfStock\":64,\"hook:actionProductAttributeUpdate\":65,\"hook:displayCarrierList\":66,\"hook:displayShoppingCart\":67,\"hook:actionCarrierUpdate\":68,\"hook:actionOrderStatusPostUpdate\":69,\"hook:displayCustomerAccountFormTop\":70,\"hook:displayBackOfficeHeader\":71,\"hook:displayBackOfficeTop\":72,\"hook:displayAdminEndContent\":73,\"hook:displayBackOfficeFooter\":74,\"hook:actionProductAttributeDelete\":75,\"hook:actionCarrierProcess\":76,\"hook:displayBeforeCarrier\":77,\"hook:displayAfterCarrier\":78,\"hook:displayOrderDetail\":79,\"hook:actionPaymentCCAdd\":80,\"hook:actionCategoryAdd\":81,\"hook:actionCategoryUpdate\":82,\"hook:actionCategoryDelete\":83,\"hook:displayPaymentTop\":84,\"hook:actionHtaccessCreate\":85,\"hook:actionAdminMetaSave\":86,\"hook:displayAttributeGroupForm\":87,\"hook:actionAttributeGroupSave\":88,\"hook:actionAttributeGroupDelete\":89,\"hook:displayFeatureFo','2022-11-26 15:03:25','2022-11-26 15:03:25'),
-(293,NULL,NULL,'PS_SSL_ENABLED_EVERYWHERE','1','2022-11-26 15:03:25','2022-11-28 16:00:21'),
+(293,NULL,NULL,'PS_SSL_ENABLED_EVERYWHERE','1','2022-11-26 15:03:25','2022-12-09 22:58:44'),
 (294,NULL,NULL,'blockwishlist_WishlistPageName',NULL,'2022-11-26 15:03:28','2022-11-26 15:03:28'),
 (295,NULL,NULL,'blockwishlist_WishlistDefaultTitle',NULL,'2022-11-26 15:03:28','2022-11-26 15:03:28'),
 (296,NULL,NULL,'blockwishlist_CreateButtonLabel',NULL,'2022-11-26 15:03:28','2022-11-26 15:03:28'),
@@ -5559,9 +5580,9 @@ INSERT INTO `ps_configuration` VALUES
 (359,NULL,NULL,'CONF_PS_WIREPAYMENT_FIXED_FOREIGN','0.2','2022-11-26 15:03:32','2022-11-26 15:03:32'),
 (360,NULL,NULL,'CONF_PS_WIREPAYMENT_VAR_FOREIGN','2','2022-11-26 15:03:32','2022-11-26 15:03:32'),
 (361,NULL,NULL,'GF_INSTALL_CALC','1','2022-11-26 15:04:03','2022-11-26 15:06:16'),
-(362,NULL,NULL,'GF_CURRENT_LEVEL','1','2022-11-26 15:04:03','2022-11-26 15:04:03'),
-(363,NULL,NULL,'GF_CURRENT_LEVEL_PERCENT','90','2022-11-26 15:04:03','2022-12-01 20:52:01'),
-(364,NULL,NULL,'GF_NOTIFICATION','0','2022-11-26 15:04:03','2022-12-02 15:08:45'),
+(362,NULL,NULL,'GF_CURRENT_LEVEL','2','2022-11-26 15:04:03','2022-12-09 21:44:56'),
+(363,NULL,NULL,'GF_CURRENT_LEVEL_PERCENT','30','2022-11-26 15:04:03','2022-12-09 23:43:24'),
+(364,NULL,NULL,'GF_NOTIFICATION','4','2022-11-26 15:04:03','2022-12-09 23:43:24'),
 (365,NULL,NULL,'PSGDPR_CREATION_FORM_SWITCH','1','2022-11-26 15:04:04','2022-11-26 15:04:04'),
 (366,NULL,NULL,'PSGDPR_CREATION_FORM',NULL,'2022-11-26 15:04:04','2022-11-26 15:04:04'),
 (367,NULL,NULL,'PSGDPR_CUSTOMER_FORM_SWITCH','1','2022-11-26 15:04:04','2022-11-26 15:04:04'),
@@ -5625,7 +5646,7 @@ INSERT INTO `ps_configuration` VALUES
 (425,NULL,NULL,'PS_LAYERED_FILTER_SHOW_OUT_OF_STOCK_LAST','0','2022-11-26 15:04:18','2022-11-26 15:04:18'),
 (426,NULL,NULL,'PS_LAYERED_FILTER_BY_DEFAULT_CATEGORY','0','2022-11-26 15:04:18','2022-11-26 15:04:18'),
 (427,NULL,NULL,'PS_LAYERED_INDEXED','1','2022-11-26 15:04:18','2022-11-26 15:04:18'),
-(428,NULL,NULL,'GF_NOT_VIEWED_BADGE','19','2022-11-26 15:06:16','2022-12-01 20:52:01'),
+(428,NULL,NULL,'GF_NOT_VIEWED_BADGE','176','2022-11-26 15:06:16','2022-12-09 23:43:24'),
 (429,NULL,NULL,'ONBOARDINGV2_CURRENT_STEP','11','2022-11-26 15:06:17','2022-11-26 15:08:14'),
 (430,NULL,NULL,'PS_LOGO_MAIL','logo_mail-1669644759.jpg','2022-11-28 15:12:39','2022-11-28 15:12:39'),
 (431,NULL,NULL,'PS_ACCOUNTS_RSA_PRIVATE_KEY','-----BEGIN RSA PRIVATE KEY-----\r\nMIICXAIBAAKBgQDTLZDidMRFYfsLxcWov+jjtnXarkUjCuSQxAof+BH82UGs5gW2\r\nPmxd+hX38pSVYs8Uu4ixHJsFd9YHkpVcqe0Q66XR9vTMMUNB0ZeizcIginmK8XDB\r\nlEoSebLocCLfBhMKHok9ClNbYWNUoevYMRIEz9s+bQ9cpEk9yK/2wJs/tQIDAQAB\r\nAoGAEze2U6Vkpxu/iNa6ohy0yOQ13Wy2hfXbzwDIGxisKmJrA5z7MBaGLhcwIJxG\r\nwUF4rt5SFiwQP3MkWxQP25rrI9C6lAhKd4nuWV2BPMpueLC7K94q336WdResttWj\r\nmuPa4G1IJVeurK5upS8yvUuHS7Ztbpgl0yFjcDaQ1YvfKhECQQDs4wOyFqn5xu0B\r\nPis9RSwb9RCC/JcP33le/p69T41z7SMKiUz3gz1rLDJ/X6YYSF5d/t4Jo9jT2vj1\r\nOQSEjLnfAkEA5DeG5ERM88GOKrjU+1Cx2Pm4sy/CaACswgf33qzV+OsrlA+fCjo1\r\nx7bkaqngyXA6i5D1LoT0/wWjAGd9G2dg6wJAWWUiU+axpo0ni7yGXMzp5HMLFCN2\r\nbosLJoo4JYEMBJ+NBcDixtVELFm1hNP3vloxIo+4AzNN9EVChmhKCCuDSQJAXnPs\r\nzETIZIpTQLNG0szPDrIsE11M5KaC2btahzqZRHBwlNLyS9VTtNipKMwuULC2SlUw\r\nZJR6oaG/mMc8LD9ZCQJBAJD1N5GBOCqJ4Q9pqzx8JEoYXnbOTHzhT2P6LgbiPr/L\r\nHf1GK88qNr8WgPNmc9TpjDwDY5P/beLX/iuTEBfWtp8=\r\n-----END RSA PRIVATE KEY-----','2022-11-28 16:06:46','2022-11-28 16:06:46'),
@@ -5690,12 +5711,12 @@ INSERT INTO `ps_configuration` VALUES
 (490,NULL,NULL,'PS_SHOP_PHONE',NULL,'2022-12-01 18:38:03','2022-12-01 18:38:03'),
 (491,NULL,NULL,'PS_SHOP_FAX',NULL,'2022-12-01 18:38:03','2022-12-01 18:38:03'),
 (492,NULL,NULL,'PS_REFERRERS_CACHE_LIKE',' \'2022-10-26 00:00:00\' AND \'2022-11-26 23:59:59\' ','2022-12-01 18:38:09','2022-12-01 18:38:09'),
-(493,NULL,NULL,'PS_REFERRERS_CACHE_DATE','2022-12-01 18:38:09','2022-12-01 18:38:09','2022-12-01 18:38:09'),
+(493,NULL,NULL,'PS_REFERRERS_CACHE_DATE','2022-12-09 23:15:23','2022-12-01 18:38:09','2022-12-09 23:15:23'),
 (494,NULL,NULL,'PS_MAINTENANCE_IP',NULL,'2022-12-01 19:22:36','2022-12-01 19:22:36'),
 (495,NULL,NULL,'PS_LABEL_DELIVERY_TIME_AVAILABLE',NULL,'2022-12-01 19:28:04','2022-12-01 19:28:04'),
 (496,NULL,NULL,'PS_LABEL_DELIVERY_TIME_OOSBOA',NULL,'2022-12-01 19:28:04','2022-12-01 19:28:04'),
-(497,NULL,NULL,'PS_CCCJS_VERSION','2','2022-12-01 19:28:04','2022-12-02 14:12:42'),
-(498,NULL,NULL,'PS_CCCCSS_VERSION','2','2022-12-01 19:28:04','2022-12-02 14:12:42'),
+(497,NULL,NULL,'PS_CCCJS_VERSION','10','2022-12-01 19:28:04','2022-12-09 23:49:09'),
+(498,NULL,NULL,'PS_CCCCSS_VERSION','10','2022-12-01 19:28:04','2022-12-09 23:49:09'),
 (499,NULL,NULL,'PS_SHOWCASECARD_SEO_URLS_CLOSED','1','2022-12-01 19:36:34','2022-12-01 19:36:34'),
 (500,NULL,NULL,'PS_WEBSERVICE','1','2022-12-01 20:21:53','2022-12-01 20:21:53'),
 (523,NULL,NULL,'CONF_BLUEPAYMENT_FIXED','0.2','2022-12-01 20:51:49','2022-12-01 20:51:49'),
@@ -5734,11 +5755,31 @@ INSERT INTO `ps_configuration` VALUES
 (558,NULL,NULL,'PAYPAL_EC_CLIENTID_SANDBOX',NULL,'2022-12-02 14:37:11','2022-12-02 14:37:11'),
 (559,NULL,NULL,'PAYPAL_EC_SECRET_SANDBOX',NULL,'2022-12-02 14:37:11','2022-12-02 14:37:11'),
 (560,NULL,NULL,'PAYPAL_CONNECTION_EC_CONFIGURED','0','2022-12-02 14:37:11','2022-12-02 14:37:11'),
-(561,NULL,NULL,'BANK_WIRE_DETAILS','pizza piątki','2022-12-02 14:39:24','2022-12-02 14:39:24'),
-(562,NULL,NULL,'BANK_WIRE_OWNER','Ja','2022-12-02 14:39:24','2022-12-02 14:39:24'),
+(561,NULL,NULL,'BANK_WIRE_DETAILS','IBAN: PL59109024027943136275863168\r\nBLIK: 0000000000','2022-12-02 14:39:24','2022-12-09 21:51:30'),
+(562,NULL,NULL,'BANK_WIRE_OWNER','Lampy Bright Inc.','2022-12-02 14:39:24','2022-12-09 21:51:30'),
 (563,NULL,NULL,'BANK_WIRE_ADDRESS','Polska','2022-12-02 14:39:24','2022-12-02 14:39:24'),
 (564,NULL,NULL,'BANK_WIRE_RESERVATION_DAYS',NULL,'2022-12-02 14:39:24','2022-12-02 14:39:24'),
-(565,NULL,NULL,'BANK_WIRE_CUSTOM_TEXT',NULL,'2022-12-02 14:39:24','2022-12-02 14:39:24');
+(565,NULL,NULL,'BANK_WIRE_CUSTOM_TEXT',NULL,'2022-12-02 14:39:24','2022-12-02 14:39:24'),
+(566,NULL,NULL,'CONF_PS_CASHONDELIVERY_FIXED','0.2','2022-12-09 21:48:44','2022-12-09 21:48:44'),
+(567,NULL,NULL,'CONF_PS_CASHONDELIVERY_VAR','2','2022-12-09 21:48:44','2022-12-09 21:48:44'),
+(568,NULL,NULL,'CONF_PS_CASHONDELIVERY_FIXED_FOREIGN','0.2','2022-12-09 21:48:44','2022-12-09 21:48:44'),
+(569,NULL,NULL,'CONF_PS_CASHONDELIVERY_VAR_FOREIGN','2','2022-12-09 21:48:44','2022-12-09 21:48:44'),
+(570,NULL,NULL,'PS_SAV_IMAP_URL',NULL,'2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(571,NULL,NULL,'PS_SAV_IMAP_PORT','143','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(572,NULL,NULL,'PS_SAV_IMAP_USER',NULL,'2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(573,NULL,NULL,'PS_SAV_IMAP_PWD',NULL,'2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(574,NULL,NULL,'PS_SAV_IMAP_DELETE_MSG','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(575,NULL,NULL,'PS_SAV_IMAP_CREATE_THREADS','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(576,NULL,NULL,'PS_SAV_IMAP_OPT_POP3','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(577,NULL,NULL,'PS_SAV_IMAP_OPT_NORSH','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(578,NULL,NULL,'PS_SAV_IMAP_OPT_SSL','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(579,NULL,NULL,'PS_SAV_IMAP_OPT_VALIDATE-CERT','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(580,NULL,NULL,'PS_SAV_IMAP_OPT_NOVALIDATE-CERT','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(581,NULL,NULL,'PS_SAV_IMAP_OPT_TLS','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(582,NULL,NULL,'PS_SAV_IMAP_OPT_NOTLS','0','2022-12-09 22:39:56','2022-12-09 22:39:56'),
+(583,NULL,NULL,'PS_GIFT_WRAPPING_TAX_RULES_GROUP','0','2022-12-09 23:10:15','2022-12-09 23:10:15'),
+(584,NULL,NULL,'PS_HTACCESS_DISABLE_MULTIVIEWS',NULL,'2022-12-09 23:23:41','2022-12-09 23:24:22'),
+(585,NULL,NULL,'PS_HTACCESS_DISABLE_MODSEC',NULL,'2022-12-09 23:24:07','2022-12-09 23:24:22');
 /*!40000 ALTER TABLE `ps_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5761,7 +5802,7 @@ CREATE TABLE `ps_configuration_kpi` (
   KEY `name` (`name`),
   KEY `id_shop` (`id_shop`),
   KEY `id_shop_group` (`id_shop_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -5834,7 +5875,15 @@ INSERT INTO `ps_configuration_kpi` VALUES
 (61,NULL,NULL,'MESSAGES_PER_THREAD','0','2022-12-01 17:38:24','2022-12-01 17:38:24'),
 (62,NULL,NULL,'MESSAGES_PER_THREAD_EXPIRE','1669955904','2022-12-01 17:38:24','2022-12-01 17:38:24'),
 (63,NULL,NULL,'PENDING_MESSAGES','0','2022-12-01 17:38:24','2022-12-01 17:38:24'),
-(64,NULL,NULL,'PENDING_MESSAGES_EXPIRE','1669913004','2022-12-01 17:38:24','2022-12-01 17:38:24');
+(64,NULL,NULL,'PENDING_MESSAGES_EXPIRE','1669913004','2022-12-01 17:38:24','2022-12-01 17:38:24'),
+(65,NULL,NULL,'ORDERS_PER_CUSTOMER','0','2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(66,NULL,NULL,'ORDERS_PER_CUSTOMER_EXPIRE','1670705528','2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(67,NULL,NULL,'AVG_CUSTOMER_AGE',NULL,'2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(68,NULL,NULL,'AVG_CUSTOMER_AGE_EXPIRE',NULL,'2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(69,NULL,NULL,'CUSTOMER_MAIN_GENDER',NULL,'2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(70,NULL,NULL,'CUSTOMER_MAIN_GENDER_EXPIRE',NULL,'2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(71,NULL,NULL,'NEWSLETTER_REGISTRATIONS','1','2022-12-09 21:52:08','2022-12-09 21:52:08'),
+(72,NULL,NULL,'NEWSLETTER_REGISTRATIONS_EXPIRE','1670640728','2022-12-09 21:52:08','2022-12-09 21:52:08');
 /*!40000 ALTER TABLE `ps_configuration_kpi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5864,7 +5913,11 @@ INSERT INTO `ps_configuration_kpi_lang` VALUES
 (43,1,'Accessories','2022-11-28 15:16:24'),
 (44,1,'1669731384','2022-11-28 15:16:24'),
 (45,1,'Brak zamówień','2022-12-01 17:33:43'),
-(46,1,'1669998823','2022-12-01 17:33:43');
+(46,1,'1669998823','2022-12-01 17:33:43'),
+(67,1,'38 lat','2022-12-09 21:52:08'),
+(68,1,'1670705528','2022-12-09 21:52:08'),
+(69,1,'67% Klientów Mężczyzn','2022-12-09 21:52:08'),
+(70,1,'1670705528','2022-12-09 21:52:08');
 /*!40000 ALTER TABLE `ps_configuration_kpi_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5891,11 +5944,11 @@ CREATE TABLE `ps_configuration_lang` (
 LOCK TABLES `ps_configuration_lang` WRITE;
 /*!40000 ALTER TABLE `ps_configuration_lang` DISABLE KEYS */;
 INSERT INTO `ps_configuration_lang` VALUES
-(38,1,'#IN',NULL),
-(41,1,'#DE',NULL),
-(43,1,'#RE',NULL),
-(54,1,'a|about|above|after|again|against|all|am|an|and|any|are|aren|as|at|be|because|been|before|being|below|between|both|but|by|can|cannot|could|couldn|did|didn|do|does|doesn|doing|don|down|during|each|few|for|from|further|had|hadn|has|hasn|have|haven|having|he|ll|her|here|hers|herself|him|himself|his|how|ve|if|in|into|is|isn|it|its|itself|let|me|more|most|mustn|my|myself|no|nor|not|of|off|on|once|only|or|other|ought|our|ours|ourselves|out|over|own|same|shan|she|should|shouldn|so|some|such|than|that|the|their|theirs|them|themselves|then|there|these|they|re|this|those|through|to|too|under|until|up|very|was|wasn|we|were|weren|what|when|where|which|while|who|whom|why|with|won|would|wouldn|you|your|yours|yourself|yourselves',NULL),
-(80,1,'Dear Customer,\r\n\r\nRegards,\r\nCustomer service',NULL),
+(38,1,'#FV',NULL),
+(41,1,'#LP',NULL),
+(43,1,'#ZW',NULL),
+(54,1,'ach|aj|albo|bardzo|bez|bo|być|ci|cię|ciebie|co|czy|daleko|dla|dlaczego|dlatego|do|dobrze|dokąd|dość|dużo|dwa|dwaj|dwie|dwoje|dziś|dzisiaj|gdyby|gdzie|go|ich|ile|im|inny|ja|ją|jak|jakby|jaki|je|jeden|jedna|jedno|jego|jej|jemu|jeśli|jest|jestem|jeżeli|już|każdy|kiedy|kierunku|kto|ku|lub|ma|mają|mam|mi|mną|mnie|moi|mój|moja|moje|może|mu|my|na|nam|nami|nas|nasi|nasz|nasza|nasze|natychmiast|nią|nic|nich|nie|niego|niej|niemu|nigdy|nim|nimi|niż|obok|od|okolo|on|ona|one|oni|ono|owszem|po|pod|ponieważ|przed|przedtem|są|sam|sama|się|skąd|tak|taki|tam|ten|to|tobą|tobie|tu|tutaj|twoi|twój|twoja|twoje|ty|wam|wami|was|wasi|wasz|wasza|wasze|we|więc|wszystko|wtedy|wy|żaden|zawsze|że',NULL),
+(80,1,'Szanowny Kliencie,\r\n\r\nPozdrowienia,\r\nObsługa klienta','2022-12-09 21:39:56'),
 (281,1,'<p>Obecnie aktualizujemy nasz sklep, ale już niedługo będziemy! Dziękujemy za cierpliwość.</p>','2022-12-01 18:22:36'),
 (283,1,'','2022-12-01 18:28:04'),
 (284,1,'','2022-12-01 18:28:04'),
@@ -5906,8 +5959,8 @@ INSERT INTO `ps_configuration_lang` VALUES
 (317,1,'74ca18f6e255f3402ee9eae5402ceee1.png','2022-11-28 15:10:29'),
 (318,1,'localhost','2022-11-28 15:10:29'),
 (319,1,'Porada i Dostawa','2022-11-28 15:10:29'),
-(328,1,'The personal data you provide is used to answer queries, process orders or allow access to specific information. You have the right to modify and delete all the personal information found in the \"My Account\" page.','2022-11-26 15:03:30'),
-(330,1,'You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.','2022-11-26 15:03:30'),
+(328,1,'<p>Podane przez Ciebie dane osobowe są wykorzystywane w celu odpowiedzi na zapytania, realizacji zamówień lub umożliwienia dostępu do określonych informacji. Masz prawo do modyfikowania i usuwania wszystkich danych osobowych znajdujących się na stronie „Moje konto”.</p>','2022-12-09 20:53:24'),
+(330,1,'Możesz zrezygnować w każdej chwili. W tym celu należy odnaleźć szczegóły w naszej informacji prawnej.','2022-11-26 15:03:30'),
 (366,1,'Akceptuję ogólne warunki użytkowania i politykę prywatności','2022-11-26 15:04:04'),
 (368,1,'Akceptuję ogólne warunki użytkowania i politykę prywatności','2022-11-26 15:04:04'),
 (495,1,NULL,'2022-12-01 19:28:04'),
@@ -5938,7 +5991,7 @@ CREATE TABLE `ps_connections` (
   KEY `id_guest` (`id_guest`),
   KEY `date_add` (`date_add`),
   KEY `id_page` (`id_page`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -5961,7 +6014,11 @@ INSERT INTO `ps_connections` VALUES
 (11,1,1,4,1,2886860801,'2022-12-01 20:14:44',''),
 (12,1,1,4,1,2886860801,'2022-12-01 20:53:12',''),
 (13,1,1,4,1,2887188481,'2022-12-02 14:12:21',''),
-(14,1,1,4,1,2887188481,'2022-12-02 14:59:03','');
+(14,1,1,4,1,2887188481,'2022-12-02 14:59:03',''),
+(15,1,1,6,1,2887057409,'2022-12-09 21:47:53',''),
+(16,1,1,4,3,2887057409,'2022-12-09 22:00:06',''),
+(17,1,1,4,3,2887057409,'2022-12-09 22:31:01',''),
+(18,1,1,4,3,2887057409,'2022-12-09 23:09:05','');
 /*!40000 ALTER TABLE `ps_connections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7164,7 +7221,7 @@ CREATE TABLE `ps_customer_session` (
   `id_customer` int(10) unsigned DEFAULT NULL,
   `token` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id_customer_session`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -7177,7 +7234,8 @@ INSERT INTO `ps_customer_session` VALUES
 (2,4,'8c40dd06071417fa5ef983888a123f95c2f5cd8f'),
 (3,4,'b67db09ad37290d4ed705814b073cd1811016192'),
 (4,4,'b7384a5de05a3e24c25ec22fe4f0bf725e97939e'),
-(5,4,'646af142bb5cd066920fea32d37a5d6af7df0c3a');
+(5,4,'646af142bb5cd066920fea32d37a5d6af7df0c3a'),
+(6,4,'d7b7b0bc6237ae73e0a1bd1c62d578bc58e4fd9c');
 /*!40000 ALTER TABLE `ps_customer_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7531,7 +7589,7 @@ CREATE TABLE `ps_employee` (
 LOCK TABLES `ps_employee` WRITE;
 /*!40000 ALTER TABLE `ps_employee` DISABLE KEYS */;
 INSERT INTO `ps_employee` VALUES
-(1,1,1,'Lampiarski','Jan','lampy-bright@op.pl','$2y$10$nRTbvxyxG5ZDlFTuElKkteaRuwl3WwMtf.T6oO7GgHwaRqqMO9ES2','2022-11-26 09:03:27','2022-10-26','2022-11-26','0000-00-00','0000-00-00',1,'','','default','theme.css',1,0,1,1,NULL,6,0,4,'2022-12-02','','0000-00-00 00:00:00',0);
+(1,1,1,'Lampiarski','Jan','lampy-bright@op.pl','$2y$10$nRTbvxyxG5ZDlFTuElKkteaRuwl3WwMtf.T6oO7GgHwaRqqMO9ES2','2022-11-26 09:03:27','2022-10-26','2022-11-26','0000-00-00','0000-00-00',1,'','','default','theme.css',1,0,1,1,NULL,6,0,4,'2022-12-09','','0000-00-00 00:00:00',0);
 /*!40000 ALTER TABLE `ps_employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7547,7 +7605,7 @@ CREATE TABLE `ps_employee_session` (
   `id_employee` int(10) unsigned DEFAULT NULL,
   `token` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id_employee_session`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -7560,7 +7618,8 @@ INSERT INTO `ps_employee_session` VALUES
 (1,1,'cdd4c1e6d2383daef97f45c5c2801d4d70116031'),
 (4,1,'3c9711c6990652a37ba625550daca289d0a7dc13'),
 (9,1,'200a8553a824021df8da5fcdb337bf9fa13f0a7b'),
-(10,1,'fb76255accae0a26bda7a1c0dc762540733d6631');
+(10,1,'fb76255accae0a26bda7a1c0dc762540733d6631'),
+(11,1,'21b2ce26c5e987a2af47b985bbc3b22fdd3daa97');
 /*!40000 ALTER TABLE `ps_employee_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7664,6 +7723,16 @@ INSERT INTO `ps_eventbus_incremental_sync` VALUES
 ('carts',9,1,'pl','2022-12-02 14:43:24'),
 ('carts',10,1,'pl','2022-12-02 14:56:15'),
 ('carts',11,1,'pl','2022-12-02 15:11:49'),
+('carts',12,1,'pl','2022-12-09 22:12:45'),
+('carts',13,1,'pl','2022-12-09 22:34:38'),
+('carts',14,1,'pl','2022-12-09 23:10:23'),
+('carts',15,1,'pl','2022-12-09 23:25:12'),
+('carts',16,1,'pl','2022-12-09 23:42:19'),
+('carts',17,1,'pl','2022-12-09 23:52:14'),
+('carts',18,1,'pl','2022-12-09 23:53:50'),
+('carts',19,1,'pl','2022-12-09 23:57:09'),
+('carts',20,1,'pl','2022-12-09 23:59:07'),
+('categories',9,1,'pl','2022-12-09 23:17:28'),
 ('orders',2,1,'pl','2022-12-01 17:37:30'),
 ('orders',3,1,'pl','2022-12-01 17:37:30'),
 ('orders',4,1,'pl','2022-12-01 17:37:30'),
@@ -7672,7 +7741,16 @@ INSERT INTO `ps_eventbus_incremental_sync` VALUES
 ('orders',7,1,'pl','2022-12-01 20:16:21'),
 ('orders',8,1,'pl','2022-12-01 20:53:49'),
 ('orders',9,1,'pl','2022-12-02 14:43:29'),
-('orders',10,1,'pl','2022-12-02 15:11:54');
+('orders',10,1,'pl','2022-12-02 15:11:54'),
+('orders',11,1,'pl','2022-12-09 22:13:13'),
+('orders',12,1,'pl','2022-12-09 22:34:43'),
+('orders',13,1,'pl','2022-12-09 23:10:28'),
+('orders',14,1,'pl','2022-12-09 23:32:32'),
+('orders',15,1,'pl','2022-12-09 23:42:24'),
+('orders',16,1,'pl','2022-12-09 23:52:19'),
+('orders',17,1,'pl','2022-12-09 23:53:54'),
+('orders',18,1,'pl','2022-12-09 23:57:19'),
+('orders',19,1,'pl','2022-12-09 23:59:11');
 /*!40000 ALTER TABLE `ps_eventbus_incremental_sync` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7973,10 +8051,10 @@ CREATE TABLE `ps_feature_value_lang` (
 LOCK TABLES `ps_feature_value_lang` WRITE;
 /*!40000 ALTER TABLE `ps_feature_value_lang` DISABLE KEYS */;
 INSERT INTO `ps_feature_value_lang` VALUES
-(1,1,'Polyester'),
-(2,1,'Wool'),
+(1,1,'Poliester'),
+(2,1,'Wełna'),
 (3,1,'Ceramic'),
-(4,1,'Cotton'),
+(4,1,'Bawełna'),
 (5,1,'Recycled cardboard'),
 (6,1,'Matt paper'),
 (7,1,'Long sleeves'),
@@ -8004,7 +8082,7 @@ CREATE TABLE `ps_ganalytics` (
   PRIMARY KEY (`id_google_analytics`),
   KEY `id_order` (`id_order`),
   KEY `sent` (`sent`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -8015,7 +8093,16 @@ LOCK TABLES `ps_ganalytics` WRITE;
 /*!40000 ALTER TABLE `ps_ganalytics` DISABLE KEYS */;
 INSERT INTO `ps_ganalytics` VALUES
 (1,9,0,1,1,NULL,'2022-12-02 13:43:34'),
-(2,10,0,1,1,NULL,'2022-12-02 14:12:00');
+(2,10,0,1,1,NULL,'2022-12-02 14:12:00'),
+(3,11,0,1,1,NULL,'2022-12-09 21:13:16'),
+(4,12,0,1,1,NULL,'2022-12-09 21:34:47'),
+(5,13,0,1,1,NULL,'2022-12-09 22:10:31'),
+(6,14,0,1,1,NULL,'2022-12-09 22:32:35'),
+(7,15,0,1,1,NULL,'2022-12-09 22:42:28'),
+(8,16,0,1,1,NULL,'2022-12-09 22:52:23'),
+(9,17,0,1,1,NULL,'2022-12-09 22:53:57'),
+(10,18,0,1,1,NULL,'2022-12-09 22:57:23'),
+(11,19,0,1,1,NULL,'2022-12-09 22:59:13');
 /*!40000 ALTER TABLE `ps_ganalytics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -8042,7 +8129,14 @@ LOCK TABLES `ps_ganalytics_data` WRITE;
 /*!40000 ALTER TABLE `ps_ganalytics_data` DISABLE KEYS */;
 INSERT INTO `ps_ganalytics_data` VALUES
 (9,1,'[[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]]'),
-(11,1,'[[[[[\"MBG.addCheckoutOption(2,\'Kurier UPS\');\"]]]]]');
+(11,1,'[[[[[\"MBG.addCheckoutOption(2,\'Kurier UPS\');\"]]]]]'),
+(14,1,'[[[[[[\"MBG.addCheckoutOption(2,\'Paczkomat InPost\');\"]]]]]]'),
+(15,1,'[\"MBG.addCheckoutOption(2,\'Kurier UPS\');\"]'),
+(16,1,'[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]'),
+(17,1,'[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]'),
+(18,1,'[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]'),
+(19,1,'[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]'),
+(20,1,'[[[[[[[\"MBG.addCheckoutOption(2,\'\');\"]]]]]]]');
 /*!40000 ALTER TABLE `ps_ganalytics_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -8276,7 +8370,7 @@ INSERT INTO `ps_guest` VALUES
 (1,0,0,2,0,0,0,0,0,0,0,0,0,0,'',0),
 (2,0,0,0,0,0,0,0,0,0,0,0,0,0,'',0),
 (3,6,11,0,0,0,0,0,0,0,0,0,0,0,'en',0),
-(4,6,11,4,0,0,0,0,0,0,0,0,0,0,'pl',0);
+(4,0,0,4,0,0,0,0,0,0,0,0,0,0,'',0);
 /*!40000 ALTER TABLE `ps_guest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -9654,11 +9748,13 @@ INSERT INTO `ps_hook_module` VALUES
 (69,1,41,5),
 (69,1,46,5),
 (70,1,741,5),
+(71,1,702,5),
 (43,1,55,6),
 (54,1,682,6),
 (62,1,16,6),
 (65,1,71,6),
 (70,1,683,6),
+(71,1,46,6),
 (45,1,55,7),
 (56,1,682,7),
 (67,1,16,7),
@@ -10237,7 +10333,9 @@ LOCK TABLES `ps_layered_filter_block` WRITE;
 INSERT INTO `ps_layered_filter_block` VALUES
 ('16d463a7d4f06596ac114a4f35ba0164','a:1:{s:7:\"filters\";a:10:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"1\";s:4:\"name\";s:4:\"Size\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:1;a:4:{s:4:\"name\";s:1:\"S\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:2;a:4:{s:4:\"name\";s:1:\"M\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:3;a:4:{s:4:\"name\";s:1:\"L\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:4;a:4:{s:4:\"name\";s:2:\"XL\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"2\";s:4:\"name\";s:5:\"Color\";s:14:\"is_color_group\";b:1;s:6:\"values\";a:2:{i:8;a:5:{s:4:\"name\";s:5:\"White\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#ffffff\";}i:11;a:6:{s:4:\"name\";s:5:\"Black\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#434A54\";s:7:\"checked\";b:1;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:4;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:6:\"Cotton\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:8;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:13:\"Short sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:1;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:1;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"1\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"1\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:8;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:1;}i:9;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:30;s:3:\"min\";d:23;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:1;s:5:\"value\";N;}}}'),
 ('3c89e4d2fe714839734a43c9245e4117','a:1:{s:7:\"filters\";a:10:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"1\";s:4:\"name\";s:4:\"Size\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:1;a:4:{s:4:\"name\";s:1:\"S\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:2;a:4:{s:4:\"name\";s:1:\"M\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:3;a:4:{s:4:\"name\";s:1:\"L\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:4;a:4:{s:4:\"name\";s:2:\"XL\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"2\";s:4:\"name\";s:5:\"Color\";s:14:\"is_color_group\";b:1;s:6:\"values\";a:2:{i:8;a:5:{s:4:\"name\";s:5:\"White\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#ffffff\";}i:11;a:5:{s:4:\"name\";s:5:\"Black\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#434A54\";}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:4;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:6:\"Cotton\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:8;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:13:\"Short sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:2;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:2;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"1\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"2\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:8;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:2;}i:9;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:30;s:3:\"min\";d:23;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:2;s:5:\"value\";N;}}}'),
+('4acfb2f3e2939e23ab3d6611fe0c1a17','a:1:{s:7:\"filters\";a:9:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"2\";s:4:\"name\";s:5:\"Color\";s:14:\"is_color_group\";b:1;s:6:\"values\";a:2:{i:8;a:5:{s:4:\"name\";s:5:\"White\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#ffffff\";}i:11;a:5:{s:4:\"name\";s:5:\"Black\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#434A54\";}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:2:{i:3;a:4:{s:3:\"nbr\";s:1:\"4\";s:4:\"name\";s:7:\"Ceramic\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:1;a:4:{s:3:\"nbr\";s:1:\"3\";s:4:\"name\";s:9:\"Polyester\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:9;a:4:{s:3:\"nbr\";s:1:\"3\";s:4:\"name\";s:15:\"Removable cover\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:8;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:8;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"7\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"8\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:8;}i:8;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:44;s:3:\"min\";d:14;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:8;s:5:\"value\";N;}}}'),
 ('586af24a62796f53515d60d1e9f733c5','a:1:{s:7:\"filters\";a:9:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"1\";s:4:\"name\";s:4:\"Size\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:1;a:4:{s:4:\"name\";s:1:\"S\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:2;a:4:{s:4:\"name\";s:1:\"M\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:3;a:4:{s:4:\"name\";s:1:\"L\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:4;a:4:{s:4:\"name\";s:2:\"XL\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:4;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:6:\"Cotton\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:7;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:12:\"Long sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:1;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:1;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"1\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"1\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:1;}i:8;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:45;s:3:\"min\";d:35;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:1;s:5:\"value\";N;}}}'),
+('669ca3b14fe2235d92fa8a14764674cb','a:1:{s:7:\"filters\";a:8:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:6;a:4:{s:3:\"nbr\";s:1:\"3\";s:4:\"name\";s:10:\"Matt paper\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:7;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:7;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:2;a:2:{s:4:\"name\";s:14:\"Graphic Corner\";s:3:\"nbr\";s:1:\"6\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"7\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:7;}i:6;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:44;s:3:\"min\";d:11;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:7;s:5:\"value\";N;}i:7;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"3\";s:4:\"name\";s:9:\"Dimension\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:3:{i:19;a:4:{s:4:\"name\";s:7:\"40x60cm\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:20;a:4:{s:4:\"name\";s:7:\"60x90cm\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:21;a:4:{s:4:\"name\";s:8:\"80x120cm\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}}}'),
 ('707890260ae6912b0527e04465ad7132','a:1:{s:7:\"filters\";a:10:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"1\";s:4:\"name\";s:4:\"Size\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:1;a:4:{s:4:\"name\";s:1:\"S\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:2;a:4:{s:4:\"name\";s:1:\"M\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:3;a:4:{s:4:\"name\";s:1:\"L\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:4;a:5:{s:4:\"name\";s:2:\"XL\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:7:\"checked\";b:1;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"2\";s:4:\"name\";s:5:\"Color\";s:14:\"is_color_group\";b:1;s:6:\"values\";a:2:{i:8;a:5:{s:4:\"name\";s:5:\"White\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#ffffff\";}i:11;a:6:{s:4:\"name\";s:5:\"Black\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#434A54\";s:7:\"checked\";b:1;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:4;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:6:\"Cotton\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:8;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:13:\"Short sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:1;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:1;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"1\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"1\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:8;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:1;}i:9;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:30;s:3:\"min\";d:23;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:1;s:5:\"value\";N;}}}'),
 ('99a8b59891d6832eefba67582517293d','a:1:{s:7:\"filters\";a:10:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:2:{i:4;a:2:{s:4:\"name\";s:3:\"Men\";s:3:\"nbr\";s:1:\"2\";}i:5;a:2:{s:4:\"name\";s:5:\"Women\";s:3:\"nbr\";s:1:\"1\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"1\";s:4:\"name\";s:4:\"Size\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:1;a:4:{s:4:\"name\";s:1:\"S\";s:3:\"nbr\";s:1:\"2\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:2;a:4:{s:4:\"name\";s:1:\"M\";s:3:\"nbr\";s:1:\"2\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:3;a:4:{s:4:\"name\";s:1:\"L\";s:3:\"nbr\";s:1:\"2\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:4;a:4:{s:4:\"name\";s:2:\"XL\";s:3:\"nbr\";s:1:\"2\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"2\";s:4:\"name\";s:5:\"Color\";s:14:\"is_color_group\";b:1;s:6:\"values\";a:2:{i:8;a:5:{s:4:\"name\";s:5:\"White\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#ffffff\";}i:11;a:5:{s:4:\"name\";s:5:\"Black\";s:3:\"nbr\";s:1:\"1\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:5:\"color\";s:7:\"#434A54\";}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:4;a:4:{s:3:\"nbr\";s:1:\"2\";s:4:\"name\";s:6:\"Cotton\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:2:{i:7;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:12:\"Long sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:8;a:4:{s:3:\"nbr\";s:1:\"1\";s:4:\"name\";s:13:\"Short sleeves\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:3;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:3;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:1;a:2:{s:4:\"name\";s:13:\"Studio Design\";s:3:\"nbr\";s:1:\"2\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:7;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"3\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:8;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:3;}i:9;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:45;s:3:\"min\";d:23;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:3;s:5:\"value\";N;}}}'),
 ('ae3e1b351f2d704e2ba6b9bac118a438','a:1:{s:7:\"filters\";a:9:{i:0;a:7:{s:9:\"type_lite\";s:8:\"category\";s:4:\"type\";s:8:\"category\";s:6:\"id_key\";i:0;s:4:\"name\";s:9:\"Kategorie\";s:6:\"values\";a:0:{}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:1;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"1\";s:6:\"values\";a:1:{i:5;a:4:{s:3:\"nbr\";s:1:\"3\";s:4:\"name\";s:18:\"Recycled cardboard\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:11:\"Composition\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:2;a:9:{s:9:\"type_lite\";s:10:\"id_feature\";s:4:\"type\";s:10:\"id_feature\";s:6:\"id_key\";s:1:\"2\";s:6:\"values\";a:1:{i:10;a:4:{s:3:\"nbr\";s:1:\"3\";s:4:\"name\";s:9:\"120 pages\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:4:\"name\";s:8:\"Property\";s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:3;a:7:{s:9:\"type_lite\";s:8:\"quantity\";s:4:\"type\";s:8:\"quantity\";s:6:\"id_key\";i:0;s:4:\"name\";s:13:\"Dostępność\";s:6:\"values\";a:3:{i:0;a:2:{s:4:\"name\";s:12:\"Niedostępne\";s:3:\"nbr\";i:0;}i:1;a:2:{s:4:\"name\";s:9:\"Dostępny\";s:3:\"nbr\";i:3;}i:2;a:2:{s:4:\"name\";s:11:\"W magazynie\";s:3:\"nbr\";i:3;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:4;a:7:{s:9:\"type_lite\";s:12:\"manufacturer\";s:4:\"type\";s:12:\"manufacturer\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Marka\";s:6:\"values\";a:1:{i:2;a:2:{s:4:\"name\";s:14:\"Graphic Corner\";s:3:\"nbr\";s:1:\"3\";}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:5;a:7:{s:9:\"type_lite\";s:9:\"condition\";s:4:\"type\";s:9:\"condition\";s:6:\"id_key\";i:0;s:4:\"name\";s:5:\"Stan:\";s:6:\"values\";a:3:{s:3:\"new\";a:2:{s:4:\"name\";s:4:\"Nowy\";s:3:\"nbr\";s:1:\"3\";}s:4:\"used\";a:2:{s:4:\"name\";s:8:\"Używane\";s:3:\"nbr\";i:0;}s:11:\"refurbished\";a:2:{s:4:\"name\";s:9:\"Odnowione\";s:3:\"nbr\";i:0;}}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}i:6;a:12:{s:9:\"type_lite\";s:6:\"weight\";s:4:\"type\";s:6:\"weight\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Waga\";s:3:\"max\";d:0.29999999999999999;s:3:\"min\";d:0.29999999999999999;s:4:\"unit\";s:2:\"kg\";s:14:\"specifications\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:5:\"value\";N;s:3:\"nbr\";i:3;}i:7;a:12:{s:9:\"type_lite\";s:5:\"price\";s:4:\"type\";s:5:\"price\";s:6:\"id_key\";i:0;s:4:\"name\";s:4:\"Cena\";s:3:\"max\";d:16;s:3:\"min\";d:15;s:4:\"unit\";s:3:\"zł\";s:14:\"specifications\";a:11:{s:6:\"symbol\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:12:\"currencyCode\";s:3:\"PLN\";s:14:\"currencySymbol\";s:3:\"zł\";s:13:\"numberSymbols\";a:11:{i:0;s:1:\",\";i:1;s:2:\" \";i:2;s:1:\";\";i:3;s:1:\"%\";i:4;s:1:\"-\";i:5;s:1:\"+\";i:6;s:1:\"E\";i:7;s:2:\"×\";i:8;s:3:\"‰\";i:9;s:3:\"∞\";i:10;s:3:\"NaN\";}s:15:\"positivePattern\";s:12:\"#,##0.00 ¤\";s:15:\"negativePattern\";s:13:\"-#,##0.00 ¤\";s:17:\"maxFractionDigits\";i:2;s:17:\"minFractionDigits\";i:2;s:12:\"groupingUsed\";b:1;s:16:\"primaryGroupSize\";i:3;s:18:\"secondaryGroupSize\";i:3;}s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";i:3;s:3:\"nbr\";i:3;s:5:\"value\";N;}i:8;a:10:{s:9:\"type_lite\";s:18:\"id_attribute_group\";s:4:\"type\";s:18:\"id_attribute_group\";s:6:\"id_key\";s:1:\"4\";s:4:\"name\";s:10:\"Paper Type\";s:14:\"is_color_group\";b:0;s:6:\"values\";a:4:{i:22;a:4:{s:4:\"name\";s:5:\"Ruled\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:23;a:4:{s:4:\"name\";s:5:\"Plain\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:24;a:4:{s:4:\"name\";s:8:\"Squarred\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}i:25;a:4:{s:4:\"name\";s:5:\"Doted\";s:3:\"nbr\";s:1:\"3\";s:8:\"url_name\";N;s:10:\"meta_title\";N;}}s:8:\"url_name\";N;s:10:\"meta_title\";N;s:17:\"filter_show_limit\";i:0;s:11:\"filter_type\";s:1:\"0\";}}}'),
@@ -10564,8 +10662,7 @@ CREATE TABLE `ps_link_block` (
 LOCK TABLES `ps_link_block` WRITE;
 /*!40000 ALTER TABLE `ps_link_block` DISABLE KEYS */;
 INSERT INTO `ps_link_block` VALUES
-(1,41,0,'{\"cms\":[false],\"static\":[false],\"product\":[\"prices-drop\",\"new-products\",\"best-sales\"],\"category\":[false]}'),
-(2,41,1,'{\"cms\":[\"1\",\"2\",\"3\",\"4\",\"5\"],\"static\":[\"contact\",\"sitemap\",\"stores\"],\"product\":[false],\"category\":[false]}');
+(2,41,1,'{\"cms\":[\"1\",\"2\",\"3\",\"4\",\"5\"],\"static\":[false],\"product\":[false],\"category\":[false]}');
 /*!40000 ALTER TABLE `ps_link_block` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -10592,7 +10689,6 @@ CREATE TABLE `ps_link_block_lang` (
 LOCK TABLES `ps_link_block_lang` WRITE;
 /*!40000 ALTER TABLE `ps_link_block_lang` DISABLE KEYS */;
 INSERT INTO `ps_link_block_lang` VALUES
-(1,1,'Produkty',NULL),
 (2,1,'Nasza firma',NULL);
 /*!40000 ALTER TABLE `ps_link_block_lang` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -10619,7 +10715,6 @@ CREATE TABLE `ps_link_block_shop` (
 LOCK TABLES `ps_link_block_shop` WRITE;
 /*!40000 ALTER TABLE `ps_link_block_shop` DISABLE KEYS */;
 INSERT INTO `ps_link_block_shop` VALUES
-(1,1,0),
 (2,1,1);
 /*!40000 ALTER TABLE `ps_link_block_shop` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -10697,7 +10792,7 @@ CREATE TABLE `ps_log` (
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
   PRIMARY KEY (`id_log`)
-) ENGINE=InnoDB AUTO_INCREMENT=300 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=535 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11005,7 +11100,242 @@ INSERT INTO `ps_log` VALUES
 (296,1,0,'authorization failed wrong key - currency PLN','',0,1,NULL,1,0,1,'2022-12-02 14:34:44','2022-12-02 14:34:44'),
 (297,1,0,'Protect vendor folder in module ps_wirepayment','',0,1,NULL,1,0,1,'2022-12-02 14:41:36','2022-12-02 14:41:36'),
 (298,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',9,1,NULL,1,0,0,'2022-12-02 14:43:33','2022-12-02 14:43:33'),
-(299,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',11,1,NULL,1,0,0,'2022-12-02 15:11:59','2022-12-02 15:11:59');
+(299,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',11,1,NULL,1,0,0,'2022-12-02 15:11:59','2022-12-02 15:11:59'),
+(300,1,0,'Połączenie z panelem administracyjnym z 172.21.0.1','',0,NULL,NULL,1,1,1,'2022-12-09 21:44:53','2022-12-09 21:44:53'),
+(301,1,0,'Protect vendor folder in module ps_cashondelivery','',0,1,NULL,1,0,1,'2022-12-09 21:48:44','2022-12-09 21:48:44'),
+(302,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',12,1,NULL,1,0,0,'2022-12-09 22:13:15','2022-12-09 22:13:15'),
+(303,1,0,'Exporting mail with theme classic for language Polski (Polish)','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(304,1,0,'Core output folder: /var/www/html/mails','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(305,1,0,'Modules output folder: /var/www/html/modules/','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(306,1,0,'Generate html template account at /var/www/html/mails/pl/account.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(307,1,0,'Generate txt template account at /var/www/html/mails/pl/account.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(308,1,0,'Generate html template backoffice_order at /var/www/html/mails/pl/backoffice_order.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(309,1,0,'Generate txt template backoffice_order at /var/www/html/mails/pl/backoffice_order.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(310,1,0,'Generate html template bankwire at /var/www/html/mails/pl/bankwire.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(311,1,0,'Generate txt template bankwire at /var/www/html/mails/pl/bankwire.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:36','2022-12-09 22:33:36'),
+(312,1,0,'Generate html template cheque at /var/www/html/mails/pl/cheque.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(313,1,0,'Generate txt template cheque at /var/www/html/mails/pl/cheque.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(314,1,0,'Generate html template contact at /var/www/html/mails/pl/contact.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(315,1,0,'Generate txt template contact at /var/www/html/mails/pl/contact.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(316,1,0,'Generate html template contact_form at /var/www/html/mails/pl/contact_form.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(317,1,0,'Generate txt template contact_form at /var/www/html/mails/pl/contact_form.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(318,1,0,'Generate html template credit_slip at /var/www/html/mails/pl/credit_slip.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(319,1,0,'Generate txt template credit_slip at /var/www/html/mails/pl/credit_slip.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(320,1,0,'Generate html template download_product at /var/www/html/mails/pl/download_product.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(321,1,0,'Generate txt template download_product at /var/www/html/mails/pl/download_product.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(322,1,0,'Generate html template employee_password at /var/www/html/mails/pl/employee_password.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(323,1,0,'Generate txt template employee_password at /var/www/html/mails/pl/employee_password.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(324,1,0,'Generate html template forward_msg at /var/www/html/mails/pl/forward_msg.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(325,1,0,'Generate txt template forward_msg at /var/www/html/mails/pl/forward_msg.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(326,1,0,'Generate html template guest_to_customer at /var/www/html/mails/pl/guest_to_customer.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(327,1,0,'Generate txt template guest_to_customer at /var/www/html/mails/pl/guest_to_customer.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(328,1,0,'Generate html template import at /var/www/html/mails/pl/import.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(329,1,0,'Generate txt template import at /var/www/html/mails/pl/import.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(330,1,0,'Generate html template in_transit at /var/www/html/mails/pl/in_transit.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(331,1,0,'Generate txt template in_transit at /var/www/html/mails/pl/in_transit.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(332,1,0,'Generate html template log_alert at /var/www/html/mails/pl/log_alert.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(333,1,0,'Generate txt template log_alert at /var/www/html/mails/pl/log_alert.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(334,1,0,'Generate html template newsletter at /var/www/html/mails/pl/newsletter.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(335,1,0,'Generate txt template newsletter at /var/www/html/mails/pl/newsletter.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(336,1,0,'Generate html template order_canceled at /var/www/html/mails/pl/order_canceled.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(337,1,0,'Generate txt template order_canceled at /var/www/html/mails/pl/order_canceled.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(338,1,0,'Generate html template order_changed at /var/www/html/mails/pl/order_changed.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(339,1,0,'Generate txt template order_changed at /var/www/html/mails/pl/order_changed.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(340,1,0,'Generate html template order_conf at /var/www/html/mails/pl/order_conf.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(341,1,0,'Generate txt template order_conf at /var/www/html/mails/pl/order_conf.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(342,1,0,'Generate html template order_customer_comment at /var/www/html/mails/pl/order_customer_comment.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(343,1,0,'Generate txt template order_customer_comment at /var/www/html/mails/pl/order_customer_comment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(344,1,0,'Generate html template order_merchant_comment at /var/www/html/mails/pl/order_merchant_comment.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(345,1,0,'Generate txt template order_merchant_comment at /var/www/html/mails/pl/order_merchant_comment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(346,1,0,'Generate html template order_return_state at /var/www/html/mails/pl/order_return_state.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(347,1,0,'Generate txt template order_return_state at /var/www/html/mails/pl/order_return_state.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(348,1,0,'Generate html template outofstock at /var/www/html/mails/pl/outofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(349,1,0,'Generate txt template outofstock at /var/www/html/mails/pl/outofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(350,1,0,'Generate html template password at /var/www/html/mails/pl/password.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(351,1,0,'Generate txt template password at /var/www/html/mails/pl/password.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(352,1,0,'Generate html template password_query at /var/www/html/mails/pl/password_query.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(353,1,0,'Generate txt template password_query at /var/www/html/mails/pl/password_query.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(354,1,0,'Generate html template payment at /var/www/html/mails/pl/payment.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(355,1,0,'Generate txt template payment at /var/www/html/mails/pl/payment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(356,1,0,'Generate html template payment_error at /var/www/html/mails/pl/payment_error.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(357,1,0,'Generate txt template payment_error at /var/www/html/mails/pl/payment_error.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(358,1,0,'Generate html template preparation at /var/www/html/mails/pl/preparation.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(359,1,0,'Generate txt template preparation at /var/www/html/mails/pl/preparation.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(360,1,0,'Generate html template productoutofstock at /var/www/html/mails/pl/productoutofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(361,1,0,'Generate txt template productoutofstock at /var/www/html/mails/pl/productoutofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(362,1,0,'Generate html template refund at /var/www/html/mails/pl/refund.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(363,1,0,'Generate txt template refund at /var/www/html/mails/pl/refund.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(364,1,0,'Generate html template reply_msg at /var/www/html/mails/pl/reply_msg.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(365,1,0,'Generate txt template reply_msg at /var/www/html/mails/pl/reply_msg.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(366,1,0,'Generate html template shipped at /var/www/html/mails/pl/shipped.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(367,1,0,'Generate txt template shipped at /var/www/html/mails/pl/shipped.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(368,1,0,'Generate html template test at /var/www/html/mails/pl/test.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(369,1,0,'Generate txt template test at /var/www/html/mails/pl/test.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(370,1,0,'Generate html template voucher at /var/www/html/mails/pl/voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(371,1,0,'Generate txt template voucher at /var/www/html/mails/pl/voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(372,1,0,'Generate html template voucher_new at /var/www/html/mails/pl/voucher_new.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(373,1,0,'Generate txt template voucher_new at /var/www/html/mails/pl/voucher_new.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(374,1,0,'Generate html template followup_1 at /var/www/html/modules//ps_reminder/mails/pl/followup_1.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(375,1,0,'Generate txt template followup_1 at /var/www/html/modules//ps_reminder/mails/pl/followup_1.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(376,1,0,'Generate html template followup_2 at /var/www/html/modules//ps_reminder/mails/pl/followup_2.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(377,1,0,'Generate txt template followup_2 at /var/www/html/modules//ps_reminder/mails/pl/followup_2.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(378,1,0,'Generate html template followup_3 at /var/www/html/modules//ps_reminder/mails/pl/followup_3.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(379,1,0,'Generate txt template followup_3 at /var/www/html/modules//ps_reminder/mails/pl/followup_3.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(380,1,0,'Generate html template followup_4 at /var/www/html/modules//ps_reminder/mails/pl/followup_4.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(381,1,0,'Generate txt template followup_4 at /var/www/html/modules//ps_reminder/mails/pl/followup_4.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(382,1,0,'Generate html template customer_qty at /var/www/html/modules//ps_emailalerts/mails/pl/customer_qty.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(383,1,0,'Generate txt template customer_qty at /var/www/html/modules//ps_emailalerts/mails/pl/customer_qty.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(384,1,0,'Generate html template new_order at /var/www/html/modules//ps_emailalerts/mails/pl/new_order.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(385,1,0,'Generate txt template new_order at /var/www/html/modules//ps_emailalerts/mails/pl/new_order.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(386,1,0,'Generate html template order_changed at /var/www/html/modules//ps_emailalerts/mails/pl/order_changed.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(387,1,0,'Generate txt template order_changed at /var/www/html/modules//ps_emailalerts/mails/pl/order_changed.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(388,1,0,'Generate html template productcoverage at /var/www/html/modules//ps_emailalerts/mails/pl/productcoverage.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(389,1,0,'Generate txt template productcoverage at /var/www/html/modules//ps_emailalerts/mails/pl/productcoverage.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(390,1,0,'Generate html template productoutofstock at /var/www/html/modules//ps_emailalerts/mails/pl/productoutofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(391,1,0,'Generate txt template productoutofstock at /var/www/html/modules//ps_emailalerts/mails/pl/productoutofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(392,1,0,'Generate html template return_slip at /var/www/html/modules//ps_emailalerts/mails/pl/return_slip.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(393,1,0,'Generate txt template return_slip at /var/www/html/modules//ps_emailalerts/mails/pl/return_slip.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(394,1,0,'Generate html template newsletter_conf at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_conf.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(395,1,0,'Generate txt template newsletter_conf at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_conf.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(396,1,0,'Generate html template newsletter_verif at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_verif.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(397,1,0,'Generate txt template newsletter_verif at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_verif.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(398,1,0,'Generate html template newsletter_voucher at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(399,1,0,'Generate txt template newsletter_voucher at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(400,1,0,'Generate html template referralprogram-congratulations at /var/www/html/modules//referralprogram/mails/pl/referralprogram-congratulations.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(401,1,0,'Generate txt template referralprogram-congratulations at /var/www/html/modules//referralprogram/mails/pl/referralprogram-congratulations.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(402,1,0,'Generate html template referralprogram-invitation at /var/www/html/modules//referralprogram/mails/pl/referralprogram-invitation.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(403,1,0,'Generate txt template referralprogram-invitation at /var/www/html/modules//referralprogram/mails/pl/referralprogram-invitation.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(404,1,0,'Generate html template referralprogram-voucher at /var/www/html/modules//referralprogram/mails/pl/referralprogram-voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(405,1,0,'Generate txt template referralprogram-voucher at /var/www/html/modules//referralprogram/mails/pl/referralprogram-voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:33:37','2022-12-09 22:33:37'),
+(406,1,0,'Exporting mail with theme modern for language Polski (Polish)','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(407,1,0,'Core output folder: /var/www/html/mails','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(408,1,0,'Modules output folder: /var/www/html/modules/','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(409,1,0,'Generate html template account at /var/www/html/mails/pl/account.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(410,1,0,'Generate txt template account at /var/www/html/mails/pl/account.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(411,1,0,'Generate html template backoffice_order at /var/www/html/mails/pl/backoffice_order.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(412,1,0,'Generate txt template backoffice_order at /var/www/html/mails/pl/backoffice_order.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(413,1,0,'Generate html template bankwire at /var/www/html/mails/pl/bankwire.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(414,1,0,'Generate txt template bankwire at /var/www/html/mails/pl/bankwire.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(415,1,0,'Generate html template cheque at /var/www/html/mails/pl/cheque.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(416,1,0,'Generate txt template cheque at /var/www/html/mails/pl/cheque.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(417,1,0,'Generate html template contact at /var/www/html/mails/pl/contact.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(418,1,0,'Generate txt template contact at /var/www/html/mails/pl/contact.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(419,1,0,'Generate html template contact_form at /var/www/html/mails/pl/contact_form.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(420,1,0,'Generate txt template contact_form at /var/www/html/mails/pl/contact_form.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(421,1,0,'Generate html template credit_slip at /var/www/html/mails/pl/credit_slip.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(422,1,0,'Generate txt template credit_slip at /var/www/html/mails/pl/credit_slip.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(423,1,0,'Generate html template download_product at /var/www/html/mails/pl/download_product.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(424,1,0,'Generate txt template download_product at /var/www/html/mails/pl/download_product.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(425,1,0,'Generate html template employee_password at /var/www/html/mails/pl/employee_password.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(426,1,0,'Generate txt template employee_password at /var/www/html/mails/pl/employee_password.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(427,1,0,'Generate html template forward_msg at /var/www/html/mails/pl/forward_msg.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(428,1,0,'Generate txt template forward_msg at /var/www/html/mails/pl/forward_msg.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(429,1,0,'Generate html template guest_to_customer at /var/www/html/mails/pl/guest_to_customer.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(430,1,0,'Generate txt template guest_to_customer at /var/www/html/mails/pl/guest_to_customer.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(431,1,0,'Generate html template import at /var/www/html/mails/pl/import.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(432,1,0,'Generate txt template import at /var/www/html/mails/pl/import.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(433,1,0,'Generate html template in_transit at /var/www/html/mails/pl/in_transit.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(434,1,0,'Generate txt template in_transit at /var/www/html/mails/pl/in_transit.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(435,1,0,'Generate html template log_alert at /var/www/html/mails/pl/log_alert.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(436,1,0,'Generate txt template log_alert at /var/www/html/mails/pl/log_alert.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(437,1,0,'Generate html template newsletter at /var/www/html/mails/pl/newsletter.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(438,1,0,'Generate txt template newsletter at /var/www/html/mails/pl/newsletter.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(439,1,0,'Generate html template order_canceled at /var/www/html/mails/pl/order_canceled.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(440,1,0,'Generate txt template order_canceled at /var/www/html/mails/pl/order_canceled.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(441,1,0,'Generate html template order_changed at /var/www/html/mails/pl/order_changed.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(442,1,0,'Generate txt template order_changed at /var/www/html/mails/pl/order_changed.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(443,1,0,'Generate html template order_conf at /var/www/html/mails/pl/order_conf.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(444,1,0,'Generate txt template order_conf at /var/www/html/mails/pl/order_conf.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(445,1,0,'Generate html template order_customer_comment at /var/www/html/mails/pl/order_customer_comment.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(446,1,0,'Generate txt template order_customer_comment at /var/www/html/mails/pl/order_customer_comment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(447,1,0,'Generate html template order_merchant_comment at /var/www/html/mails/pl/order_merchant_comment.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(448,1,0,'Generate txt template order_merchant_comment at /var/www/html/mails/pl/order_merchant_comment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(449,1,0,'Generate html template order_return_state at /var/www/html/mails/pl/order_return_state.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(450,1,0,'Generate txt template order_return_state at /var/www/html/mails/pl/order_return_state.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(451,1,0,'Generate html template outofstock at /var/www/html/mails/pl/outofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(452,1,0,'Generate txt template outofstock at /var/www/html/mails/pl/outofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(453,1,0,'Generate html template password at /var/www/html/mails/pl/password.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(454,1,0,'Generate txt template password at /var/www/html/mails/pl/password.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(455,1,0,'Generate html template password_query at /var/www/html/mails/pl/password_query.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(456,1,0,'Generate txt template password_query at /var/www/html/mails/pl/password_query.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(457,1,0,'Generate html template payment at /var/www/html/mails/pl/payment.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(458,1,0,'Generate txt template payment at /var/www/html/mails/pl/payment.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(459,1,0,'Generate html template payment_error at /var/www/html/mails/pl/payment_error.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(460,1,0,'Generate txt template payment_error at /var/www/html/mails/pl/payment_error.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(461,1,0,'Generate html template preparation at /var/www/html/mails/pl/preparation.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(462,1,0,'Generate txt template preparation at /var/www/html/mails/pl/preparation.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(463,1,0,'Generate html template productoutofstock at /var/www/html/mails/pl/productoutofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(464,1,0,'Generate txt template productoutofstock at /var/www/html/mails/pl/productoutofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(465,1,0,'Generate html template refund at /var/www/html/mails/pl/refund.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(466,1,0,'Generate txt template refund at /var/www/html/mails/pl/refund.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(467,1,0,'Generate html template reply_msg at /var/www/html/mails/pl/reply_msg.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(468,1,0,'Generate txt template reply_msg at /var/www/html/mails/pl/reply_msg.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(469,1,0,'Generate html template shipped at /var/www/html/mails/pl/shipped.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(470,1,0,'Generate txt template shipped at /var/www/html/mails/pl/shipped.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(471,1,0,'Generate html template test at /var/www/html/mails/pl/test.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(472,1,0,'Generate txt template test at /var/www/html/mails/pl/test.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(473,1,0,'Generate html template voucher at /var/www/html/mails/pl/voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(474,1,0,'Generate txt template voucher at /var/www/html/mails/pl/voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(475,1,0,'Generate html template voucher_new at /var/www/html/mails/pl/voucher_new.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(476,1,0,'Generate txt template voucher_new at /var/www/html/mails/pl/voucher_new.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(477,1,0,'Generate html template followup_1 at /var/www/html/modules//followup/mails/pl/followup_1.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(478,1,0,'Generate txt template followup_1 at /var/www/html/modules//followup/mails/pl/followup_1.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(479,1,0,'Generate html template followup_2 at /var/www/html/modules//followup/mails/pl/followup_2.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(480,1,0,'Generate txt template followup_2 at /var/www/html/modules//followup/mails/pl/followup_2.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(481,1,0,'Generate html template followup_3 at /var/www/html/modules//followup/mails/pl/followup_3.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(482,1,0,'Generate txt template followup_3 at /var/www/html/modules//followup/mails/pl/followup_3.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(483,1,0,'Generate html template followup_4 at /var/www/html/modules//followup/mails/pl/followup_4.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(484,1,0,'Generate txt template followup_4 at /var/www/html/modules//followup/mails/pl/followup_4.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(485,1,0,'Generate html template followup_1 at /var/www/html/modules//ps_reminder/mails/pl/followup_1.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(486,1,0,'Generate txt template followup_1 at /var/www/html/modules//ps_reminder/mails/pl/followup_1.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(487,1,0,'Generate html template followup_2 at /var/www/html/modules//ps_reminder/mails/pl/followup_2.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(488,1,0,'Generate txt template followup_2 at /var/www/html/modules//ps_reminder/mails/pl/followup_2.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(489,1,0,'Generate html template followup_3 at /var/www/html/modules//ps_reminder/mails/pl/followup_3.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(490,1,0,'Generate txt template followup_3 at /var/www/html/modules//ps_reminder/mails/pl/followup_3.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(491,1,0,'Generate html template followup_4 at /var/www/html/modules//ps_reminder/mails/pl/followup_4.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(492,1,0,'Generate txt template followup_4 at /var/www/html/modules//ps_reminder/mails/pl/followup_4.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(493,1,0,'Generate html template customer_qty at /var/www/html/modules//ps_emailalerts/mails/pl/customer_qty.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(494,1,0,'Generate txt template customer_qty at /var/www/html/modules//ps_emailalerts/mails/pl/customer_qty.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(495,1,0,'Generate html template new_order at /var/www/html/modules//ps_emailalerts/mails/pl/new_order.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(496,1,0,'Generate txt template new_order at /var/www/html/modules//ps_emailalerts/mails/pl/new_order.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(497,1,0,'Generate html template order_changed at /var/www/html/modules//ps_emailalerts/mails/pl/order_changed.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(498,1,0,'Generate txt template order_changed at /var/www/html/modules//ps_emailalerts/mails/pl/order_changed.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(499,1,0,'Generate html template productcoverage at /var/www/html/modules//ps_emailalerts/mails/pl/productcoverage.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(500,1,0,'Generate txt template productcoverage at /var/www/html/modules//ps_emailalerts/mails/pl/productcoverage.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(501,1,0,'Generate html template productoutofstock at /var/www/html/modules//ps_emailalerts/mails/pl/productoutofstock.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(502,1,0,'Generate txt template productoutofstock at /var/www/html/modules//ps_emailalerts/mails/pl/productoutofstock.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(503,1,0,'Generate html template return_slip at /var/www/html/modules//ps_emailalerts/mails/pl/return_slip.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(504,1,0,'Generate txt template return_slip at /var/www/html/modules//ps_emailalerts/mails/pl/return_slip.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(505,1,0,'Generate html template newsletter_conf at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_conf.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(506,1,0,'Generate txt template newsletter_conf at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_conf.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(507,1,0,'Generate html template newsletter_verif at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_verif.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(508,1,0,'Generate txt template newsletter_verif at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_verif.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(509,1,0,'Generate html template newsletter_voucher at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:06','2022-12-09 22:34:06'),
+(510,1,0,'Generate txt template newsletter_voucher at /var/www/html/modules//ps_emailsubscription/mails/pl/newsletter_voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(511,1,0,'Generate html template referralprogram-congratulations at /var/www/html/modules//referralprogram/mails/pl/referralprogram-congratulations.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(512,1,0,'Generate txt template referralprogram-congratulations at /var/www/html/modules//referralprogram/mails/pl/referralprogram-congratulations.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(513,1,0,'Generate html template referralprogram-invitation at /var/www/html/modules//referralprogram/mails/pl/referralprogram-invitation.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(514,1,0,'Generate txt template referralprogram-invitation at /var/www/html/modules//referralprogram/mails/pl/referralprogram-invitation.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(515,1,0,'Generate html template referralprogram-voucher at /var/www/html/modules//referralprogram/mails/pl/referralprogram-voucher.html','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(516,1,0,'Generate txt template referralprogram-voucher at /var/www/html/modules//referralprogram/mails/pl/referralprogram-voucher.txt','',0,1,NULL,1,0,1,'2022-12-09 22:34:07','2022-12-09 22:34:07'),
+(517,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',13,1,NULL,1,0,0,'2022-12-09 22:34:46','2022-12-09 22:34:46'),
+(518,1,0,'usunięcie Alias','Alias',1,1,NULL,1,0,1,'2022-12-09 22:53:15','2022-12-09 22:53:15'),
+(519,1,0,'usunięcie Alias','Alias',2,1,NULL,1,0,1,'2022-12-09 22:53:18','2022-12-09 22:53:18'),
+(520,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',14,1,NULL,1,0,0,'2022-12-09 23:10:30','2022-12-09 23:10:30'),
+(521,1,0,'Exporting mail with theme modern for language Polski (Polish)','',0,1,NULL,1,0,1,'2022-12-09 23:29:37','2022-12-09 23:29:37'),
+(522,1,0,'Core output folder: /var/www/html/mails','',0,1,NULL,1,0,1,'2022-12-09 23:29:37','2022-12-09 23:29:37'),
+(523,1,0,'Modules output folder: /var/www/html/modules/','',0,1,NULL,1,0,1,'2022-12-09 23:29:37','2022-12-09 23:29:37'),
+(524,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',15,1,NULL,1,0,0,'2022-12-09 23:32:35','2022-12-09 23:32:35'),
+(525,1,0,'OrderState modyfikacja','OrderState',13,NULL,NULL,1,1,1,'2022-12-09 23:39:39','2022-12-09 23:39:39'),
+(526,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',16,1,NULL,1,0,0,'2022-12-09 23:42:27','2022-12-09 23:42:27'),
+(527,1,0,'Exporting mail with theme modern for language Polski (Polish)','',0,1,NULL,1,0,1,'2022-12-09 23:49:09','2022-12-09 23:49:09'),
+(528,1,0,'Core output folder: /var/www/html/mails','',0,1,NULL,1,0,1,'2022-12-09 23:49:09','2022-12-09 23:49:09'),
+(529,1,0,'Modules output folder: /var/www/html/modules/','',0,1,NULL,1,0,1,'2022-12-09 23:49:09','2022-12-09 23:49:09'),
+(530,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',17,1,NULL,1,0,0,'2022-12-09 23:52:22','2022-12-09 23:52:22'),
+(531,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',18,1,NULL,1,0,0,'2022-12-09 23:53:56','2022-12-09 23:53:56'),
+(532,1,0,'OrderState modyfikacja','OrderState',13,NULL,NULL,1,1,1,'2022-12-09 23:55:36','2022-12-09 23:55:36'),
+(533,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',19,1,NULL,1,0,0,'2022-12-09 23:57:22','2022-12-09 23:57:22'),
+(534,1,0,'Frontcontroller::init - Cart cannot be loaded or an order has already been placed using this cart','Cart',20,1,NULL,1,0,0,'2022-12-09 23:59:12','2022-12-09 23:59:12');
 /*!40000 ALTER TABLE `ps_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11025,7 +11355,7 @@ CREATE TABLE `ps_mail` (
   `date_add` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id_mail`),
   KEY `recipient` (`recipient`(10))
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11043,7 +11373,23 @@ INSERT INTO `ps_mail` VALUES
 (6,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-02 14:43:32'),
 (7,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-02 14:43:33'),
 (8,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-02 15:11:56'),
-(9,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-02 15:11:59');
+(9,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-02 15:11:59'),
+(10,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 22:13:15'),
+(11,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 22:34:44'),
+(12,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 22:34:46'),
+(13,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 23:10:29'),
+(14,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:10:30'),
+(15,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 23:32:33'),
+(16,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:32:34'),
+(17,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 23:42:25'),
+(18,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:42:27'),
+(19,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 23:52:20'),
+(20,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:52:22'),
+(21,'mar.polaj@gmail.com','order_conf','[PrestaShop]  Oczekiwanie na zatwierdzenie płatności za pobraniem',1,'2022-12-09 23:53:55'),
+(22,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:53:56'),
+(23,'mar.polaj@gmail.com','bankwire','[PrestaShop]  Oczekiwanie na płatność przelewem bankowym',1,'2022-12-09 23:57:21'),
+(24,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:57:22'),
+(25,'mar.polaj@gmail.com','order_conf','[PrestaShop] Potwierdzenie zamówienia',1,'2022-12-09 23:59:12');
 /*!40000 ALTER TABLE `ps_mail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11229,7 +11575,7 @@ CREATE TABLE `ps_meta` (
   `configurable` tinyint(1) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_meta`),
   UNIQUE KEY `page` (`page`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11259,7 +11605,6 @@ INSERT INTO `ps_meta` VALUES
 (18,'my-account',1),
 (19,'order-follow',1),
 (20,'order-slip',1),
-(21,'order',1),
 (22,'search',1),
 (23,'stores',1),
 (24,'guest-tracking',1),
@@ -11278,7 +11623,10 @@ INSERT INTO `ps_meta` VALUES
 (39,'module-ps_wirepayment-payment',1),
 (40,'module-ps_wirepayment-validation',1),
 (41,'module-paypal-payment',1),
-(42,'module-paypal-validation',1);
+(42,'module-paypal-validation',1),
+(43,'module-ps_cashondelivery-validation',1),
+(44,'order-detail',1),
+(45,'order',1);
 /*!40000 ALTER TABLE `ps_meta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11310,38 +11658,40 @@ CREATE TABLE `ps_meta_lang` (
 LOCK TABLES `ps_meta_lang` WRITE;
 /*!40000 ALTER TABLE `ps_meta_lang` DISABLE KEYS */;
 INSERT INTO `ps_meta_lang` VALUES
-(1,1,1,'błąd 404','Ta strona nie może zostać odnaleziona','','page-not-found'),
-(2,1,1,'Best sales','Our best sales','','best-sales'),
-(3,1,1,'Contact us','Use our form to contact us','','contact-us'),
-(4,1,1,'','Shop powered by PrestaShop','',''),
-(5,1,1,'Brands','Brands list','','brands'),
-(6,1,1,'New products','Our new products','','new-products'),
-(7,1,1,'Forgot your password','Enter the e-mail address you use to sign in to receive an e-mail with a new password','','password-recovery'),
-(8,1,1,'Prices drop','Our special products','','prices-drop'),
-(9,1,1,'Sitemap','Lost ? Find what your are looking for','','sitemap'),
-(10,1,1,'Suppliers','Suppliers list','','supplier'),
-(11,1,1,'Address','','','address'),
-(12,1,1,'Addresses','','','addresses'),
-(13,1,1,'Login','','','login'),
-(14,1,1,'Cart','','','cart'),
-(15,1,1,'Discount','','','discount'),
-(16,1,1,'Order history','','','order-history'),
-(17,1,1,'Identity','','','identity'),
-(18,1,1,'My account','','','my-account'),
-(19,1,1,'Order follow','','','order-follow'),
-(20,1,1,'Credit slip','','','credit-slip'),
-(21,1,1,'Order','','','order'),
-(22,1,1,'Search','','','search'),
-(23,1,1,'Stores','','','stores'),
-(24,1,1,'Guest tracking','','','guest-tracking'),
-(25,1,1,'Order confirmation','','','order-confirmation'),
+(1,1,1,'błąd 404','Ta strona nie może zostać odnaleziona','','nie-znaleziono-strony'),
+(2,1,1,'Najlepsze promocje','Nasze najlepiej sprzedające się produkty','','najczesciej-kupowane'),
+(3,1,1,'Kontakt','Skorzystaj z formularza kontaktowego','','kontakt'),
+(4,1,1,'Lampy Bright','','',''),
+(5,1,1,'Marki','','','brands'),
+(6,1,1,'Nowe produkty','','','nowe-produkty'),
+(7,1,1,'Zapomniałeś hasła?','Wprowadź adres e-mail, którego używasz do logowania, aby otrzymać wiadomość e-mail z nowym hasłem','','odzyskiwanie-hasla'),
+(8,1,1,'Obniżka cen','Nasze specjalne produkty','','promocje'),
+(9,1,1,'Mapa','Zgubiony? Znajdź co zgubione','','Mapa strony'),
+(10,1,1,'Dostawcy','Lista dostawców','','dostawcy'),
+(11,1,1,'Adres','','','adres'),
+(12,1,1,'Adresy','','','adresy'),
+(13,1,1,'Nazwa użytkowika','','','logowanie'),
+(14,1,1,'Wózek','','','koszyk'),
+(15,1,1,'Obniżka','','','rabaty'),
+(16,1,1,'Historia zamówień','','','historia-zamowien'),
+(17,1,1,'Tożsamość','','','dane-osobiste'),
+(18,1,1,'Moje konto','','','moje-konto'),
+(19,1,1,'Śledź zamówienie','','','sledzenie-zamowienia'),
+(20,1,1,'Korekty Płatności','','','potwierdzenie-zwrotu'),
+(22,1,1,'Szukaj','','','szukaj'),
+(23,1,1,'Sklepy','','','nasze-sklepy'),
+(24,1,1,'Śledzenie gości','','','sledzenie-zamowien-gosci'),
+(25,1,1,'Potwierdzenie zamówienia','','','potwierdzenie-zamowienia'),
 (36,1,1,'','','',''),
 (37,1,1,'','','',''),
-(38,1,1,'','','',''),
-(39,1,1,'','','',''),
-(40,1,1,'','','',''),
+(38,1,1,'XD','','','XD'),
+(39,1,1,'XD','','','XD'),
+(40,1,1,'XD','','','XD'),
 (41,1,1,'','','',''),
-(42,1,1,'','','','');
+(42,1,1,'','','',''),
+(43,1,1,'','','',''),
+(44,1,1,'Szczegóły zamówienia','','','order-detail'),
+(45,1,1,'Zamówienia','','','zamówienie');
 /*!40000 ALTER TABLE `ps_meta_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11360,7 +11710,7 @@ CREATE TABLE `ps_module` (
   PRIMARY KEY (`id_module`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -11436,7 +11786,8 @@ INSERT INTO `ps_module` VALUES
 (66,'ps_eventbus',1,'1.9.3'),
 (67,'paypal',1,'5.7.3'),
 (69,'ps_googleanalytics',1,'4.1.2'),
-(70,'bluepayment',1,'2.8.2');
+(70,'bluepayment',1,'2.8.2'),
+(71,'ps_cashondelivery',1,'2.0.1');
 /*!40000 ALTER TABLE `ps_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11728,7 +12079,11 @@ INSERT INTO `ps_module_access` VALUES
 (1,925),
 (1,926),
 (1,927),
-(1,928);
+(1,928),
+(1,937),
+(1,938),
+(1,939),
+(1,940);
 /*!40000 ALTER TABLE `ps_module_access` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11765,7 +12120,10 @@ INSERT INTO `ps_module_carrier` VALUES
 (67,1,3),
 (70,1,1),
 (70,1,2),
-(70,1,3);
+(70,1,3),
+(71,1,1),
+(71,1,2),
+(71,1,3);
 /*!40000 ALTER TABLE `ps_module_carrier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12234,7 +12592,8 @@ INSERT INTO `ps_module_country` VALUES
 (67,1,239),
 (67,1,240),
 (67,1,241),
-(70,1,14);
+(70,1,14),
+(71,1,14);
 /*!40000 ALTER TABLE `ps_module_country` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12264,7 +12623,8 @@ INSERT INTO `ps_module_currency` VALUES
 (35,1,1),
 (59,1,1),
 (67,1,1),
-(70,1,1);
+(70,1,1),
+(71,1,1);
 /*!40000 ALTER TABLE `ps_module_currency` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12490,7 +12850,10 @@ INSERT INTO `ps_module_group` VALUES
 (69,1,3),
 (70,1,1),
 (70,1,2),
-(70,1,3);
+(70,1,3),
+(71,1,1),
+(71,1,2),
+(71,1,3);
 /*!40000 ALTER TABLE `ps_module_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12508,7 +12871,7 @@ CREATE TABLE `ps_module_history` (
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -12518,14 +12881,19 @@ CREATE TABLE `ps_module_history` (
 LOCK TABLES `ps_module_history` WRITE;
 /*!40000 ALTER TABLE `ps_module_history` DISABLE KEYS */;
 INSERT INTO `ps_module_history` VALUES
-(1,1,35,'2022-11-28 16:28:38','2022-12-02 14:41:42'),
+(1,1,35,'2022-11-28 16:28:38','2022-12-09 23:36:24'),
 (2,1,14,'2022-11-28 16:55:21','2022-11-30 14:46:18'),
 (3,1,59,'2022-11-28 16:55:53','2022-12-01 20:49:13'),
-(4,1,2,'2022-12-01 20:26:02','2022-12-01 20:26:02'),
+(4,1,2,'2022-12-01 20:26:02','2022-12-09 22:35:45'),
 (5,1,68,'2022-12-01 20:51:58','2022-12-01 20:54:34'),
 (6,1,69,'2022-12-02 14:21:43','2022-12-02 14:21:43'),
-(7,1,70,'2022-12-02 14:30:59','2022-12-02 14:35:25'),
-(8,1,67,'2022-12-02 14:35:50','2022-12-02 14:46:26');
+(7,1,70,'2022-12-02 14:30:59','2022-12-09 22:04:24'),
+(8,1,67,'2022-12-02 14:35:50','2022-12-09 22:50:21'),
+(9,1,21,'2022-12-09 21:53:00','2022-12-09 21:53:00'),
+(10,1,15,'2022-12-09 21:55:12','2022-12-09 22:35:33'),
+(11,1,9,'2022-12-09 21:55:42','2022-12-09 21:55:42'),
+(12,1,28,'2022-12-09 21:56:25','2022-12-09 21:56:25'),
+(13,1,63,'2022-12-09 22:02:18','2022-12-09 22:02:18');
 /*!40000 ALTER TABLE `ps_module_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12579,7 +12947,6 @@ CREATE TABLE `ps_module_shop` (
 LOCK TABLES `ps_module_shop` WRITE;
 /*!40000 ALTER TABLE `ps_module_shop` DISABLE KEYS */;
 INSERT INTO `ps_module_shop` VALUES
-(1,1,7),
 (2,1,7),
 (3,1,7),
 (4,1,7),
@@ -12641,9 +13008,8 @@ INSERT INTO `ps_module_shop` VALUES
 (64,1,7),
 (65,1,7),
 (66,1,7),
-(67,1,7),
 (69,1,7),
-(70,1,7);
+(71,1,7);
 /*!40000 ALTER TABLE `ps_module_shop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12701,7 +13067,7 @@ CREATE TABLE `ps_order_carrier` (
   KEY `id_order` (`id_order`),
   KEY `id_carrier` (`id_carrier`),
   KEY `id_order_invoice` (`id_order_invoice`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -12720,7 +13086,16 @@ INSERT INTO `ps_order_carrier` VALUES
 (7,7,10,0,0.300000,0.000000,0.000000,'','2022-12-01 20:16:21'),
 (8,8,10,0,0.300000,0.000000,0.000000,'','2022-12-01 20:53:49'),
 (9,9,12,0,0.300000,25.000000,30.750000,'','2022-12-02 14:43:29'),
-(10,10,17,0,0.600000,5.000000,6.150000,'','2022-12-02 15:11:54');
+(10,10,17,0,0.600000,5.000000,6.150000,'','2022-12-02 15:11:54'),
+(11,11,17,0,0.000000,5.000000,6.150000,'','2022-12-09 22:13:13'),
+(12,12,17,0,0.300000,17.000000,20.910000,'','2022-12-09 22:34:43'),
+(13,13,19,0,0.300000,8.000000,9.840000,'','2022-12-09 23:10:27'),
+(14,14,19,0,0.300000,8.000000,9.840000,'','2022-12-09 23:32:32'),
+(15,15,19,0,0.300000,8.000000,9.840000,'','2022-12-09 23:42:24'),
+(16,16,19,0,0.000000,8.000000,9.840000,'','2022-12-09 23:52:19'),
+(17,17,19,0,0.300000,8.000000,9.840000,'','2022-12-09 23:53:53'),
+(18,18,19,0,0.300000,8.000000,9.840000,'','2022-12-09 23:57:19'),
+(19,19,16,0,1.200000,10.000000,12.300000,'','2022-12-09 23:59:11');
 /*!40000 ALTER TABLE `ps_order_carrier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12819,7 +13194,7 @@ CREATE TABLE `ps_order_detail` (
   KEY `product_attribute_id` (`product_attribute_id`),
   KEY `id_tax_rules_group` (`id_tax_rules_group`),
   KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -12841,7 +13216,16 @@ INSERT INTO `ps_order_detail` VALUES
 (10,8,0,0,1,1,1,0,'Hummingbird printed t-shirt (Size: S - Color: White)',1,1,0,0,0,19.120000,20.00,0.000000,0.000000,0.000000,0.00,24.750000,'','','','','demo_1','demo_1_46',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',23.520000,19.120000,23.517600,19.120000,0.000000,0.000000,5.490000,23.900000,0.000000,0.000000,0.000000),
 (11,9,0,0,1,16,28,0,'Mountain fox notebook (Paper Type: Ruled)',1,1,0,0,0,12.900000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_8','demo_8_85',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',15.870000,12.900000,15.867000,12.900000,0.000000,0.000000,5.490000,12.900000,0.000000,0.000000,0.000000),
 (12,10,0,0,1,20,0,0,'pogczampik',2,2,0,0,0,23.000000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','','',0.000000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',56.580000,46.000000,28.290000,23.000000,0.000000,0.000000,0.000000,23.000000,0.000000,0.000000,0.000000),
-(13,10,0,0,1,2,9,0,'Hummingbird printed sweater (Size: S)',2,2,0,0,0,28.720000,20.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_3','demo_3_62',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',70.660000,57.440000,35.325600,28.720000,0.000000,0.000000,5.490000,35.900000,0.000000,0.000000,0.000000);
+(13,10,0,0,1,2,9,0,'Hummingbird printed sweater (Size: S)',2,2,0,0,0,28.720000,20.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_3','demo_3_62',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',70.660000,57.440000,35.325600,28.720000,0.000000,0.000000,5.490000,35.900000,0.000000,0.000000,0.000000),
+(14,11,0,0,1,20,0,0,'pogczampik',2,2,0,0,0,23.000000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','','',0.000000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',56.580000,46.000000,28.290000,23.000000,0.000000,0.000000,0.000000,23.000000,0.000000,0.000000,0.000000),
+(15,12,0,0,1,2,9,0,'Hummingbird printed sweater (Size: S)',1,1,0,0,0,28.720000,20.00,0.000000,0.000000,0.000000,0.00,36.560000,'','','','','demo_3','demo_3_62',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',35.330000,28.720000,35.325600,28.720000,0.000000,0.000000,5.490000,35.900000,0.000000,0.000000,0.000000),
+(16,13,0,0,1,2,9,0,'Hummingbird printed sweater (Size: S)',1,1,0,0,0,28.720000,20.00,0.000000,0.000000,0.000000,0.00,36.560000,'','','','','demo_3','demo_3_62',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',35.330000,28.720000,35.325600,28.720000,0.000000,0.000000,5.490000,35.900000,0.000000,0.000000,0.000000),
+(17,14,0,0,1,1,1,0,'Hummingbird printed t-shirt (Rozmiar: S - Kolor: Biały)',1,1,0,0,0,19.120000,20.00,0.000000,0.000000,0.000000,0.00,24.750000,'','','','','demo_1','demo_1_46',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',23.520000,19.120000,23.517600,19.120000,0.000000,0.000000,5.490000,23.900000,0.000000,0.000000,0.000000),
+(18,15,0,0,1,15,0,0,'Pack Mug + Framed poster',1,1,0,0,0,35.000000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_21','',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',43.050000,35.000000,43.050000,35.000000,0.000000,0.000000,0.000000,35.000000,0.000000,0.000000,0.000000),
+(19,16,0,0,1,20,0,0,'pogczampik',1,1,0,0,0,23.000000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','','',0.000000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',28.290000,23.000000,28.290000,23.000000,0.000000,0.000000,0.000000,23.000000,0.000000,0.000000,0.000000),
+(20,17,0,0,1,6,0,0,'Mug The best is yet to come',1,1,0,0,0,11.900000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_11','demo_11',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',14.640000,11.900000,14.637000,11.900000,0.000000,0.000000,5.490000,11.900000,0.000000,0.000000,0.000000),
+(21,18,0,0,1,9,23,0,'Mountain fox cushion (Kolor: czarny)',1,1,0,0,0,18.900000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_15','demo_15_80',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',23.250000,18.900000,23.247000,18.900000,0.000000,0.000000,5.490000,18.900000,0.000000,0.000000,0.000000),
+(22,19,0,0,1,10,25,0,'Brown bear cushion (Kolor: czarny)',4,4,0,0,0,18.900000,0.00,0.000000,0.000000,0.000000,0.00,0.000000,'','','','','demo_16','demo_16_82',0.300000,1,0,'PTU PL 23%',23.000,0.000000,0.000,0,'',0,'0000-00-00 00:00:00',93.000000,75.600000,23.247000,18.900000,0.000000,0.000000,5.490000,18.900000,0.000000,0.000000,0.000000);
 /*!40000 ALTER TABLE `ps_order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12874,7 +13258,16 @@ INSERT INTO `ps_order_detail_tax` VALUES
 (10,1,4.397600,4.400000),
 (11,1,2.967000,2.970000),
 (13,1,6.605600,13.220000),
-(12,1,5.290000,10.580000);
+(12,1,5.290000,10.580000),
+(14,1,5.290000,10.580000),
+(15,1,6.605600,6.610000),
+(16,1,6.605600,6.610000),
+(17,1,4.397600,4.400000),
+(18,1,8.050000,8.050000),
+(19,1,5.290000,5.290000),
+(20,1,2.737000,2.740000),
+(21,1,4.347000,4.350000),
+(22,1,4.347000,17.400000);
 /*!40000 ALTER TABLE `ps_order_detail_tax` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -12895,7 +13288,7 @@ CREATE TABLE `ps_order_history` (
   KEY `order_history_order` (`id_order`),
   KEY `id_employee` (`id_employee`),
   KEY `id_order_state` (`id_order_state`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -12921,7 +13314,16 @@ INSERT INTO `ps_order_history` VALUES
 (14,0,7,10,'2022-12-01 20:16:21'),
 (15,0,8,1,'2022-12-01 20:53:49'),
 (16,0,9,10,'2022-12-02 14:43:29'),
-(17,0,10,10,'2022-12-02 15:11:54');
+(17,0,10,10,'2022-12-02 15:11:54'),
+(18,0,11,13,'2022-12-09 22:13:13'),
+(19,0,12,10,'2022-12-09 22:34:43'),
+(20,0,13,10,'2022-12-09 23:10:28'),
+(21,0,14,10,'2022-12-09 23:32:32'),
+(22,0,15,10,'2022-12-09 23:42:24'),
+(23,0,16,10,'2022-12-09 23:52:19'),
+(24,0,17,13,'2022-12-09 23:53:54'),
+(25,0,18,10,'2022-12-09 23:57:19'),
+(26,0,19,13,'2022-12-09 23:59:11');
 /*!40000 ALTER TABLE `ps_order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13065,7 +13467,7 @@ CREATE TABLE `ps_order_message_lang` (
 LOCK TABLES `ps_order_message_lang` WRITE;
 /*!40000 ALTER TABLE `ps_order_message_lang` DISABLE KEYS */;
 INSERT INTO `ps_order_message_lang` VALUES
-(1,1,'Delay','Hi,\n\nUnfortunately, an item on your order is currently out of stock. This may cause a slight delay in delivery.\nPlease accept our apologies and rest assured that we are working hard to rectify this.\n\nBest regards,');
+(1,1,'Opóźnienie','Cześć,\r\n\r\nNiestety, pozycja z Twojego zamówienia jest obecnie niedostępna. Może to spowodować niewielkie opóźnienie w dostawie.\r\nPrzyjmij nasze przeprosiny i zapewniamy, że ciężko pracujemy, aby to naprawić.\r\n\r\nZ poważaniem,');
 /*!40000 ALTER TABLE `ps_order_message_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13463,7 +13865,7 @@ CREATE TABLE `ps_orders` (
   KEY `current_state` (`current_state`),
   KEY `id_shop` (`id_shop`),
   KEY `date_add` (`date_add`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13482,7 +13884,16 @@ INSERT INTO `ps_orders` VALUES
 (7,'CAQKVLMMF',1,1,10,1,4,7,1,8,8,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,35.330000,35.330000,28.720000,0.000000,28.720000,35.330000,0.000000,0.000000,0.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-01 20:16:21','2022-12-01 20:16:21',''),
 (8,'WTEJIMEJN',1,1,10,1,4,8,1,9,9,1,'923301d010bf0619382c333000b34aa6','Czek',1.000000,'ps_checkpayment',0,0,'',0,'',0.000000,0.000000,0.000000,23.520000,23.520000,19.120000,0.000000,19.120000,23.520000,0.000000,0.000000,0.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-01 20:53:49','2022-12-01 20:53:49',''),
 (9,'RLEXUCIMM',1,1,12,1,4,9,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,46.620000,46.620000,37.900000,0.000000,12.900000,15.870000,30.750000,30.750000,25.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-02 14:43:29','2022-12-02 14:43:29',''),
-(10,'ALFRKOOJX',1,1,17,1,4,11,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,133.390000,133.390000,108.440000,0.000000,103.440000,127.240000,6.150000,6.150000,5.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-02 15:11:54','2022-12-02 15:11:54','');
+(10,'ALFRKOOJX',1,1,17,1,4,11,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,133.390000,133.390000,108.440000,0.000000,103.440000,127.240000,6.150000,6.150000,5.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-02 15:11:54','2022-12-02 15:11:54',''),
+(11,'PYLCKEKXW',1,1,17,1,4,12,1,9,9,13,'923301d010bf0619382c333000b34aa6','Płatność przy odbiorze',1.000000,'ps_cashondelivery',0,0,'',0,'',0.000000,0.000000,0.000000,62.730000,62.730000,51.000000,0.000000,46.000000,56.580000,6.150000,6.150000,5.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 22:13:13','2022-12-09 22:13:13',''),
+(12,'MGPJKWEIZ',1,1,17,1,4,13,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,56.240000,56.240000,45.720000,0.000000,28.720000,35.330000,20.910000,20.910000,17.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 22:34:43','2022-12-09 22:34:43',''),
+(13,'SRLHNAQIX',1,1,19,1,4,14,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,45.170000,45.170000,36.720000,0.000000,28.720000,35.330000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:10:27','2022-12-09 23:10:28',''),
+(14,'GAQXYCHCQ',1,1,19,1,4,15,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,33.360000,33.360000,27.120000,0.000000,19.120000,23.520000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:32:32','2022-12-09 23:32:32',''),
+(15,'WPQQYBUUN',1,1,19,1,4,16,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,52.890000,52.890000,43.000000,0.000000,35.000000,43.050000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:42:24','2022-12-09 23:42:24',''),
+(16,'MKKJGKREE',1,1,19,1,4,17,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,38.130000,38.130000,31.000000,0.000000,23.000000,28.290000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:52:19','2022-12-09 23:52:19',''),
+(17,'FJIBQDBZD',1,1,19,1,4,18,1,9,9,13,'923301d010bf0619382c333000b34aa6','Płatność przy odbiorze',1.000000,'ps_cashondelivery',0,0,'',0,'',0.000000,0.000000,0.000000,24.480000,24.480000,19.900000,0.000000,11.900000,14.640000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:53:53','2022-12-09 23:53:54',''),
+(18,'IQOBSGUPI',1,1,19,1,4,19,1,9,9,10,'923301d010bf0619382c333000b34aa6','Płatności elektroniczne',1.000000,'ps_wirepayment',0,0,'',0,'',0.000000,0.000000,0.000000,33.090000,33.090000,26.900000,0.000000,18.900000,23.250000,9.840000,9.840000,8.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:57:19','2022-12-09 23:57:19',''),
+(19,'WSPASSHSA',1,1,16,1,4,20,1,9,9,13,'923301d010bf0619382c333000b34aa6','Płatność przy odbiorze',1.000000,'ps_cashondelivery',0,0,'',0,'',0.000000,0.000000,0.000000,105.300000,105.300000,85.600000,0.000000,75.600000,93.000000,12.300000,12.300000,10.000000,23.000,0.000000,0.000000,0.000000,2,1,0,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,'2022-12-09 23:59:11','2022-12-09 23:59:11','');
 /*!40000 ALTER TABLE `ps_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13529,7 +13940,7 @@ CREATE TABLE `ps_page` (
   PRIMARY KEY (`id_page`),
   KEY `id_page_type` (`id_page_type`),
   KEY `id_object` (`id_object`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13540,7 +13951,8 @@ LOCK TABLES `ps_page` WRITE;
 /*!40000 ALTER TABLE `ps_page` DISABLE KEYS */;
 INSERT INTO `ps_page` VALUES
 (1,1,NULL),
-(2,2,NULL);
+(2,2,NULL),
+(3,3,NULL);
 /*!40000 ALTER TABLE `ps_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -13556,7 +13968,7 @@ CREATE TABLE `ps_page_type` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id_page_type`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -13567,7 +13979,8 @@ LOCK TABLES `ps_page_type` WRITE;
 /*!40000 ALTER TABLE `ps_page_type` DISABLE KEYS */;
 INSERT INTO `ps_page_type` VALUES
 (1,'index'),
-(2,'orderconfirmation');
+(2,'orderconfirmation'),
+(3,'pagenotfound');
 /*!40000 ALTER TABLE `ps_page_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14880,7 +15293,7 @@ CREATE TABLE `ps_profile_lang` (
 LOCK TABLES `ps_profile_lang` WRITE;
 /*!40000 ALTER TABLE `ps_profile_lang` DISABLE KEYS */;
 INSERT INTO `ps_profile_lang` VALUES
-(1,1,'SuperAdmin'),
+(1,1,'Administrator'),
 (1,2,'Logistyk'),
 (1,3,'Tłumacz'),
 (1,4,'Sprzedawca');
@@ -15087,9 +15500,9 @@ CREATE TABLE `ps_psreassurance` (
 LOCK TABLES `ps_psreassurance` WRITE;
 /*!40000 ALTER TABLE `ps_psreassurance` DISABLE KEYS */;
 INSERT INTO `ps_psreassurance` VALUES
-(1,'//modules/blockreassurance/views/img/reassurance/pack2/security.svg','',1,1,1,0,0,'2022-12-01 19:38:43','2022-12-01 19:38:43'),
-(2,'//modules/blockreassurance/views/img/reassurance/pack2/carrier.svg','',1,2,1,0,0,'2022-12-01 19:38:59','2022-12-01 19:38:59'),
-(3,'//modules/blockreassurance/views/img/reassurance/pack2/parcel.svg','',1,3,1,0,0,'2022-12-01 19:39:21','2022-12-01 19:39:21');
+(1,'//modules/blockreassurance/views/img/reassurance/pack2/security.svg','',0,1,1,0,0,'2022-12-01 19:38:43','2022-12-09 22:03:22'),
+(2,'//modules/blockreassurance/views/img/reassurance/pack2/carrier.svg','',0,2,1,0,0,'2022-12-01 19:38:59','2022-12-09 22:03:23'),
+(3,'//modules/blockreassurance/views/img/reassurance/pack2/parcel.svg','',0,3,1,0,0,'2022-12-01 19:39:21','2022-12-09 22:03:23');
 /*!40000 ALTER TABLE `ps_psreassurance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15177,12 +15590,12 @@ CREATE TABLE `ps_quick_access_lang` (
 LOCK TABLES `ps_quick_access_lang` WRITE;
 /*!40000 ALTER TABLE `ps_quick_access_lang` DISABLE KEYS */;
 INSERT INTO `ps_quick_access_lang` VALUES
-(1,1,'Orders'),
-(2,1,'New voucher'),
-(3,1,'New product'),
-(4,1,'New category'),
-(5,1,'Installed modules'),
-(6,1,'Catalog evaluation');
+(1,1,'Zamówienia'),
+(2,1,'Nowy kupon'),
+(3,1,'Nowy produkt'),
+(4,1,'Nowa kategoria'),
+(5,1,'Zainstalowane moduły'),
+(6,1,'Ocena katalogu');
 /*!40000 ALTER TABLE `ps_quick_access_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15463,10 +15876,10 @@ CREATE TABLE `ps_risk_lang` (
 LOCK TABLES `ps_risk_lang` WRITE;
 /*!40000 ALTER TABLE `ps_risk_lang` DISABLE KEYS */;
 INSERT INTO `ps_risk_lang` VALUES
-(1,1,'None'),
-(2,1,'Low'),
-(3,1,'Medium'),
-(4,1,'High');
+(1,1,'Żaden'),
+(2,1,'Niski'),
+(3,1,'Średnia'),
+(4,1,'Wysoka');
 /*!40000 ALTER TABLE `ps_risk_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17294,26 +17707,26 @@ CREATE TABLE `ps_stock_available` (
 LOCK TABLES `ps_stock_available` WRITE;
 /*!40000 ALTER TABLE `ps_stock_available` DISABLE KEYS */;
 INSERT INTO `ps_stock_available` VALUES
-(1,1,0,1,0,2399,2399,0,0,2,''),
-(2,2,0,1,0,2097,2097,0,0,2,''),
+(1,1,0,1,0,2398,2398,0,0,2,''),
+(2,2,0,1,0,2095,2095,0,0,2,''),
 (3,3,0,1,0,1500,1500,0,0,2,''),
 (4,4,0,1,0,1502,1502,0,0,2,''),
 (5,5,0,1,0,900,900,0,0,2,''),
-(6,6,0,1,0,300,300,0,0,2,''),
+(6,6,0,1,0,299,300,1,0,2,''),
 (7,7,0,1,0,300,300,0,0,2,''),
 (8,8,0,1,0,301,301,0,0,2,''),
-(9,9,0,1,0,600,600,0,0,2,''),
-(10,10,0,1,0,601,601,0,0,2,''),
+(9,9,0,1,0,599,599,0,0,2,''),
+(10,10,0,1,0,597,597,0,0,2,''),
 (11,11,0,1,0,600,600,0,0,2,''),
 (12,12,0,1,0,300,300,0,0,1,''),
 (13,13,0,1,0,300,300,0,0,1,''),
 (14,14,0,1,0,300,300,0,0,1,''),
-(15,15,0,1,0,100,100,0,0,2,''),
+(15,15,0,1,0,99,100,1,0,2,''),
 (16,16,0,1,0,1200,1200,0,0,2,''),
 (17,17,0,1,0,1200,1200,0,0,2,''),
 (18,18,0,1,0,1200,1200,0,0,2,''),
 (19,19,0,1,0,300,300,0,0,2,''),
-(20,1,1,1,0,299,300,1,0,2,''),
+(20,1,1,1,0,298,300,2,0,2,''),
 (21,1,2,1,0,300,300,0,0,2,''),
 (22,1,3,1,0,300,300,0,0,2,''),
 (23,1,4,1,0,300,300,0,0,2,''),
@@ -17321,7 +17734,7 @@ INSERT INTO `ps_stock_available` VALUES
 (25,1,6,1,0,300,300,0,0,2,''),
 (26,1,7,1,0,300,300,0,0,2,''),
 (27,1,8,1,0,300,300,0,0,2,''),
-(28,2,9,1,0,1197,1200,3,0,2,''),
+(28,2,9,1,0,1195,1200,5,0,2,''),
 (29,2,10,1,0,300,300,0,0,2,''),
 (30,2,11,1,0,300,300,0,0,2,''),
 (31,2,12,1,0,300,300,0,0,2,''),
@@ -17335,9 +17748,9 @@ INSERT INTO `ps_stock_available` VALUES
 (39,5,20,1,0,300,300,0,0,2,''),
 (40,5,21,1,0,300,300,0,0,2,''),
 (41,9,22,1,0,300,300,0,0,2,''),
-(42,9,23,1,0,300,300,0,0,2,''),
+(42,9,23,1,0,299,300,1,0,2,''),
 (43,10,24,1,0,300,300,0,0,2,''),
-(44,10,25,1,0,301,301,0,0,2,''),
+(44,10,25,1,0,297,301,4,0,2,''),
 (45,11,26,1,0,300,300,0,0,2,''),
 (46,11,27,1,0,300,300,0,0,2,''),
 (47,16,28,1,0,299,300,1,0,2,''),
@@ -17352,7 +17765,7 @@ INSERT INTO `ps_stock_available` VALUES
 (56,18,37,1,0,300,300,0,0,2,''),
 (57,18,38,1,0,300,300,0,0,2,''),
 (58,18,39,1,0,300,300,0,0,2,''),
-(59,20,0,1,0,8,10,2,0,2,'');
+(59,20,0,1,0,5,10,5,0,2,'');
 /*!40000 ALTER TABLE `ps_stock_available` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17457,16 +17870,16 @@ CREATE TABLE `ps_stock_mvt_reason_lang` (
 LOCK TABLES `ps_stock_mvt_reason_lang` WRITE;
 /*!40000 ALTER TABLE `ps_stock_mvt_reason_lang` DISABLE KEYS */;
 INSERT INTO `ps_stock_mvt_reason_lang` VALUES
-(1,1,'Increase'),
-(2,1,'Decrease'),
-(3,1,'Customer Order'),
+(1,1,'Wzrost'),
+(2,1,'Zmniejsz'),
+(3,1,'Zamówienie klienta'),
 (4,1,'Regulation following an inventory of stock'),
 (5,1,'Regulation following an inventory of stock'),
-(6,1,'Transfer to another warehouse'),
-(7,1,'Transfer from another warehouse'),
-(8,1,'Supply Order'),
-(9,1,'Customer Order'),
-(10,1,'Product Return'),
+(6,1,'Przeniesienie do innego magazynu'),
+(7,1,'Przeniesienie z innego magazynu'),
+(8,1,'Zamówienie dostawcy'),
+(9,1,'Zamówienie klienta'),
+(10,1,'Zwrot produktu'),
 (11,1,'Employee Edition'),
 (12,1,'Employee Edition');
 /*!40000 ALTER TABLE `ps_stock_mvt_reason_lang` ENABLE KEYS */;
@@ -17855,12 +18268,12 @@ CREATE TABLE `ps_supply_order_state_lang` (
 LOCK TABLES `ps_supply_order_state_lang` WRITE;
 /*!40000 ALTER TABLE `ps_supply_order_state_lang` DISABLE KEYS */;
 INSERT INTO `ps_supply_order_state_lang` VALUES
-(1,1,'1 - Creation in progress'),
-(2,1,'2 - Order validated'),
-(3,1,'3 - Pending receipt'),
-(4,1,'4 - Order received in part'),
-(5,1,'5 - Order received completely'),
-(6,1,'6 - Order canceled');
+(1,1,'1 - Tworzenie w toku'),
+(2,1,'2 - Zamówienie zostało zatwierdzone'),
+(3,1,'3 - W oczekiwaniu'),
+(4,1,'4 - Zamówienie zostało otrzymane w częściach'),
+(5,1,'5 - Otrzymano zamówienie'),
+(6,1,'6 - Zamówienie zostało anulowane');
 /*!40000 ALTER TABLE `ps_supply_order_state_lang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18018,9 +18431,9 @@ INSERT INTO `ps_tab` VALUES
 (121,-1,1,NULL,'AdminQuickAccesses',NULL,1,1,0,'','Quick Access','Admin.Navigation.Menu'),
 (122,0,5,NULL,'DEFAULT',NULL,1,1,0,'','More','Admin.Navigation.Menu'),
 (123,-1,3,NULL,'AdminPatterns',NULL,1,1,0,'','',''),
-(124,0,6,'blockwishlist','WishlistConfigurationAdminParentController','',0,1,0,'',NULL,NULL),
-(125,124,1,'blockwishlist','WishlistConfigurationAdminController','',1,1,0,'',NULL,NULL),
-(126,124,2,'blockwishlist','WishlistStatisticsAdminController','',1,1,0,'',NULL,NULL),
+(124,0,6,'blockwishlist','WishlistConfigurationAdminParentController','',0,0,0,'',NULL,NULL),
+(125,124,1,'blockwishlist','WishlistConfigurationAdminController','',1,0,0,'',NULL,NULL),
+(126,124,2,'blockwishlist','WishlistStatisticsAdminController','',1,0,0,'',NULL,NULL),
 (127,-1,4,'dashgoals','AdminDashgoals','',1,1,0,'',NULL,NULL),
 (128,-1,5,'ps_faviconnotificationbo','AdminConfigureFaviconBo','',1,1,0,'',NULL,NULL),
 (129,52,6,'ps_linklist','AdminLinkWidget','admin_link_block_list',1,1,0,'','Link List','Modules.Linklist.Admin'),
@@ -18048,18 +18461,18 @@ INSERT INTO `ps_tab` VALUES
 (151,0,8,'blockreassurance','AdminBlockListing','',0,1,0,'',NULL,NULL),
 (152,0,9,'ps_accounts','AdminAjaxPsAccounts','',0,1,0,'',NULL,NULL),
 (153,0,10,'ps_accounts','AdminDebugPsAccounts','',0,1,0,'',NULL,NULL),
-(154,2,6,'paypal','AdminParentPaypalConfiguration','',0,1,0,'payment',NULL,NULL),
-(155,154,1,'paypal','AdminPaypalConfiguration','',0,1,0,'',NULL,NULL),
-(156,155,1,'paypal','AdminPayPalSetup','',1,1,0,'',NULL,NULL),
-(157,155,2,'paypal','AdminPayPalCustomizeCheckout','',0,1,0,'',NULL,NULL),
-(158,155,3,'paypal','AdminPayPalInstallment','',0,1,0,'',NULL,NULL),
-(159,155,4,'paypal','AdminPayPalHelp','',1,1,0,'',NULL,NULL),
-(160,155,5,'paypal','AdminPayPalLogs','',0,1,0,'',NULL,NULL),
-(161,154,2,'paypal','AdminPaypalGetCredentials','',0,1,0,'',NULL,NULL),
-(162,154,3,'paypal','AdminPayPalPUIListener','',0,1,0,'',NULL,NULL),
-(163,154,4,'paypal','AdminPaypalProcessLogger','',1,1,0,'',NULL,NULL),
-(166,-1,13,'bluepayment','AdminBluepaymentPayments','',0,1,0,'',NULL,NULL),
-(167,-1,14,'bluepayment','AdminBluepaymentAjax','',0,1,0,'',NULL,NULL);
+(154,2,6,'paypal','AdminParentPaypalConfiguration','',0,0,0,'payment',NULL,NULL),
+(155,154,1,'paypal','AdminPaypalConfiguration','',0,0,0,'',NULL,NULL),
+(156,155,1,'paypal','AdminPayPalSetup','',1,0,0,'',NULL,NULL),
+(157,155,2,'paypal','AdminPayPalCustomizeCheckout','',0,0,0,'',NULL,NULL),
+(158,155,3,'paypal','AdminPayPalInstallment','',0,0,0,'',NULL,NULL),
+(159,155,4,'paypal','AdminPayPalHelp','',1,0,0,'',NULL,NULL),
+(160,155,5,'paypal','AdminPayPalLogs','',0,0,0,'',NULL,NULL),
+(161,154,2,'paypal','AdminPaypalGetCredentials','',0,0,0,'',NULL,NULL),
+(162,154,3,'paypal','AdminPayPalPUIListener','',0,0,0,'',NULL,NULL),
+(163,154,4,'paypal','AdminPaypalProcessLogger','',1,0,0,'',NULL,NULL),
+(166,-1,13,'bluepayment','AdminBluepaymentPayments','',0,0,0,'',NULL,NULL),
+(167,-1,14,'bluepayment','AdminBluepaymentAjax','',0,0,0,'',NULL,NULL);
 /*!40000 ALTER TABLE `ps_tab` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18110,146 +18523,146 @@ CREATE TABLE `ps_tab_lang` (
 LOCK TABLES `ps_tab_lang` WRITE;
 /*!40000 ALTER TABLE `ps_tab_lang` DISABLE KEYS */;
 INSERT INTO `ps_tab_lang` VALUES
-(1,1,'Dashboard'),
-(2,1,'Sell'),
-(3,1,'Orders'),
-(4,1,'Orders'),
-(5,1,'Invoices'),
-(6,1,'Credit Slips'),
-(7,1,'Delivery Slips'),
-(8,1,'Shopping Carts'),
-(9,1,'Catalog'),
-(10,1,'Products'),
-(11,1,'Categories'),
-(12,1,'Monitoring'),
-(13,1,'Attributes & Features'),
-(14,1,'Attributes'),
-(15,1,'Features'),
-(16,1,'Brands & Suppliers'),
-(17,1,'Brands'),
-(18,1,'Suppliers'),
-(19,1,'Files'),
-(20,1,'Discounts'),
-(21,1,'Cart Rules'),
-(22,1,'Catalog Price Rules'),
-(23,1,'Stock'),
-(24,1,'Customers'),
-(25,1,'Customers'),
-(26,1,'Addresses'),
-(27,1,'Outstanding'),
-(28,1,'Customer Service'),
-(29,1,'Customer Service'),
-(30,1,'Order Messages'),
-(31,1,'Merchandise Returns'),
-(32,1,'Stats'),
-(34,1,'Warehouses'),
-(35,1,'Stock Management'),
-(37,1,'Stock Movement'),
-(38,1,'Instant Stock Status'),
-(39,1,'Stock Coverage'),
-(40,1,'Supply orders'),
-(41,1,'Configuration'),
-(42,1,'Improve'),
-(43,1,'Modules'),
-(44,1,'Module Manager'),
-(45,1,'Modules'),
-(46,1,'Alerts'),
-(47,1,'Updates'),
-(48,1,'Module Catalog'),
-(49,1,'Module Catalog'),
+(1,1,'Pulpit'),
+(2,1,'Sprzedaż'),
+(3,1,'Zamówienia'),
+(4,1,'Zamówienia'),
+(5,1,'Faktury'),
+(6,1,'Druki kredytowe'),
+(7,1,'Druk wysyłki'),
+(8,1,'Koszyki zakupowe'),
+(9,1,'Katalog'),
+(10,1,'Produkty'),
+(11,1,'Kategorie'),
+(12,1,'Monitorowanie'),
+(13,1,'Atrybuty & Cechy'),
+(14,1,'Atrybuty'),
+(15,1,'Funkcje'),
+(16,1,'Marki & Dostawcy'),
+(17,1,'Marki'),
+(18,1,'Dostawcy'),
+(19,1,'Pliki'),
+(20,1,'Rabaty'),
+(21,1,'Kody rabatowe'),
+(22,1,'Reguły cenowe katalogu'),
+(23,1,'Magazyn'),
+(24,1,'Klienci'),
+(25,1,'Klienci'),
+(26,1,'Adresy'),
+(27,1,'Saldo'),
+(28,1,'Obsługa klienta'),
+(29,1,'Obsługa klienta'),
+(30,1,'Wiadomości zamówienia'),
+(31,1,'Zwroty produktów'),
+(32,1,'Statystyki'),
+(34,1,'Magazyny'),
+(35,1,'Zarządzanie magazynem'),
+(37,1,'Ruch magazynowy'),
+(38,1,'Stany magazynowe'),
+(39,1,'Aktualne pokrycie stanu'),
+(40,1,'Dostawa zamówień'),
+(41,1,'Konfiguracja'),
+(42,1,'Ulepszenia'),
+(43,1,'Moduły'),
+(44,1,'Menedżer modułów'),
+(45,1,'Moduły'),
+(46,1,'Powiadomienia'),
+(47,1,'Aktualizacje'),
+(48,1,'Katalog'),
+(49,1,'Katalog'),
 (50,1,'Module Selections'),
-(52,1,'Design'),
-(53,1,'Theme & Logo'),
-(54,1,'Theme Catalog'),
-(55,1,'Email Theme'),
-(56,1,'Email Theme'),
-(57,1,'Pages'),
-(58,1,'Positions'),
-(59,1,'Image Settings'),
-(60,1,'Shipping'),
-(61,1,'Carriers'),
-(62,1,'Preferences'),
-(63,1,'Payment'),
-(64,1,'Payment Methods'),
-(65,1,'Preferences'),
-(66,1,'International'),
-(67,1,'Localization'),
-(68,1,'Localization'),
-(69,1,'Languages'),
-(70,1,'Currencies'),
-(71,1,'Geolocation'),
-(72,1,'Locations'),
-(73,1,'Zones'),
-(74,1,'Countries'),
-(75,1,'States'),
-(76,1,'Taxes'),
-(77,1,'Taxes'),
-(78,1,'Tax Rules'),
-(79,1,'Translations'),
-(80,1,'Configure'),
-(81,1,'Shop Parameters'),
-(82,1,'General'),
-(83,1,'General'),
-(84,1,'Maintenance'),
-(85,1,'Order Settings'),
-(86,1,'Order Settings'),
-(87,1,'Statuses'),
-(88,1,'Product Settings'),
-(89,1,'Customer Settings'),
-(90,1,'Customer Settings'),
-(91,1,'Groups'),
-(92,1,'Titles'),
-(93,1,'Contact'),
-(94,1,'Contacts'),
-(95,1,'Stores'),
-(96,1,'Traffic & SEO'),
-(97,1,'SEO & URLs'),
-(98,1,'Search Engines'),
-(99,1,'Referrers'),
-(100,1,'Search'),
-(101,1,'Search'),
-(102,1,'Tags'),
-(103,1,'Advanced Parameters'),
-(104,1,'Information'),
-(105,1,'Performance'),
-(106,1,'Administration'),
-(107,1,'E-mail'),
-(108,1,'Import'),
-(109,1,'Team'),
-(110,1,'Employees'),
-(111,1,'Profiles'),
-(112,1,'Permissions'),
-(113,1,'Database'),
-(114,1,'SQL Manager'),
-(115,1,'DB Backup'),
-(116,1,'Logs'),
-(117,1,'Webservice'),
-(118,1,'Multistore'),
-(119,1,'Multistore'),
-(120,1,'Experimental Features'),
-(121,1,'Quick Access'),
-(122,1,'More'),
+(52,1,'Wygląd'),
+(53,1,'Szablony'),
+(54,1,'Katalog'),
+(55,1,'Szablon maila'),
+(56,1,'Szablon maila'),
+(57,1,'Strony'),
+(58,1,'Pozycje'),
+(59,1,'Zdjęcia'),
+(60,1,'Wysyłka'),
+(61,1,'Przewoźnicy'),
+(62,1,'Preferencje'),
+(63,1,'Płatność'),
+(64,1,'Płatności'),
+(65,1,'Preferencje'),
+(66,1,'Międzynarodowy'),
+(67,1,'Lokalizacja'),
+(68,1,'Lokalizacja'),
+(69,1,'Języki'),
+(70,1,'Waluty'),
+(71,1,'Geolokalizacja'),
+(72,1,'Położenie'),
+(73,1,'Strefy'),
+(74,1,'Kraje'),
+(75,1,'Województwa lub regiony'),
+(76,1,'Podatki'),
+(77,1,'Podatki'),
+(78,1,'Reguły podatków'),
+(79,1,'Tłumaczenia'),
+(80,1,'Konfiguruj'),
+(81,1,'Preferencje'),
+(82,1,'Ogólny'),
+(83,1,'Ogólny'),
+(84,1,'Przerwa techniczna'),
+(85,1,'Zamówienia'),
+(86,1,'Zamówienia'),
+(87,1,'Statusy'),
+(88,1,'Produkty'),
+(89,1,'Klienci'),
+(90,1,'Klienci'),
+(91,1,'Grupy'),
+(92,1,'Tytuły'),
+(93,1,'Kontakt'),
+(94,1,'Kontakty'),
+(95,1,'Sklepy'),
+(96,1,'Ruch'),
+(97,1,'SEO & URL'),
+(98,1,'Wyszukiwarki'),
+(99,1,'Polecający'),
+(100,1,'Szukaj'),
+(101,1,'Szukaj'),
+(102,1,'Tagi'),
+(103,1,'Zaawansowane'),
+(104,1,'Informacja'),
+(105,1,'Wydajność'),
+(106,1,'Administracja'),
+(107,1,'Adres e-mail'),
+(108,1,'Importuj'),
+(109,1,'Zespół'),
+(110,1,'Pracownicy'),
+(111,1,'Profile'),
+(112,1,'Uprawnienia'),
+(113,1,'Baza danych'),
+(114,1,'Menadżer SQL'),
+(115,1,'Kopia zapasowa DB'),
+(116,1,'Logi'),
+(117,1,'API'),
+(118,1,'Multisklep'),
+(119,1,'Multisklep'),
+(120,1,'Funkcje eksperymentalne'),
+(121,1,'Szybki dostęp'),
+(122,1,'Więcej'),
 (124,1,'Wishlist Module'),
-(125,1,'Configuration'),
+(125,1,'Konfiguracja'),
 (126,1,'Statistics'),
 (127,1,'Dashgoals'),
 (128,1,'Order Notifications on the Favicon'),
-(129,1,'Link List'),
-(130,1,'Theme & Logo'),
+(129,1,'Lista linków'),
+(130,1,'Szablony'),
 (131,1,'Pages Configuration'),
 (132,1,'Advanced Customization'),
 (133,1,'Welcome'),
 (134,1,'Merchant Expertise'),
 (135,1,'Oficjalna zgodność z RODO'),
 (136,1,'Oficjalna zgodność z RODO'),
-(137,1,'Module Catalog'),
+(137,1,'Katalog'),
 (138,1,'Module Selections'),
 (139,1,'Module recommended'),
-(140,1,'Theme Catalog'),
+(140,1,'Katalog'),
 (141,1,'ps_buybuttonlite'),
 (142,1,'PrestaShop Checkout'),
 (143,1,'PrestaShop Checkout'),
-(144,1,'Stats'),
+(144,1,'Statystyki'),
 (145,1,'PrestaShop Metrics'),
 (146,1,'Marketing'),
 (147,1,'Facebook'),
@@ -18260,7 +18673,7 @@ INSERT INTO `ps_tab_lang` VALUES
 (152,1,'PrestaShop Account (ajax)'),
 (153,1,'PrestaShop Account (debug)'),
 (154,1,'PayPal Official'),
-(155,1,'Configuration'),
+(155,1,'Konfiguracja'),
 (156,1,'Ustawienia'),
 (157,1,'Doświadczenie'),
 (158,1,'Pay in X times'),
@@ -20048,4 +20461,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-02 14:56:25
+-- Dump completed on 2022-12-09 23:01:44
