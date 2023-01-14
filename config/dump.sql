@@ -8642,7 +8642,7 @@ CREATE TABLE `ps_employee_session` (
   `id_employee` int(10) unsigned DEFAULT NULL,
   `token` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id_employee_session`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -8658,7 +8658,8 @@ INSERT INTO `ps_employee_session` VALUES
 (10,1,'fb76255accae0a26bda7a1c0dc762540733d6631'),
 (11,1,'21b2ce26c5e987a2af47b985bbc3b22fdd3daa97'),
 (13,1,'650efcf169ae3efdba31cfee6a8169822d309ba0'),
-(14,1,'e0af516519a931cf8d95ff08630c19b93622d87d');
+(14,1,'e0af516519a931cf8d95ff08630c19b93622d87d'),
+(15,1,'d430a90552d46b341057e4566ea331569a0c5fb3');
 /*!40000 ALTER TABLE `ps_employee_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -17685,7 +17686,7 @@ CREATE TABLE `ps_log` (
   `date_add` datetime NOT NULL,
   `date_upd` datetime NOT NULL,
   PRIMARY KEY (`id_log`)
-) ENGINE=InnoDB AUTO_INCREMENT=558 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=559 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -18251,7 +18252,8 @@ INSERT INTO `ps_log` VALUES
 (554,1,0,'Product modification','Product',158,1,NULL,1,0,1,'2022-12-12 19:24:02','2022-12-12 19:24:02'),
 (555,1,0,'Protect vendor folder in module trustpilot','',0,1,NULL,1,0,1,'2022-12-12 19:52:35','2022-12-12 19:52:35'),
 (556,1,0,'Module trustpilot has no vendor folder','',0,1,NULL,1,0,1,'2022-12-12 19:52:35','2022-12-12 19:52:35'),
-(557,1,0,'Połączenie z panelem administracyjnym z 172.23.0.1','',0,NULL,NULL,1,1,1,'2023-01-14 16:23:54','2023-01-14 16:23:54');
+(557,1,0,'Połączenie z panelem administracyjnym z 172.23.0.1','',0,NULL,NULL,1,1,1,'2023-01-14 16:23:54','2023-01-14 16:23:54'),
+(558,1,0,'Połączenie z panelem administracyjnym z 172.20.0.1','',0,NULL,NULL,1,1,1,'2023-01-14 18:12:30','2023-01-14 18:12:30');
 /*!40000 ALTER TABLE `ps_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18412,7 +18414,7 @@ CREATE TABLE `ps_memcached_servers` (
   `port` int(11) unsigned NOT NULL,
   `weight` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id_memcached_server`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -18421,6 +18423,8 @@ CREATE TABLE `ps_memcached_servers` (
 
 LOCK TABLES `ps_memcached_servers` WRITE;
 /*!40000 ALTER TABLE `ps_memcached_servers` DISABLE KEYS */;
+INSERT INTO `ps_memcached_servers` VALUES
+(1,'lampy-bright-clone-memcached-1',11211,1);
 /*!40000 ALTER TABLE `ps_memcached_servers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54852,4 +54856,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-14 15:28:27
+-- Dump completed on 2023-01-14 17:29:13

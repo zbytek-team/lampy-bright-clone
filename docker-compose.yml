@@ -58,3 +58,8 @@ services:
       PMA_PASSWORD: admin
     depends_on:
       - db
+
+  memcached:
+    image: 'bitnami/memcached:latest'
+    ports:
+      - '11211:11211'
