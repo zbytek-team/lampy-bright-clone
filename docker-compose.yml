@@ -44,6 +44,7 @@ services:
       ADMIN_PASSWD: lampybright
     volumes:
       - ./src:/var/www/html
+      - ./backoffice:/var/www/html/back-office
     depends_on:
       - db
   

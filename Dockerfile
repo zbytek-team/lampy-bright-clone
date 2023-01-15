@@ -9,4 +9,9 @@ RUN a2enmod ssl
 EXPOSE 80
 EXPOSE 443
 
+RUN apt-get update
+RUN apt install -y libmemcached-dev
+RUN pecl install memcached
+RUN docker-php-ext-enable memcached
+
 RUN service apache2 restart
