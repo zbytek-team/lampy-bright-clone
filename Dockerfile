@@ -15,3 +15,30 @@ RUN pecl install memcached
 RUN docker-php-ext-enable memcached
 
 RUN service apache2 restart
+
+COPY utils /utils
+RUN chmod -R 777 /utils
+
+
+
+RUN apt install -y python3-pip
+RUN pip install prestapyt
+RUN pip install bs4
+
+COPY src /var/www/html
+
+COPY back-office /var/www/html/back-office
+
+RUN chmod -R 777 /var/www/html
+
+# cd into utils
+
+# WORKDIR /utils
+
+# # run the script
+
+# RUN ./get-data.sh
+
+# WORKDIR /utils/backoffice
+
+# CMD ["php", "a.php"]

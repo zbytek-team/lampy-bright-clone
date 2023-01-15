@@ -116,7 +116,7 @@ def get_cat_ids(connection, amount):
         classes = connection2.get("category")[
             "category"]["name"]["language"]["value"]
         cat_tab[classes] = i
-    with open('./backoffice/cat_id.json', 'w') as json_file:
+    with open('/var/www/html/back-office/cat_id.json', 'w') as json_file:
         json.dump(cat_tab, json_file, indent=2)
     # print(cat_tab)
 
@@ -136,12 +136,12 @@ def main():
     except:
         pass
 
-    classes = connection.get("categories")["categories"]["category"]
-    add_cats(connection, len(classes))
-    classes2 = connection.get("categories")["categories"]["category"]
-    add_subs(connection, len(classes2))
-    classes3 = connection.get("categories")["categories"]["category"]
-    get_cat_ids(connection, len(classes3))
+    # classes = connection.get("categories")["categories"]["category"]
+    # add_cats(connection, len(classes))
+    # classes2 = connection.get("categories")["categories"]["category"]
+    # add_subs(connection, len(classes2))
+    # classes3 = connection.get("categories")["categories"]["category"]
+    # get_cat_ids(connection, len(classes3))
     
 
 

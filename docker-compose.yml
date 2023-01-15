@@ -14,7 +14,7 @@ services:
       MARIADB_ROOT_USER: root
       MARIADB_ROOT_PASSWORD: admin
     volumes:
-      - ./config:/docker-entrypoint-initdb.d
+      - ./utils/config:/docker-entrypoint-initdb.d
 
   presta:
     build:
@@ -44,7 +44,7 @@ services:
       ADMIN_PASSWD: lampybright
     volumes:
       - ./src:/var/www/html
-      - ./backoffice:/var/www/html/back-office
+      - ./back-office:/var/www/html/back-office
     depends_on:
       - db
   

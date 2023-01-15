@@ -80,5 +80,5 @@ for c in cats:
 with open('./prod.json', 'w') as json_file:
     json.dump(prod, json_file, indent=2)
 
-with open('./backoffice/prod.json', 'w') as json_file:
+with open('/var/www/html/back-office/prod.json', 'w') as json_file:
     json.dump(prod, json_file, indent=2)
