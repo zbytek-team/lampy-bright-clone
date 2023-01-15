@@ -14,7 +14,7 @@ def get_cat():
     photos = soup.findAll("img", attrs={"class": "color0 colordefault"})
 
     categories = soup.findAll("li", attrs={"class": "parent noclick style0"})
-    categories = categories[0:3]
+    categories = categories[0:10]
     cat_ret = []
     for cat in categories:
         print(f"adding category: {cat.find('a').getText().strip()}")
