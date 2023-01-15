@@ -18,23 +18,32 @@ def rem_product(connection):
 
 
 def rem_cats(connection):
-    cat = list(range(3, 10))
-    # classes = connection.get("categories")["categories"]["category"]
-    # for key in classes:
-    #     cat.append(key["attrs"]["id"])
+    classes = connection.get("categories")["categories"]["category"]
+
+    cat = []
+    keys = [int(key["attrs"]["id"]) for key in classes]
+    for i in keys:
+        if i > 2:
+            cat.append(i)
     connection.delete("categories", resource_ids=cat)
 
 
 def add_cats(connection, amount):
     print("adding categories")
 
+    classes = connection.get("categories")["categories"]["category"]
+
+    keys = [int(key["attrs"]["id"]) for key in classes]
+
+
+
     cat_tab = {}
-    for i in range(amount):
+    for i in keys:
         connection2 = PrestaShopWebServiceDict(
-            'http://localhost/api/categories/' + str(i+1), API_KEY)
+            'http://localhost/api/categories/' + str(i), API_KEY)
         classes = connection2.get("category")[
             "category"]["name"]["language"]["value"]
-        cat_tab[classes] = i+1
+        cat_tab[classes] = i
 
     with open("prod.json", "r") as prod_json:
         p_j = json.load(prod_json)
@@ -61,12 +70,17 @@ def add_subs(connection, main_cat_len):
     print("adding subcategories")
     cat_tab = {}
 
-    for i in range(main_cat_len):
+    classes = connection.get("categories")["categories"]["category"]
+
+    keys = [int(key["attrs"]["id"]) for key in classes]
+
+
+    for i in keys:
         connection2 = PrestaShopWebServiceDict(
-            'http://localhost/api/categories/' + str(i+1), API_KEY)
+            'http://localhost/api/categories/' + str(i), API_KEY)
         classes = connection2.get("category")[
             "category"]["name"]["language"]["value"]
-        cat_tab[classes] = i+1
+        cat_tab[classes] = i
 
     with open("prod.json", "r") as prod_json:
         p_j = json.load(prod_json)
@@ -89,14 +103,19 @@ def add_subs(connection, main_cat_len):
             xx = connection.add('categories', ET.tostring(tree))
 
 
-def get_cat_ids(amount):
+def get_cat_ids(connection, amount):
     cat_tab = {}
-    for i in range(amount):
+
+    classes = connection.get("categories")["categories"]["category"]
+
+    keys = [int(key["attrs"]["id"]) for key in classes]
+    
+    for i in keys:
         connection2 = PrestaShopWebServiceDict(
-            'http://localhost/api/categories/' + str(i+1), API_KEY)
+            'http://localhost/api/categories/' + str(i), API_KEY)
         classes = connection2.get("category")[
             "category"]["name"]["language"]["value"]
-        cat_tab[classes] = i+1
+        cat_tab[classes] = i
     with open('./backoffice/cat_id.json', 'w') as json_file:
         json.dump(cat_tab, json_file, indent=2)
     # print(cat_tab)
@@ -112,17 +131,19 @@ def main():
     except:
         pass
 
+    try:
+        rem_cats(connection)
+    except:
+        pass
+
     classes = connection.get("categories")["categories"]["category"]
     add_cats(connection, len(classes))
     classes2 = connection.get("categories")["categories"]["category"]
     add_subs(connection, len(classes2))
     classes3 = connection.get("categories")["categories"]["category"]
-    get_cat_ids(len(classes3))
+    get_cat_ids(connection, len(classes3))
     
-    try:
-        rem_cats(connection)
-    except:
-        pass
+
 
 if __name__ == '__main__':
     main()
