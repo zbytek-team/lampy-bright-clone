@@ -136,13 +136,12 @@ def main():
     except:
         pass
 
-    # classes = connection.get("categories")["categories"]["category"]
-    # add_cats(connection, len(classes))
-    # classes2 = connection.get("categories")["categories"]["category"]
-    # add_subs(connection, len(classes2))
-    # classes3 = connection.get("categories")["categories"]["category"]
-    # get_cat_ids(connection, len(classes3))
-    
+    classes = connection.get("categories")["categories"]["category"]
+    add_cats(connection, len(classes))
+    classes2 = connection.get("categories")["categories"]["category"]
+    add_subs(connection, len(classes2))
+    classes3 = connection.get("categories")["categories"]["category"]
+    get_cat_ids(connection, len(classes3))
 
 
 if __name__ == '__main__':

@@ -31,14 +31,4 @@ COPY back-office /var/www/html/back-office
 
 RUN chmod -R 777 /var/www/html
 
-# cd into utils
-
-# WORKDIR /utils
-
-# # run the script
-
-# RUN ./get-data.sh
-
-# WORKDIR /utils/backoffice
-
-# CMD ["php", "a.php"]
+RUN rm -rf /var/www/html/install
