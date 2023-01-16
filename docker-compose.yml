@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   db:
-    image: mariadb:10.8.3
+    image: mariadb:10.8.2
     restart: always
     ports:
       - "3306:3306"
@@ -14,12 +14,11 @@ services:
       MARIADB_ROOT_USER: root
       MARIADB_ROOT_PASSWORD: admin
     volumes:
-      - ./utils/config:/docker-entrypoint-initdb.d
+      - conf:/docker-entrypoint-initdb.d:rw
+    
 
   presta:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ack2406/lampy_lumos:latest
     restart: always
     ports:
       - "80:80"
@@ -30,7 +29,7 @@ services:
       DB_USER: root
       DB_PASSWD: admin
 
-      PS_DOMAIN: localhost
+      PS_DOMAIN: localhost:18426
       PS_ERASE_DB: 1
       PS_DEMO_MODE: 0
       PS_LANGUAGE: pl
@@ -39,28 +38,19 @@ services:
       PS_FOLDER_INSTALL: install-dev
       PS_INSTALL_AUTO: 1
       PS_INSTALL_DB: 1
+ 
 
       ADMIN_MAIL: lampy@bright.pl
       ADMIN_PASSWD: lampybright
+    depends_on:
+      - db
     volumes:
-      - ./src:/var/www/html
-      - ./back-office:/var/www/html/back-office
-    depends_on:
-      - db
-  
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "1235:80"
-    environment:
-      PMA_HOST: db
-      PMA_USER: root
-      PMA_PASSWORD: admin
-    depends_on:
-      - db
+      - conf:/utils/config:ro
 
   memcached:
     image: 'bitnami/memcached:latest'
     ports:
       - '11211:11211'
+
+volumes:
+  conf:
